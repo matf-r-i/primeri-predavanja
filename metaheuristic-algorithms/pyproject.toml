@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "metaheuristics"
+name = "metaheuristic-algorithms"
 version = "0.1.0"
 description = ""
 authors = ["Vladimir Filipovic <vladofilipovic@hotmail.com>"]
+packages = [{include = "metaheuristic_algorithms"}]
 readme = "README.md"
 
 [tool.poetry.dependencies]
