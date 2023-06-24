@@ -78,7 +78,7 @@ class TargetProblem:
         """
         s = '<Problem>' + '\n'
         s += 'name: '+ self.name + '\n'
-        s += 'file path: '+ str(self.file_path) + '\n'
+        s += 'file path: '+ str(self.file_path) 
         return s
 
     @abstractmethod
@@ -90,5 +90,5 @@ class TargetProblem:
         """
         s = '<Problem>' + '\n'
         s += 'name: '+ self.name + '\n'
-        s += 'file path: '+ str(self.file_path) + '\n'
+        s += 'file path: '+ str(self.file_path) 
         return s

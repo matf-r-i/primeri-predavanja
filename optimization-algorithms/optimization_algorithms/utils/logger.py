@@ -39,8 +39,8 @@ console_handler.setFormatter(log_formatter)
 logger.addHandler(console_handler)
 
 # Logger level
-logger.setLevel(os.environ.get('LOG_LEVEL') or logging.INFO)
-#logger.setLevel(os.environ.get('LOG_LEVEL') or logging.DEBUG)
+#logger.setLevel(os.environ.get('LOG_LEVEL') or logging.INFO)
+logger.setLevel(os.environ.get('LOG_LEVEL') or logging.DEBUG)
 '''
 End logger config
 '''
