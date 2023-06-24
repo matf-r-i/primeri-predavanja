@@ -1,7 +1,7 @@
-import path
-import sys
-directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
+from pathlib import Path
+import sys 
+path = Path().joinpath().joinpath('..')
+sys.path.append(str(path))
 
 from abc import ABC, abstractmethod
 
