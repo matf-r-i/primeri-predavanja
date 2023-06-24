@@ -15,14 +15,14 @@ class TargetProblem:
         self.__name = name
         self.__file_path = path
 
-    def __copy__(self)->TargetProblem:
+    def __copy__(self):
         """
         Internal copy of the current target problem
         :return: TargetProblem -- new TargetProblem instance with the same properties
         """
         return TargetProblem(self.__name, self.__file_path)
 
-    def copy(self)->TargetProblem:
+    def copy(self):
         """
         Copy the current target problem
         :return: TargetProblem -- new TargetProblem instance with the same properties
