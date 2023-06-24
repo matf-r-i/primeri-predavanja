@@ -6,14 +6,14 @@ sys.path.append(str(path))
 from abc import ABC, abstractmethod
 
 class TargetProblem:
-    def __init__(self, name:str, file_path:str ):
+    def __init__(self, name:str, file_path:str )->None:
         """
         Create new TargetProblem instance
         :param name:str -- name of the target problem
         :param file_path:str -- path of the file with data for the parget problem instance 
         """
         self.__name = name
-        self.__file_path = path
+        self.__file_path = file_path
 
     def __copy__(self):
         """
@@ -78,8 +78,7 @@ class TargetProblem:
         """
         s = '<Problem>' + '\n'
         s += 'name: '+ self.name + '\n'
-        s += 'file path: '+ self.file_path + '\n'
-        s += 'dimension: '+ str(self.__dimension) + '\n'
+        s += 'file path: '+ str(self.file_path) + '\n'
         return s
 
     @abstractmethod
