@@ -17,13 +17,16 @@ OUTPUT_DIR = 'outputs'
 from utils.command_line import get_execution_parameters
 from utils.command_line import default_parameters
 
-from problems.max_ones.target_problem_max_ones import TargetProblemMaxOnes
+from target_problem.max_ones.target_problem_max_ones import TargetProblemMaxOnes
 
 def main():
     """ This function is an entry  point of the application.
     """
+    ensure_dir(OUTPUT_DIR)
+    logger.debug('Execution started.')    
     problem = TargetProblemMaxOnes("aaa")
-    print(problem)
+    logger.info('Problem: {}'.format(problem))
+    logger.debug('Execution ended.')    
 
 
 # this means that if this script is executed, then 

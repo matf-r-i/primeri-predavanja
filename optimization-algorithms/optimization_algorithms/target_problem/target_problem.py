@@ -88,4 +88,7 @@ class TargetProblem:
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        return __str__(self)
+        s = '<Problem>' + '\n'
+        s += 'name: '+ self.name + '\n'
+        s += 'file path: '+ str(self.file_path) + '\n'
+        return s

@@ -3,7 +3,7 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-from target_problem import TargetProblem
+from target_problem.target_problem import TargetProblem
 
 class TargetProblemMaxOnes(TargetProblem):
     def __init__(self, file_path:str )->None:
@@ -19,3 +19,11 @@ class TargetProblemMaxOnes(TargetProblem):
         :return: string representation of the max ones problem instance
         """
         return super().__str__()
+
+    def __format__(self, spec:str)->str:
+        """
+        Formatted the target problem instance
+        :param spec: str -- Format specification
+        :return: formatted target problem instance
+        """
+        return super().__format__(spec)
