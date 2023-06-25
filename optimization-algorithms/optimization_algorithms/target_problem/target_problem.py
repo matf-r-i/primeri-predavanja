@@ -76,9 +76,18 @@ class TargetProblem:
         String representation of the target problem instance
         :return: string representation of the target problem instance
         """
-        s = '<Problem>' + '\n'
-        s += 'name: '+ self.name + '\n'
-        s += 'file path: '+ str(self.file_path) 
+        s = 'Problem: name= '+ self.name + '| '
+        s += 'file path= '+ str(self.file_path) + '| '
+        return s
+
+    @abstractmethod
+    def __repr__(self)->str:
+        """
+        Representation of the target problem instance
+        :return: string representation of the problem instance
+        """
+        s = 'Problem: name= '+ self.name + '| '
+        s += 'file path= '+ str(self.file_path) + '| '
         return s
 
     @abstractmethod
