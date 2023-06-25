@@ -5,28 +5,54 @@ sys.path.append(str(path))
 
 from abc import ABC, abstractmethod
 
-class TargetSolution:
-    def __init__(self, name:str)->None:
+from target_solution.cache_control_statistics import CacheControlStatistics
+
+class TargetSolution(ABC):
+    
+    """
+    Cache that is used during evaluation for previously obtained solutions
+    """
+    cache_control_statistics:CacheControlStatistics = CacheControlStatistics()
+    
+    @abstractmethod
+    def __init__(self, name:str, fitness_value:float=None, objective_value:float=None, is_feasible:bool=False)->None:
         """
         Create new TargetSolution instance
         :param name:str -- name of the target solution
+        :param fitness_value:float -- fitness value of the target solution
+        :param objective_value:float -- objective value of the target solution
         """
         self.__name = name
-        self.__fitness = None
+        self.__fitness_value = fitness_value
+        self.__objective_value = objective_value
+        self.__is_feasible = is_feasible
 
+    @abstractmethod
     def __copy__(self):
         """
         Internal copy of the current target solution
         :return: TargetSolution -- new TargetSolution instance with the same properties
         """
-        return TargetSolution(self.__name)
+        return TargetSolution(self.__name, self.__fitness_value, self.__objective_value)
 
+    @abstractmethod
     def copy(self):
         """
         Copy the current target solution
         :return: TargetSolution -- new TargetSolution instance with the same properties
         """
         return self.__copy__()
+
+    @abstractmethod
+    def copy_to(self, destination)->None:
+        """
+        Copy the current target problem to the already existing destination target problem
+        :param destination:TargetProblem -- destination target problem
+        """
+        destination.name = self.name
+        destination.fitness_value = self.fitness_value
+        destination.objective_value = self.objective_value
+        destination.is_feasible = self.is_feasible
 
     @property
     def name(self)->str:
@@ -40,18 +66,60 @@ class TargetSolution:
     def fitness_value(self)->float:
         """
         Property getter for fitness value of the target solution
-        :return: fitness of the target solution instance 
+        :return: fitness value of the target solution instance 
         """
-        return self.__fitness
+        return self.__fitness_value
 
     @fitness_value.setter
     def fitness_value(self, value:float)->None:
         """
-        Property setter for dimension of the target solution
+        Property setter for fitness value of the target solution
         """
         if value < 0:
-            raise ValueError("Fitness less than 0 is not possible.")
-        self.__fitness = value
+            raise ValueError("Fitness value less than 0 is not possible.")
+        self.__fitness_value = value
+
+    @property
+    def objective_value(self)->float:
+        """
+        Property getter for objective value of the target solution
+        :return: objective value of the target solution instance 
+        """
+        return self.__objective_value
+
+    @objective_value.setter
+    def objective_value(self, value:float)->None:
+        """
+        Property setter for objective value of the target solution
+        """
+        self.__objective_value = value
+
+    @property
+    def is_feasible(self)->bool:
+        """
+        Property getter for feasibility of the target solution
+        :return: feasibility of the target solution instance 
+        """
+        return self.__is_feasible
+
+    @is_feasible.setter
+    def is_feasible(self, value:bool)->None:
+        """
+        Property setter for feasibility of the target solution
+        """
+        self.__is_feasible = value
+
+    def string_representation( self, delimiter:str)->str:
+        """
+        String representation of the target solution instance
+        :param delimiter: str -- Delimiter between fields
+        :return: tring representation of target solution instance
+        """        
+        s = 'name= '+ self.name + delimiter
+        s += 'fitness_value= '+ str(self.fitness_value) + delimiter
+        s += 'objective_value= '+ str(self.objective_value) + delimiter
+        s += 'is_feasible= '+ str(self.is_feasible) + delimiter
+        return s
 
     @abstractmethod
     def __str__(self)->str:
@@ -59,8 +127,7 @@ class TargetSolution:
         String representation of the target solution instance
         :return: string representation of the target solution instance
         """
-        s = 'name= '+ self.name + '| '
-        return s
+        return self.string_representation('| ')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -68,8 +135,7 @@ class TargetSolution:
         Representation of the target solution instance
         :return: string representation of the solution instance
         """
-        s = 'name= '+ self.name + '\n'
-        return s
+        return self.string_representation('\n')
 
     @abstractmethod
     def __format__(self, spec:str)->str:
@@ -78,5 +144,4 @@ class TargetSolution:
         :param spec: str -- Format specification
         :return: formatted target solution instance
         """
-        s = 'name= '+ self.name + '| '
-        return s
+        return self.string_representation('| ')

@@ -5,7 +5,9 @@ sys.path.append(str(path))
 
 from abc import ABC, abstractmethod
 
-class Algorithm:
+class Algorithm(ABC):
+
+    @abstractmethod
     def __init__(self, name:str )->None:
         """
         Create new Algorithm instance
@@ -13,6 +15,7 @@ class Algorithm:
         """
         self.__name = name
 
+    @abstractmethod
     def __copy__(self):
         """
         Internal copy of the current algorithm
@@ -20,6 +23,7 @@ class Algorithm:
         """
         return Algorithm(self.__name)
 
+    @abstractmethod
     def copy(self):
         """
         Copy the current algorithm
@@ -35,14 +39,22 @@ class Algorithm:
         """
         return self.__name
 
+    def string_representation( self, delimiter:str)->str:
+        """
+        String representation of the target solution instance
+        :param delimiter: str -- Delimiter between fields
+        :return: tring representation of target solution instance
+        """        
+        s = 'name= '+ self.name + delimiter
+        return s
+
     @abstractmethod
     def __str__(self)->str:
         """
         String representation of the algorithm instance
         :return: string representation of the algorithm instance
         """
-        s = 'name= '+ self.name + '| '
-        return s
+        return self.string_representation('| ')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -50,8 +62,7 @@ class Algorithm:
         Representation of the algorithm instance
         :return: string representation of the problem instance
         """
-        s = 'name= '+ self.name + '| '
-        return s
+        return self.string_representation('\n')
 
     @abstractmethod
     def __format__(self, spec:str)->str:
@@ -60,5 +71,4 @@ class Algorithm:
         :param spec: str -- Format specification
         :return: formatted algorithm instance
         """
-        s = 'name= '+ self.name + '| '
-        return s
+        return self.string_representation('| ')

@@ -1,0 +1,9 @@
+import os
+
+def ensure_dir(path_to_dir:str)->None:
+        """
+        Ensure existence of the specific directory in the file system
+        :param path_to_dir:str -- Path of the directory whose existence should be ensured
+        """    
+        if not os.path.exists(path_to_dir):
+            os.mkdir(path_to_dir)

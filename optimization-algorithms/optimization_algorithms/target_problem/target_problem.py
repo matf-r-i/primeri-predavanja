@@ -5,7 +5,9 @@ sys.path.append(str(path))
 
 from abc import ABC, abstractmethod
 
-class TargetProblem:
+class TargetProblem(ABC):
+
+    @abstractmethod
     def __init__(self, name:str, file_path:str )->None:
         """
         Create new TargetProblem instance
@@ -15,6 +17,7 @@ class TargetProblem:
         self.__name = name
         self.__file_path = file_path
 
+    @abstractmethod
     def __copy__(self):
         """
         Internal copy of the current target problem
@@ -22,6 +25,7 @@ class TargetProblem:
         """
         return TargetProblem(self.__name, self.__file_path)
 
+    @abstractmethod
     def copy(self):
         """
         Copy the current target problem
@@ -70,15 +74,23 @@ class TargetProblem:
         """
         pass
 
+    def string_representation( self, delimiter:str)->str:
+        """
+        String representation of the target solution instance
+        :param delimiter: str -- Delimiter between fields
+        :return: tring representation of target solution instance
+        """        
+        s = 'name= '+ self.name + delimiter
+        s += 'file path= '+ str(self.file_path) + delimiter
+        return s
+
     @abstractmethod
     def __str__(self)->str:
         """
         String representation of the target problem instance
         :return: string representation of the target problem instance
         """
-        s = 'name= '+ self.name + '| '
-        s += 'file path= '+ str(self.file_path) + '| '
-        return s
+        return self.string_representation('| ')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -86,9 +98,7 @@ class TargetProblem:
         Representation of the target problem instance
         :return: string representation of the problem instance
         """
-        s = 'name= '+ self.name + '\n'
-        s += 'file path= '+ str(self.file_path) 
-        return s
+        return self.string_representation('\n')
 
     @abstractmethod
     def __format__(self, spec:str)->str:
@@ -97,6 +107,4 @@ class TargetProblem:
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        s = 'name= '+ self.name + '| '
-        s += 'file path= '+ str(self.file_path) + '| '
-        return s
+        return self.string_representation('| ')

@@ -3,9 +3,12 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
+from abc import ABC, abstractmethod
 from algorithm.algorithm import Algorithm
 
 class Metaheuristic(Algorithm):
+    
+    @abstractmethod
     def __init__(self, name:str )->None:
         """
         Create new TargetProblemMaxOnes instance
@@ -13,6 +16,7 @@ class Metaheuristic(Algorithm):
         """
         super().__init__(name)
 
+    @abstractmethod
     def __str__(self)->str:
         """
         String representation of the max ones problem instance
@@ -20,6 +24,7 @@ class Metaheuristic(Algorithm):
         """
         return super().__str__()
 
+    @abstractmethod
     def __repr__(self)->str:
         """
         String representation of the max ones problem instance
@@ -27,6 +32,7 @@ class Metaheuristic(Algorithm):
         """
         return super().__repr__()
 
+    @abstractmethod
     def __format__(self, spec:str)->str:
         """
         Formatted the target problem instance

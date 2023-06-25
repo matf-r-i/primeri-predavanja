@@ -9,10 +9,9 @@ import random
 
 from datetime import datetime
 
-from utils.logger import logger
-from utils.logger import ensure_dir 
+from utils.files import ensure_dir 
 
-OUTPUT_DIR = 'outputs'
+from utils.logger import logger
 
 from utils.command_line import get_execution_parameters
 from utils.command_line import default_parameters
@@ -29,15 +28,21 @@ from algorithm.metaheuristic.metaheuristic import Metaheuristic
 
 from max_ones_problem_solving.max_ones_problem import MaxOnesProblem
 
+from max_ones_problem_solving.max_ones_solution import MaxOnesSolution
+
 def main():
     """ This function is an entry  point of the application.
     """
+    OUTPUT_DIR = 'outputs'
     ensure_dir(OUTPUT_DIR)
     logger.debug('Execution started.')    
-    problem = MaxOnesProblem("aaa")
+    problem = MaxOnesProblem('file_path')
+    problem.load_from_file('clean')
     logger.info('Problem: {}'.format(problem))
-    optimizator = Metaheuristic('bbb')
-    logger.info('Optimizator: {}'.format(optimizator))
+    solution = MaxOnesSolution()
+    logger.info('Solution: {}'.format(solution))
+    #optimizer = Metaheuristic('ccc')
+    #logger.info('Optimizer: {}'.format(optimizer))
     logger.debug('Execution ended.')    
 
 
