@@ -25,6 +25,8 @@ sys.path.append(abs_path)
 
 from target_problem.target_problem import TargetProblem
 
+from algorithm.metaheuristic.metaheuristic import Metaheuristic
+
 from max_ones_problem_solving.max_ones_problem import MaxOnesProblem
 
 def main():
@@ -34,6 +36,8 @@ def main():
     logger.debug('Execution started.')    
     problem = MaxOnesProblem("aaa")
     logger.info('Problem: {}'.format(problem))
+    optimizator = Metaheuristic('bbb')
+    logger.info('Optimizator: {}'.format(optimizator))
     logger.debug('Execution ended.')    
 
 

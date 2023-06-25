@@ -10,7 +10,7 @@ class TargetProblem:
         """
         Create new TargetProblem instance
         :param name:str -- name of the target problem
-        :param file_path:str -- path of the file with data for the parget problem instance 
+        :param file_path:str -- path of the file with data for the target problem instance 
         """
         self.__name = name
         self.__file_path = file_path
@@ -76,7 +76,7 @@ class TargetProblem:
         String representation of the target problem instance
         :return: string representation of the target problem instance
         """
-        s = 'Problem: name= '+ self.name + '| '
+        s = 'name= '+ self.name + '| '
         s += 'file path= '+ str(self.file_path) + '| '
         return s
 
@@ -86,8 +86,8 @@ class TargetProblem:
         Representation of the target problem instance
         :return: string representation of the problem instance
         """
-        s = 'Problem: name= '+ self.name + '| '
-        s += 'file path= '+ str(self.file_path) + '| '
+        s = 'name= '+ self.name + '\n'
+        s += 'file path= '+ str(self.file_path) 
         return s
 
     @abstractmethod
@@ -97,7 +97,6 @@ class TargetProblem:
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        s = '<Problem>' + '\n'
-        s += 'name: '+ self.name + '\n'
-        s += 'file path: '+ str(self.file_path) 
+        s = 'name= '+ self.name + '| '
+        s += 'file path= '+ str(self.file_path) + '| '
         return s
