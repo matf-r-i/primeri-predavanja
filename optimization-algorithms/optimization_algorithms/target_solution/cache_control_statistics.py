@@ -3,7 +3,7 @@ class CacheControlStatistics:
     """
     Cache that is used during evaluation for previously obtained solutions
     """
-    cache:dict = None
+    cache:dict = {}
     
     """
     If caching is used during evaluation, or not
@@ -16,6 +16,6 @@ class CacheControlStatistics:
     cache_hit_count:int = 0
 
     """
-    number of evaluations (eg. fitness calculations) that is counted
+    number of fitness calculations that is counted
     """
-    evaluation_count:int = 0
+    fitness_calculations_count:int = 0

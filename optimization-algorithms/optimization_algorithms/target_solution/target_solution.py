@@ -46,8 +46,8 @@ class TargetSolution(ABC):
     @abstractmethod
     def copy_to(self, destination)->None:
         """
-        Copy the current target problem to the already existing destination target problem
-        :param destination:TargetProblem -- destination target problem
+        Copy the current target solution to the already existing destination target solution
+        :param destination:TargetSolution -- destination target solution
         """
         destination.name = self.name
         destination.fitness_value = self.fitness_value
@@ -139,10 +139,40 @@ class TargetSolution(ABC):
         """
         pass
 
+    @staticmethod
+    def calculate_fitness_try_consult_cache(target_solution):
+        """
+        Calculate fitness of the argument with optional cache consultation
+        :param target_solution:TargetSolution -- target solution whose fitness should be 
+        :return: solution with calculated fitness value 
+        """
+        ccs = target_solution.cache_control_statistics 
+        ccs.fitness_calculations_count += 1
+        if ccs.is_caching:
+            code = target_solution.solution_code()
+            if code in ccs.cache:
+                ccs.cache_hit_count += 1
+                return ccs.cache[code]
+            target_solution.fitness_value = target_solution.calculate_fitness()
+            ccs.cache[code] = target_solution
+            return target_solution
+        else:
+            target_solution.fitness_value = target_solution.calculate_fitness()
+            return target_solution
+
+    def evaluate(self)->None:
+        """
+        Evaluate current target solution
+        """        
+        solution = TargetSolution.calculate_fitness_try_consult_cache(self)
+        self.objective_value = solution.objective_value;
+        self.fitness_value = solution.fitness_value;
+        self.feasible = solution.feasible;
+
     @abstractmethod
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
-        Calculating distance between two solutions determined by its code
+        Calculate distance between two solutions determined by its code
         :param solution_code_1:str -- solution code for the first solution
         :param solution_code_2:str -- solution code for the second solution
         """
