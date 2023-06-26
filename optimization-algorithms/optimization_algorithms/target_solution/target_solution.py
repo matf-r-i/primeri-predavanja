@@ -109,6 +109,45 @@ class TargetSolution(ABC):
         """
         self.__is_feasible = value
 
+    @abstractmethod
+    def solution_code(self)->str:
+        """
+        Solution code of the target solution
+        :return: solution code 
+        """
+        pass
+
+    @abstractmethod
+    def calculate_fitness(self)->float:
+        """
+        Fitness calculation of the target solution
+        :return: target solution fitness value 
+        """
+        pass
+
+    @abstractmethod
+    def recalculate_solution_code(self)->None:
+        """
+        Recalculation of the solution code for the target solution
+        """
+        pass
+
+    @abstractmethod
+    def random_init(self)->None:
+        """
+        Random initialization of the target solution
+        """
+        pass
+
+    @abstractmethod
+    def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
+        """
+        Calculating distance between two solutions determined by its code
+        :param solution_code_1:str -- solution code for the first solution
+        :param solution_code_2:str -- solution code for the second solution
+        """
+        pass
+
     def string_representation( self, delimiter:str)->str:
         """
         String representation of the target solution instance

@@ -22,18 +22,51 @@ class MaxOnesSolution(TargetSolution):
 
     def copy(self):
         """
-        Copy the MaxOnesProblem problem
-        :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
+        Copy the MaxOnesSolution
+        :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
         return self.__copy__()
         
     def copy_to(self, destination)->None:
         """
-        Copy the MaxOnesProblem to the already existing destination MaxOnesProblem
-        :param destination:MaxOnesProblem -- destination target problem
+        Copy the MaxOnesSolution to the already existing destination MaxOnesSolution
+        :param destination:MaxOnesSolution -- destination MaxOnesSolution
         """
         return self.copy_to(destination)
         
+    def solution_code(self)->str:
+        """
+        Solution code of the target solution
+        :return: solution code 
+        """
+        pass
+
+    def calculate_fitness(self)->float:
+        """
+        Fitness calculation of the target solution
+        :return: target solution fitness value 
+        """
+        pass
+
+    def recalculate_solution_code(self)->None:
+        """
+        Recalculation of the solution code for the target solution
+        """
+        pass
+
+    def random_init(self)->None:
+        """
+        Random initialization of the target solution
+        """
+        pass
+
+    def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
+        """
+        Calculating distance between two solutions determined by its code
+        :param solution_code_1:str -- solution code for the first solution
+        :param solution_code_2:str -- solution code for the second solution
+        """
+        pass
 
     def __str__(self)->str:
         """
