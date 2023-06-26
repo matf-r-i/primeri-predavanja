@@ -26,7 +26,6 @@ default_parameters = {'InputFile': 'XXX.in',
 
 def get_execution_parameters(options, args, parameters):
     """  Obtains execution parameters.
-
     Args:
         parameters (:dictionary) : Parameter 'parameters' represent initial 
             values of execution parameters

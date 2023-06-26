@@ -8,12 +8,7 @@ import os
 import logging
 import datetime as dt
 
-
-# Ensure if dir exists
-def ensure_dir(path_to_dir):
-    if not os.path.exists(path_to_dir):
-        os.mkdir(path_to_dir)
-
+from files import ensure_dir
 
 '''
 Start logger config
