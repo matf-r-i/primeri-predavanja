@@ -50,13 +50,13 @@ class Algorithm(metaclass=ABCMeta):
         """
         return self.__is_minimization
 
-    def string_representation( self, delimiter:str)->str:
+    def string_representation(self, delimiter:str)->str:
         """
-        String representation of the target solution instance
+        String representation of the Algorithm instance
         :param delimiter: str -- Delimiter between fields
-        :return: tring representation of target solution instance
+        :return: string representation of the Algorithm instance
         """        
-        s = 'name=' + self.name + delimiter
+        s = delimiter + 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
         return s
 
@@ -66,7 +66,7 @@ class Algorithm(metaclass=ABCMeta):
         String representation of the algorithm instance
         :return: string representation of the algorithm instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -83,4 +83,4 @@ class Algorithm(metaclass=ABCMeta):
         :param spec: str -- Format specification
         :return: formatted algorithm instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')

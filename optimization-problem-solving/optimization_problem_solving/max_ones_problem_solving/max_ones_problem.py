@@ -35,23 +35,30 @@ class MaxOnesProblem(TargetProblem):
         Read target problem data from file
         :param data_representation: str -- Data representation within file
         """
-        logger.debug("Load parameters: file path ={}, data format representation ={}".format(self.file_path, data_representation))
+        logger.debug("Load parameters: file path={}, data format representation={}".format(self.file_path, data_representation))
+
+    def string_representation(self, delimiter:str)->str:
+        """
+        String representation of the target solution instance
+        :param delimiter: str -- Delimiter between fields
+        :return: string representation of target solution instance
+        """        
+        s = super().string_representation(delimiter)
+        return s
 
     def __str__(self)->str:
         """
-        String representation of the max ones problem instance
-        :return: string representation of the max ones problem instance
+        String representation of the target problem instance
+        :return: string representation of the target problem instance
         """
-        s = super().__str__()
-        return s
+        return self.string_representation('|')
 
     def __repr__(self)->str:
         """
-        String representation of the max ones problem instance
-        :return: string representation of the max ones problem instance
+        Representation of the target problem instance
+        :return: string representation of the problem instance
         """
-        s = super().__repr__()
-        return s
+        return self.string_representation('\n')
 
     def __format__(self, spec:str)->str:
         """
@@ -59,5 +66,5 @@ class MaxOnesProblem(TargetProblem):
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        s = super().__format__(spec)
-        return s
+        return self.string_representation('|')
+

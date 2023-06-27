@@ -200,7 +200,7 @@ class TargetSolution(metaclass=ABCMeta):
         :param delimiter: str -- Delimiter between fields
         :return: string representation of target solution instance
         """        
-        s = 'name=' + self.name + delimiter
+        s = delimiter + 'name=' + self.name + delimiter
         s += 'fitness_value=' + str(self.fitness_value) + delimiter
         s += 'objective_value=' + str(self.objective_value) + delimiter
         s += 'is_feasible=' + str(self.is_feasible) + delimiter
@@ -214,7 +214,7 @@ class TargetSolution(metaclass=ABCMeta):
         String representation of the target solution instance
         :return: string representation of the target solution instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -231,4 +231,4 @@ class TargetSolution(metaclass=ABCMeta):
         :param spec: str -- Format specification
         :return: formatted target solution instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')

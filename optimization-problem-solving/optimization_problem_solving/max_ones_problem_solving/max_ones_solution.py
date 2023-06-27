@@ -75,27 +75,34 @@ class MaxOnesSolution(TargetSolution):
         """        
         return False
 
+
+    def string_representation(self, delimiter:str)->str:
+        """
+        String representation of the target solution instance
+        :param delimiter: str -- Delimiter between fields
+        :return: string representation of target solution instance
+        """        
+        s = super().string_representation(delimiter)
+        return s
+
     def __str__(self)->str:
         """
-        String representation of the max ones problem instance
-        :return: string representation of the max ones problem instance
+        String representation of the target solution instance
+        :return: string representation of the target solution instance
         """
-        s = super().__str__()
-        return s
+        return self.string_representation('|')
 
     def __repr__(self)->str:
         """
-        String representation of the max ones problem instance
-        :return: string representation of the max ones problem instance
+        Representation of the target solution instance
+        :return: string representation of the solution instance
         """
-        s = super().__repr__()
-        return s
+        return self.string_representation('\n')
 
     def __format__(self, spec:str)->str:
         """
-        Formatted the target problem instance
+        Formatted the target solution instance
         :param spec: str -- Format specification
-        :return: formatted target problem instance
+        :return: formatted target solution instance
         """
-        s = super().__format__(spec)
-        return s
+        return self.string_representation('|')

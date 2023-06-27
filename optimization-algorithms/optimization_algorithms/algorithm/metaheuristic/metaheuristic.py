@@ -15,7 +15,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :name:str -- name of the metaheuristic
         """
         super().__init__(name, is_minimization)
-        __evaluations_max = evaluations_max
+        self.__evaluations_max = evaluations_max
 
     @abstractmethod
     def __copy__(self):
@@ -33,13 +33,31 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         return self.__copy__()
 
+    @property
+    def evaluations_max(self)->int:
+        """
+        Property getter for the maximum number of evaluations
+        :return: maximum number of evaluations 
+        """
+        return self.__evaluations_max
+
+    def string_representation(self, delimiter:str)->str:
+        """
+        String representation of the Metaheuristic instance
+        :param delimiter: str -- Delimiter between fields
+        :return: string representation of Metaheuristic instance
+        """        
+        s = super().string_representation(delimiter)
+        s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
+        return s
+
     @abstractmethod
     def __str__(self)->str:
         """
         String representation of the Metaheuristic instance
         :return: string representation of the Metaheuristic instance
         """
-        s = super().__str__()
+        s = self.string_representation('|')
         return s;
 
     @abstractmethod
@@ -48,7 +66,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         String representation of the Metaheuristic instance
         :return: string representation of the Metaheuristic instance
         """
-        s = super().__repr__()
+        s = self.string_representation('\n')
         return s
 
     @abstractmethod
@@ -58,5 +76,5 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :param spec: str -- Format specification
         :return: formatted Metaheuristic instance
         """
-        s = super().__format__(spec)
+        s = self.string_representation('|')
         return s

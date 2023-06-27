@@ -26,7 +26,7 @@ class CacheControlStatistics:
         :param delimiter: str -- Delimiter between fields
         :return: string representation of cache control and statistics structure
         """        
-        s = 'is_caching=' + str(self.is_caching) + delimiter
+        s = delimiter + 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
         s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) + delimiter
         return s

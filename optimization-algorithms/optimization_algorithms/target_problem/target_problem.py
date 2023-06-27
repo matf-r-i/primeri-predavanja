@@ -80,7 +80,7 @@ class TargetProblem(metaclass=ABCMeta):
         :param delimiter: str -- Delimiter between fields
         :return: tring representation of target solution instance
         """        
-        s = 'name=' + self.name + delimiter
+        s = delimiter + 'name=' + self.name + delimiter
         s += 'file path=' + str(self.file_path) + delimiter
         return s
 
@@ -90,7 +90,7 @@ class TargetProblem(metaclass=ABCMeta):
         String representation of the target problem instance
         :return: string representation of the target problem instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')
 
     @abstractmethod
     def __repr__(self)->str:
@@ -107,4 +107,4 @@ class TargetProblem(metaclass=ABCMeta):
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        return self.string_representation('| ')
+        return self.string_representation('|')
