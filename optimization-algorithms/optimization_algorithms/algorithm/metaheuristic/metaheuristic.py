@@ -9,13 +9,12 @@ from algorithm.algorithm import Algorithm
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int )->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None)->None:
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
         """
-        super().__init__(name, is_minimization)
-        self.__evaluations_max = evaluations_max
+        super().__init__(name, is_minimization, evaluations_max)
 
     @abstractmethod
     def __copy__(self):
@@ -33,14 +32,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         return self.__copy__()
 
-    @property
-    def evaluations_max(self)->int:
-        """
-        Property getter for the maximum number of evaluations
-        :return: maximum number of evaluations 
-        """
-        return self.__evaluations_max
-
     def string_representation(self, delimiter:str)->str:
         """
         String representation of the Metaheuristic instance
@@ -48,7 +39,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: string representation of Metaheuristic instance
         """        
         s = super().string_representation(delimiter)
-        s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
         return s
 
     @abstractmethod
