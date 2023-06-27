@@ -45,7 +45,7 @@ class Algorithm(ABC):
         :param delimiter: str -- Delimiter between fields
         :return: tring representation of target solution instance
         """        
-        s = 'name= '+ self.name + delimiter
+        s = 'name=' + self.name + delimiter
         return s
 
     @abstractmethod

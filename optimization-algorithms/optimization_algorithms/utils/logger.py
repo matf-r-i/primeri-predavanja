@@ -24,7 +24,7 @@ log_formatter = logging.Formatter('%(asctime)s [%(filename)s:%(lineno)d] [%(leve
 logger = logging.getLogger()
 
 # Logger file handler
-file_handler = logging.FileHandler(os.path.join(LOGS_DIR, LOG_FILENAME), mode='w', encoding= 'utf-8')
+file_handler = logging.FileHandler(os.path.join(LOGS_DIR, LOG_FILENAME), mode='w', encoding='utf-8')
 file_handler.setFormatter(log_formatter)
 logger.addHandler(file_handler)
 

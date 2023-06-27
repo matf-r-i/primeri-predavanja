@@ -19,3 +19,14 @@ class CacheControlStatistics:
     number of fitness calculations that is counted
     """
     fitness_calculations_count:int = 0
+
+    def string_representation(self, delimiter:str)->str:
+        """
+        String representation of the cache control and statistics structure
+        :param delimiter: str -- Delimiter between fields
+        :return: string representation of cache control and statistics structure
+        """        
+        s = 'is_caching=' + str(self.is_caching) + delimiter
+        s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
+        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) + delimiter
+        return s

@@ -39,14 +39,14 @@ class MaxOnesSolution(TargetSolution):
         Solution code of the target solution
         :return: solution code 
         """
-        pass
+        return 'XXX'
 
     def calculate_fitness(self)->float:
         """
         Fitness calculation of the target solution
         :return: target solution fitness value 
         """
-        pass
+        return 0
 
     def recalculate_solution_code(self)->None:
         """
@@ -66,7 +66,14 @@ class MaxOnesSolution(TargetSolution):
         :param solution_code_1:str -- solution code for the first solution
         :param solution_code_2:str -- solution code for the second solution
         """
-        pass
+        return 0
+
+    def best_1_change(self)->bool:
+        """
+        Change the best one within solution 
+        :return: bool -- if the best one is changed, or not
+        """        
+        return False
 
     def __str__(self)->str:
         """

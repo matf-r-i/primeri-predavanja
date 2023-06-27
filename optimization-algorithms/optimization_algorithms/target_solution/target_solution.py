@@ -170,6 +170,22 @@ class TargetSolution(ABC):
         self.feasible = solution.feasible;
 
     @abstractmethod
+    def best_1_change(self)->bool:
+        """
+        Change the best one within solution 
+        :return: bool -- if the best one is changed, or not
+        """        
+        pass
+
+    def local_search_best_improvement(self)->None:
+        """
+        Executes best improvement variant of the local search procedure 
+        """
+        while True:
+            if not self.best_1_change:
+                break
+
+    @abstractmethod
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
         Calculate distance between two solutions determined by its code
@@ -182,12 +198,14 @@ class TargetSolution(ABC):
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: tring representation of target solution instance
+        :return: string representation of target solution instance
         """        
-        s = 'name= '+ self.name + delimiter
-        s += 'fitness_value= '+ str(self.fitness_value) + delimiter
-        s += 'objective_value= '+ str(self.objective_value) + delimiter
-        s += 'is_feasible= '+ str(self.is_feasible) + delimiter
+        s = 'name=' + self.name + delimiter
+        s += 'fitness_value=' + str(self.fitness_value) + delimiter
+        s += 'objective_value=' + str(self.objective_value) + delimiter
+        s += 'is_feasible=' + str(self.is_feasible) + delimiter
+        s += 'solution_code=' + self.solution_code() + delimiter
+        s += 'cache_control_statistics={' + self.cache_control_statistics.string_representation(delimiter) + '}' + delimiter
         return s
 
     @abstractmethod

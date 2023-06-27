@@ -80,8 +80,8 @@ class TargetProblem(ABC):
         :param delimiter: str -- Delimiter between fields
         :return: tring representation of target solution instance
         """        
-        s = 'name= '+ self.name + delimiter
-        s += 'file path= '+ str(self.file_path) + delimiter
+        s = 'name=' + self.name + delimiter
+        s += 'file path=' + str(self.file_path) + delimiter
         return s
 
     @abstractmethod
