@@ -30,19 +30,28 @@ class MaxOnesProblem(TargetProblem):
         """
         return self.__copy__()
 
+    def load_from_file(self, data_representation: str)->None:
+        """
+        Read target problem data from file
+        :param data_representation: str -- Data representation within file
+        """
+        logger.debug("Load parameters: file path ={}, data format representation ={}".format(self.file_path, data_representation))
+
     def __str__(self)->str:
         """
         String representation of the max ones problem instance
         :return: string representation of the max ones problem instance
         """
-        return super().__str__()
+        s = super().__str__()
+        return s
 
     def __repr__(self)->str:
         """
         String representation of the max ones problem instance
         :return: string representation of the max ones problem instance
         """
-        return super().__repr__()
+        s = super().__repr__()
+        return s
 
     def __format__(self, spec:str)->str:
         """
@@ -50,11 +59,5 @@ class MaxOnesProblem(TargetProblem):
         :param spec: str -- Format specification
         :return: formatted target problem instance
         """
-        return super().__format__(spec)
-
-    def load_from_file(self, data_representation: str)->None:
-        """
-        Read target problem data from file
-        :param data_representation: str -- Data representation within file
-        """
-        logger.debug("Load parameters: file path ={}, data format representation ={}".format(self.file_path, data_representation))
+        s = super().__format__(spec)
+        return s

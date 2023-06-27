@@ -3,9 +3,9 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
-class TargetProblem(ABC):
+class TargetProblem(metaclass=ABCMeta):
 
     @abstractmethod
     def __init__(self, name:str, file_path:str )->None:

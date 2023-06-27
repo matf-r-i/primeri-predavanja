@@ -3,11 +3,11 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 from target_solution.cache_control_statistics import CacheControlStatistics
 
-class TargetSolution(ABC):
+class TargetSolution(metaclass=ABCMeta):
     
     """
     Cache that is used during evaluation for previously obtained solutions

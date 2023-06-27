@@ -3,17 +3,20 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
-class Algorithm(ABC):
+class Algorithm(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str )->None:
+    def __init__(self, name:str, is_minimization:bool)->None:
         """
         Create new Algorithm instance
         :param name:str -- name of the algorithm
+        :param is_minimization:bool -- is minimum is seek for
+        :param is_minimization:bool -- is minimum is seek for
         """
         self.__name = name
+        self.__is_minimization = is_minimization
 
     @abstractmethod
     def __copy__(self):
@@ -21,7 +24,7 @@ class Algorithm(ABC):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        return Algorithm(self.__name)
+        return Algorithm(self.__name, self.__is_minimization)
 
     @abstractmethod
     def copy(self):
@@ -39,6 +42,14 @@ class Algorithm(ABC):
         """
         return self.__name
 
+    @property
+    def is_minimization(self)->bool:
+        """
+        Property getter for the name of the algorithm
+        :return: if minimization takes place 
+        """
+        return self.__is_minimization
+
     def string_representation( self, delimiter:str)->str:
         """
         String representation of the target solution instance
@@ -46,6 +57,7 @@ class Algorithm(ABC):
         :return: tring representation of target solution instance
         """        
         s = 'name=' + self.name + delimiter
+        s += 'is_minimization=' + str(self.is_minimization) + delimiter
         return s
 
     @abstractmethod
