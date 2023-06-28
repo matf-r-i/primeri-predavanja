@@ -85,7 +85,7 @@ class SolutionCodeDistanceCacheControlStatistics:
     @property
     def cache(self)->dict:
         """
-        Property getter for cache t 
+        Property getter for cache 
         :return: dict -- cache  
         """
         return self.__cache
@@ -93,7 +93,7 @@ class SolutionCodeDistanceCacheControlStatistics:
     @cache.setter
     def cache(self, value:int)->None:
         """
-        Property setter for requests count
+        Property setter for cache
         """
         self.__cache = value
 

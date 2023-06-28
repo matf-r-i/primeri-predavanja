@@ -65,6 +65,36 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         return self.__random_seed
 
+    @abstractmethod
+    def main_loop_iteration(self)->None:
+        """
+        One iteration within main loop of the metaheuristic algorithm
+        """
+        pass
+
+    @abstractmethod
+    def init(self)->None:
+        """
+        Initialization of the metaheuristic algorithm
+        """
+        pass
+
+    def elapsed_seconds(self)->float:
+        """
+        Calculate time elapsed during execution of the metaheuristic algorithm 
+        :return: float -- elapsed time (in seconds)
+        """
+        delta = datetime.now() - self.__execution_started
+        return delta.total_seconds()
+
+    def main_loop(self)->None:
+        """
+        Main loop of the metaheuristic algorithm
+        """
+        while self.evaluation < self.evaluations_max and self.elapsed_seconds() < self.__seconds_max:
+                main_loop_iteration(self)
+
+
     def string_representation(self, delimiter:str)->str:
         """
         String representation of the Metaheuristic instance
@@ -88,7 +118,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: str -- string representation of the Metaheuristic instance
         """
         s = self.string_representation('|')
-        return s;
+        return s
 
     @abstractmethod
     def __repr__(self)->str:

@@ -71,12 +71,12 @@ class Algorithm(metaclass=ABCMeta):
         return self.__evaluations_max
 
     @property
-    def evaluations_max(self)->int:
+    def seconds_max(self)->int:
         """
         Property getter for the maximum number of seconds for algorithm execution
         :return: int -- maximum number of seconds 
         """
-        return self.__evaluations_max
+        return self.__seconds_max
 
     @property
     def target_problem(self)->TargetProblem:
@@ -85,6 +85,21 @@ class Algorithm(metaclass=ABCMeta):
         :return: TargetProblem -- target problem to be solved 
         """
         return self.__target_problem
+
+    @property
+    def evaluation(self)->int:
+        """
+        Property getter for current number of evaluations during algorithm execution
+        :return: int -- current number of evaluations 
+        """
+        return self.__evaluation
+
+    @evaluation.setter
+    def evaluation(self, value:int)->None:
+        """
+        Property setter for current number of evaluations
+        """
+        self.__evaluation = value
 
     def string_representation(self, delimiter:str)->str:
         """
