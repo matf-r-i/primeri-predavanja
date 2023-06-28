@@ -5,10 +5,12 @@ sys.path.append(str(path))
 
 from abc import ABCMeta, abstractmethod
 
+from target_problem.target_problem import TargetProblem
+
 class Algorithm(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None)->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None, target_problem:TargetProblem=None)->None:
         """
         Create new Algorithm instance
         :param name:str -- name of the algorithm
@@ -18,6 +20,7 @@ class Algorithm(metaclass=ABCMeta):
         self.__name = name
         self.__is_minimization = is_minimization
         self.__evaluations_max = evaluations_max
+        self.__target_problem = target_problem
 
     @abstractmethod
     def __copy__(self):
@@ -25,7 +28,7 @@ class Algorithm(metaclass=ABCMeta):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        return Algorithm(self.__name, self.__is_minimization, self.__evaluations_max)
+        return Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
 
     @abstractmethod
     def copy(self):
@@ -59,6 +62,14 @@ class Algorithm(metaclass=ABCMeta):
         """
         return self.__evaluations_max
 
+    @property
+    def target_problem(self)->TargetProblem:
+        """
+        Property getter for the target problem to be solved
+        :return: target problem to be solved 
+        """
+        return self.__target_problem
+
     def string_representation(self, delimiter:str)->str:
         """
         String representation of the Algorithm instance
@@ -68,6 +79,7 @@ class Algorithm(metaclass=ABCMeta):
         s = delimiter + 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
         s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
+        s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
         return s
 
     @abstractmethod

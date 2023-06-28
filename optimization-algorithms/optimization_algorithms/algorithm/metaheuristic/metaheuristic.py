@@ -4,17 +4,21 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
 from abc import ABCMeta, abstractmethod
+
 from algorithm.algorithm import Algorithm
+
+from target_problem.target_problem import TargetProblem
+
 
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None)->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None, target_problem:TargetProblem=None)->None:
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
         """
-        super().__init__(name, is_minimization, evaluations_max)
+        super().__init__(name, is_minimization, evaluations_max, target_problem)
 
     @abstractmethod
     def __copy__(self):
@@ -22,7 +26,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Internal copy of the current metaheuristic
         :return: Metaheuristic -- new Metaheuristic instance with the same properties
         """
-        return Metaheuristic(self.__name, self.__is_minimization, self.__evaluations_max)
+        return Metaheuristic(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
 
     @abstractmethod
     def copy(self):

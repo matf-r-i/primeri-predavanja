@@ -22,13 +22,9 @@ from utils.command_line import default_parameters
 
 
 # Script should be executed from repository root folder
-
 OPTIMIZATION_ALGORITHM_DIR = './optimization-algorithms/optimization_algorithms'
-
 abs_path = path.Path(OPTIMIZATION_ALGORITHM_DIR).abspath()
-
 sys.path.append(abs_path)
-
 # Previous code should be commented out when pip install started to work
 
 
@@ -60,7 +56,7 @@ def main():
     solution = MaxOnesSolution()
     logger.info('Solution: {}'.format(solution))
 
-    optimizer = VnsOptimizer(False, 0)
+    optimizer = VnsOptimizer(False, 0, problem)
     logger.info('Optimizer: {}'.format(optimizer))
 
     logger.debug('Execution ended.')    

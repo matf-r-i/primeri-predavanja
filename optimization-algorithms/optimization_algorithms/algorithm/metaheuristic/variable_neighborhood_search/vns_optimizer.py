@@ -5,20 +5,22 @@ sys.path.append(directory.parent.parent)
 
 from metaheuristic import Metaheuristic
 
+from target_problem.target_problem import TargetProblem
+
 class VnsOptimizer(Metaheuristic):
     
-    def __init__(self, is_minimization:bool, evaluations_max:int )->None:
+    def __init__(self, is_minimization:bool, evaluations_max:int, target_problem:TargetProblem=None)->None:
         """
         Create new VnsOptimizer instance
         """
-        super().__init__('vns', is_minimization, evaluations_max)
+        super().__init__('vns', is_minimization, evaluations_max, target_problem)
 
     def __copy__(self):
         """
         Internal copy of the current VnsOptimizer
         :return: VnsOptimizer -- new VnsOptimizer instance with the same properties
         """
-        return VnsOptimizer(self.__name, self.__is_minimization, self.__evaluations_max)
+        return VnsOptimizer(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
 
     def copy(self):
         """
