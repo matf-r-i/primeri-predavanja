@@ -41,7 +41,7 @@ class MaxOnesProblem(TargetProblem):
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: string representation of target solution instance
+        :return: str -- string representation of target solution instance
         """        
         s = super().string_representation(delimiter)
         return s
@@ -49,14 +49,14 @@ class MaxOnesProblem(TargetProblem):
     def __str__(self)->str:
         """
         String representation of the target problem instance
-        :return: string representation of the target problem instance
+        :return: str -- string representation of the target problem instance
         """
         return self.string_representation('|')
 
     def __repr__(self)->str:
         """
         Representation of the target problem instance
-        :return: string representation of the problem instance
+        :return: str -- string representation of the problem instance
         """
         return self.string_representation('\n')
 
@@ -64,7 +64,7 @@ class MaxOnesProblem(TargetProblem):
         """
         Formatted the target problem instance
         :param spec: str -- Format specification
-        :return: formatted target problem instance
+        :return: str -- formatted target problem instance
         """
         return self.string_representation('|')
 

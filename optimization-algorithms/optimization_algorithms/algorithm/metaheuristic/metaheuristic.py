@@ -17,6 +17,10 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
+        :param is_minimization:bool -- is minimum is seek for
+        :param evaluations_max:int -- maximum number of evaluations for algorithm execution
+        :param seconds_max:int -- maximum number of seconds for algorithm execution
+        :param target_problem:TargetProblem -- problem to be solved
         """
         super().__init__(name, is_minimization, evaluations_max, target_problem)
 
@@ -40,7 +44,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         String representation of the Metaheuristic instance
         :param delimiter: str -- Delimiter between fields
-        :return: string representation of Metaheuristic instance
+        :return: str -- string representation of Metaheuristic instance
         """        
         s = super().string_representation(delimiter)
         return s
@@ -49,7 +53,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     def __str__(self)->str:
         """
         String representation of the Metaheuristic instance
-        :return: string representation of the Metaheuristic instance
+        :return: str -- string representation of the Metaheuristic instance
         """
         s = self.string_representation('|')
         return s;
@@ -58,7 +62,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     def __repr__(self)->str:
         """
         String representation of the Metaheuristic instance
-        :return: string representation of the Metaheuristic instance
+        :return: str -- string representation of the Metaheuristic instance
         """
         s = self.string_representation('\n')
         return s
@@ -68,7 +72,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Formatted the Metaheuristic instance
         :param spec: str -- Format specification
-        :return: formatted Metaheuristic instance
+        :return: str -- formatted Metaheuristic instance
         """
         s = self.string_representation('|')
         return s

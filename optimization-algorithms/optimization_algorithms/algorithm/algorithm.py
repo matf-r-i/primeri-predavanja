@@ -10,16 +10,19 @@ from target_problem.target_problem import TargetProblem
 class Algorithm(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None, target_problem:TargetProblem=None)->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None, seconds_max:int=None, target_problem:TargetProblem=None)->None:
         """
         Create new Algorithm instance
         :param name:str -- name of the algorithm
         :param is_minimization:bool -- is minimum is seek for
-        :param evaluations_max:int -- maximum number of evaluations
+        :param evaluations_max:int -- maximum number of evaluations for algorithm execution
+        :param seconds_max:int -- maximum number of seconds for algorithm execution
+        :param target_problem:TargetProblem -- problem to be solved
         """
         self.__name = name
         self.__is_minimization = is_minimization
         self.__evaluations_max = evaluations_max
+        self.__seconds_max = seconds_max
         self.__target_problem = target_problem
 
     @abstractmethod
@@ -28,7 +31,7 @@ class Algorithm(metaclass=ABCMeta):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        return Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
+        return Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__seconds_max, self.__target_problem)
 
     @abstractmethod
     def copy(self):
@@ -42,7 +45,7 @@ class Algorithm(metaclass=ABCMeta):
     def name(self)->str:
         """
         Property getter for the name of the algorithm
-        :return: name of the algorithm instance 
+        :return: str -- name of the algorithm instance 
         """
         return self.__name
 
@@ -50,15 +53,23 @@ class Algorithm(metaclass=ABCMeta):
     def is_minimization(self)->bool:
         """
         Property getter for the name of the algorithm
-        :return: if minimization takes place 
+        :return: bool -- if minimization takes place 
         """
         return self.__is_minimization
 
     @property
     def evaluations_max(self)->int:
         """
-        Property getter for the maximum number of evaluations
-        :return: maximum number of evaluations 
+        Property getter for the maximum number of evaluations for algorithm execution
+        :return: int -- maximum number of evaluations 
+        """
+        return self.__evaluations_max
+
+    @property
+    def evaluations_max(self)->int:
+        """
+        Property getter for the maximum number of seconds for algorithm execution
+        :return: int -- maximum number of seconds 
         """
         return self.__evaluations_max
 
@@ -66,7 +77,7 @@ class Algorithm(metaclass=ABCMeta):
     def target_problem(self)->TargetProblem:
         """
         Property getter for the target problem to be solved
-        :return: target problem to be solved 
+        :return: TargetProblem -- target problem to be solved 
         """
         return self.__target_problem
 
@@ -74,7 +85,7 @@ class Algorithm(metaclass=ABCMeta):
         """
         String representation of the Algorithm instance
         :param delimiter: str -- Delimiter between fields
-        :return: string representation of the Algorithm instance
+        :return: str -- string representation of the Algorithm instance
         """        
         s = delimiter + 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
@@ -86,7 +97,7 @@ class Algorithm(metaclass=ABCMeta):
     def __str__(self)->str:
         """
         String representation of the algorithm instance
-        :return: string representation of the algorithm instance
+        :return: str -- string representation of the algorithm instance
         """
         return self.string_representation('|')
 
@@ -94,7 +105,7 @@ class Algorithm(metaclass=ABCMeta):
     def __repr__(self)->str:
         """
         Representation of the algorithm instance
-        :return: string representation of the problem instance
+        :return: str -- string representation of the problem instance
         """
         return self.string_representation('\n')
 
@@ -103,6 +114,6 @@ class Algorithm(metaclass=ABCMeta):
         """
         Formatted the algorithm instance
         :param spec: str -- Format specification
-        :return: formatted algorithm instance
+        :return: str -- formatted algorithm instance
         """
         return self.string_representation('|')

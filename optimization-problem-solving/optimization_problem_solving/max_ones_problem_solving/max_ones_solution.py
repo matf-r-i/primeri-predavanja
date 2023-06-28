@@ -37,14 +37,14 @@ class MaxOnesSolution(TargetSolution):
     def solution_code(self)->str:
         """
         Solution code of the target solution
-        :return: solution code 
+        :return: str -- solution code 
         """
         return 'XXX'
 
     def calculate_fitness(self)->float:
         """
         Fitness calculation of the target solution
-        :return: target solution fitness value 
+        :return: float -- fitness value of the current solution 
         """
         return 0
 
@@ -80,7 +80,7 @@ class MaxOnesSolution(TargetSolution):
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: string representation of target solution instance
+        :return: str -- string representation of target solution instance
         """        
         s = super().string_representation(delimiter)
         return s
@@ -88,14 +88,14 @@ class MaxOnesSolution(TargetSolution):
     def __str__(self)->str:
         """
         String representation of the target solution instance
-        :return: string representation of the target solution instance
+        :return: str -- string representation of the target solution instance
         """
         return self.string_representation('|')
 
     def __repr__(self)->str:
         """
         Representation of the target solution instance
-        :return: string representation of the solution instance
+        :return: str -- string representation of the solution instance
         """
         return self.string_representation('\n')
 
@@ -103,6 +103,6 @@ class MaxOnesSolution(TargetSolution):
         """
         Formatted the target solution instance
         :param spec: str -- Format specification
-        :return: formatted target solution instance
+        :return: str -- formatted target solution instance
         """
         return self.string_representation('|')

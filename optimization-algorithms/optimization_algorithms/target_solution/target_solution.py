@@ -58,7 +58,7 @@ class TargetSolution(metaclass=ABCMeta):
     def name(self)->str:
         """
         Property getter for the name of the target solution
-        :return: name of the target solution instance 
+        :return: str -- name of the target solution instance 
         """
         return self.__name
 
@@ -66,7 +66,7 @@ class TargetSolution(metaclass=ABCMeta):
     def fitness_value(self)->float:
         """
         Property getter for fitness value of the target solution
-        :return: fitness value of the target solution instance 
+        :return: float -- fitness value of the target solution instance 
         """
         return self.__fitness_value
 
@@ -83,7 +83,7 @@ class TargetSolution(metaclass=ABCMeta):
     def objective_value(self)->float:
         """
         Property getter for objective value of the target solution
-        :return: objective value of the target solution instance 
+        :return: float -- objective value of the target solution instance 
         """
         return self.__objective_value
 
@@ -98,7 +98,7 @@ class TargetSolution(metaclass=ABCMeta):
     def is_feasible(self)->bool:
         """
         Property getter for feasibility of the target solution
-        :return: feasibility of the target solution instance 
+        :return: bool -- feasibility of the target solution instance 
         """
         return self.__is_feasible
 
@@ -113,7 +113,7 @@ class TargetSolution(metaclass=ABCMeta):
     def solution_code(self)->str:
         """
         Solution code of the target solution
-        :return: solution code 
+        :return: str -- solution code 
         """
         pass
 
@@ -121,7 +121,7 @@ class TargetSolution(metaclass=ABCMeta):
     def calculate_fitness(self)->float:
         """
         Fitness calculation of the target solution
-        :return: target solution fitness value 
+        :return: float -- fitness value of the solution instance 
         """
         pass
 
@@ -144,7 +144,7 @@ class TargetSolution(metaclass=ABCMeta):
         """
         Calculate fitness of the argument with optional cache consultation
         :param target_solution:TargetSolution -- target solution whose fitness should be 
-        :return: solution with calculated fitness value 
+        :return: Solution -- solution with calculated fitness value 
         """
         ccs = target_solution.cache_control_statistics 
         ccs.fitness_calculations_count += 1
@@ -198,7 +198,7 @@ class TargetSolution(metaclass=ABCMeta):
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: string representation of target solution instance
+        :return: str -- string representation of target solution instance
         """        
         s = delimiter + 'name=' + self.name + delimiter
         s += 'fitness_value=' + str(self.fitness_value) + delimiter
@@ -212,7 +212,7 @@ class TargetSolution(metaclass=ABCMeta):
     def __str__(self)->str:
         """
         String representation of the target solution instance
-        :return: string representation of the target solution instance
+        :return: str -- string representation of the target solution instance
         """
         return self.string_representation('|')
 
@@ -220,7 +220,7 @@ class TargetSolution(metaclass=ABCMeta):
     def __repr__(self)->str:
         """
         Representation of the target solution instance
-        :return: string representation of the solution instance
+        :return: str -- string representation of the solution instance
         """
         return self.string_representation('\n')
 
@@ -229,6 +229,6 @@ class TargetSolution(metaclass=ABCMeta):
         """
         Formatted the target solution instance
         :param spec: str -- Format specification
-        :return: formatted target solution instance
+        :return: str -- formatted target solution instance
         """
         return self.string_representation('|')

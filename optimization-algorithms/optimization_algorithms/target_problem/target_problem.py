@@ -37,7 +37,7 @@ class TargetProblem(metaclass=ABCMeta):
     def name(self)->str:
         """
         Property getter for the name of the target problem
-        :return: name of the target problem instance 
+        :return: str -- name of the target problem instance 
         """
         return self.__name
 
@@ -45,7 +45,7 @@ class TargetProblem(metaclass=ABCMeta):
     def file_path(self)->str:
         """
         Property getter for the file path of the target problem
-        :return: file path of the target problem instance 
+        :return: str -- file path of the target problem instance 
         """
         return self.__file_path
 
@@ -53,7 +53,7 @@ class TargetProblem(metaclass=ABCMeta):
     def dimension(self)->int:
         """
         Property getter for dimension of the target problem
-        :return: dimension of the target problem instance 
+        :return: int -- dimension of the target problem instance 
         """
         return self.__dimension
 
@@ -78,7 +78,7 @@ class TargetProblem(metaclass=ABCMeta):
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: tring representation of target solution instance
+        :return: str -- string representation of target solution instance
         """        
         s = delimiter + 'name=' + self.name + delimiter
         s += 'file path=' + str(self.file_path) + delimiter
@@ -88,7 +88,7 @@ class TargetProblem(metaclass=ABCMeta):
     def __str__(self)->str:
         """
         String representation of the target problem instance
-        :return: string representation of the target problem instance
+        :return: str -- string representation of the target problem instance
         """
         return self.string_representation('|')
 
@@ -96,7 +96,7 @@ class TargetProblem(metaclass=ABCMeta):
     def __repr__(self)->str:
         """
         Representation of the target problem instance
-        :return: string representation of the problem instance
+        :return: str -- string representation of the problem instance
         """
         return self.string_representation('\n')
 
@@ -105,6 +105,6 @@ class TargetProblem(metaclass=ABCMeta):
         """
         Formatted the target problem instance
         :param spec: str -- Format specification
-        :return: formatted target problem instance
+        :return: str -- formatted target problem instance
         """
         return self.string_representation('|')
