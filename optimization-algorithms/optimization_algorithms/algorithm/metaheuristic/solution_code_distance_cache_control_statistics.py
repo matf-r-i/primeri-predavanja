@@ -104,8 +104,8 @@ class SolutionCodeDistanceCacheControlStatistics:
         :return: str -- string representation of cache control and statistics structure
         """        
         s = 'is_caching=' + str(self.is_caching) + delimiter
-        s = 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
-        s += 'cache_requests_count=' + str(self.cache_requests_count) + delimiter
+        s = 'cache_hit_count=' + str(self.hit_count) + delimiter
+        s += 'cache_requests_count=' + str(self.requests_count) + delimiter
         return s
 
     def __str__(self)->str:
@@ -115,7 +115,6 @@ class SolutionCodeDistanceCacheControlStatistics:
         """
         return self.string_representation('|')
 
-    @abstractmethod
     def __repr__(self)->str:
         """
         Representation of the cache control and statistics structure
@@ -123,7 +122,7 @@ class SolutionCodeDistanceCacheControlStatistics:
         """
         return self.string_representation('\n')
 
-    @abstractmethod
+
     def __format__(self, spec:str)->str:
         """
         Formatted the cache control and statistics structure
