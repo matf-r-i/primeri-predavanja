@@ -5,14 +5,14 @@ sys.path.append(str(path))
 
 from abc import ABCMeta, abstractmethod
 
-from target_solution.cache_control_statistics import CacheControlStatistics
+from target_solution.evaluation_cache_control_statistics import EvaluationCacheControlStatistics
 
 class TargetSolution(metaclass=ABCMeta):
     
     """
     Cache that is used during evaluation for previously obtained solutions
     """
-    cache_control_statistics:CacheControlStatistics = CacheControlStatistics()
+    evaluation_cache_control_statistics:EvaluationCacheControlStatistics = EvaluationCacheControlStatistics()
     
     @abstractmethod
     def __init__(self, name:str, fitness_value:float=None, objective_value:float=None, is_feasible:bool=False)->None:
@@ -146,15 +146,15 @@ class TargetSolution(metaclass=ABCMeta):
         :param target_solution:TargetSolution -- target solution whose fitness should be 
         :return: Solution -- solution with calculated fitness value 
         """
-        ccs = target_solution.cache_control_statistics 
-        ccs.fitness_calculations_count += 1
-        if ccs.is_caching:
+        eccs = target_solution.cache_control_statistics 
+        eccs.fitness_calculations_count += 1
+        if eccs.is_caching:
             code = target_solution.solution_code()
-            if code in ccs.cache:
-                ccs.cache_hit_count += 1
-                return ccs.cache[code]
+            if code in eccs.cache:
+                eccs.cache_hit_count += 1
+                return eccs.cache[code]
             target_solution.fitness_value = target_solution.calculate_fitness()
-            ccs.cache[code] = target_solution
+            eccs.cache[code] = target_solution
             return target_solution
         else:
             target_solution.fitness_value = target_solution.calculate_fitness()
@@ -200,7 +200,7 @@ class TargetSolution(metaclass=ABCMeta):
         :param delimiter: str -- Delimiter between fields
         :return: str -- string representation of target solution instance
         """        
-        s = delimiter + 'name=' + self.name + delimiter
+        s = 'name=' + self.name + delimiter
         s += 'fitness_value=' + str(self.fitness_value) + delimiter
         s += 'objective_value=' + str(self.objective_value) + delimiter
         s += 'is_feasible=' + str(self.is_feasible) + delimiter
@@ -220,7 +220,7 @@ class TargetSolution(metaclass=ABCMeta):
     def __repr__(self)->str:
         """
         Representation of the target solution instance
-        :return: str -- string representation of the solution instance
+        :return: str -- string representation of the target solution instance
         """
         return self.string_representation('\n')
 

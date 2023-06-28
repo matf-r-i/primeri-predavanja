@@ -11,6 +11,10 @@ from algorithm.algorithm import Algorithm
 
 from target_problem.target_problem import TargetProblem
 
+from solution_code_distance_cache_control_statistics import SolutionCodeDistanceCacheControlStatistics
+
+from target_solution.target_solution import TargetSolution
+
 
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
@@ -32,7 +36,10 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             self.__random_seed = random.randrange(sys.maxsize)
         self.__iteration = 0
         self.__iteration_best_found = 0
+        self.__second_best_found = 0.0
+        self.__best_solution = None
         self.__all_solution_codes = {}
+        self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
     def __copy__(self):
@@ -68,6 +75,10 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         s += 'random_seed=' + str(self.random_seed) + delimiter
         s += '__iteration=' + str(self.__iteration) + delimiter
         s += '__iteration_best_found=' + str(self.__iteration_best_found) + delimiter
+        s += '__second_best_found=' + str(self.__second_best_found) + delimiter
+        s += '__best_solution=' + str(self.__best_solution) + delimiter
+        s += '__solution_code_distance_cache_cs={' + str(self.__solution_code_distance_cache_cs) + '}' + delimiter
+        s += 'len(__all_solution_codes)=' + str(len(self.__all_solution_codes)) + delimiter
         return s
 
     @abstractmethod

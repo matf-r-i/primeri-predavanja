@@ -5,6 +5,8 @@ sys.path.append(str(path))
 
 from abc import ABCMeta, abstractmethod
 
+from datetime import datetime
+
 from target_problem.target_problem import TargetProblem
 
 class Algorithm(metaclass=ABCMeta):
@@ -25,6 +27,8 @@ class Algorithm(metaclass=ABCMeta):
         self.__seconds_max = seconds_max
         self.__target_problem = target_problem
         self.__evaluation = 0
+        self.__execution_started = None
+        self.__execution_ended = None
 
     @abstractmethod
     def __copy__(self):
@@ -88,10 +92,13 @@ class Algorithm(metaclass=ABCMeta):
         :param delimiter: str -- Delimiter between fields
         :return: str -- string representation of the Algorithm instance
         """        
-        s = delimiter + 'name=' + self.name + delimiter
+        s = 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
         s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
         s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
+        s += '__evaluation' + str(self.__evaluation) + delimiter
+        s += '__execution_started' + str(self.__execution_started) + delimiter
+        s += '__execution_ended' + str(self.__execution_ended) + delimiter
         return s
 
     @abstractmethod

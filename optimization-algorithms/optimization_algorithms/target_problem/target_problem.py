@@ -80,7 +80,7 @@ class TargetProblem(metaclass=ABCMeta):
         :param delimiter: str -- Delimiter between fields
         :return: str -- string representation of target solution instance
         """        
-        s = delimiter + 'name=' + self.name + delimiter
+        s = 'name=' + self.name + delimiter
         s += 'file path=' + str(self.file_path) + delimiter
         return s
 
