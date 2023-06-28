@@ -10,7 +10,7 @@ from target_problem.target_problem import TargetProblem
 class Algorithm(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=None, seconds_max:int=None, target_problem:TargetProblem=None)->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, target_problem:TargetProblem=None)->None:
         """
         Create new Algorithm instance
         :param name:str -- name of the algorithm
@@ -24,6 +24,7 @@ class Algorithm(metaclass=ABCMeta):
         self.__evaluations_max = evaluations_max
         self.__seconds_max = seconds_max
         self.__target_problem = target_problem
+        self.__evaluation = 0
 
     @abstractmethod
     def __copy__(self):

@@ -1,5 +1,5 @@
-""" The :mod:`command_line` module is used for obtaining execution parameters for execution of the 
-    application.
+""" The :mod:`max_ones_problem_command_line` module is used for obtaining execution parameters for execution of the 
+    optimizers for max ones problem.
 
 """
 
@@ -24,17 +24,13 @@ default_parameters = {'InputFile': 'XXX.in',
                     'MaxNumberIterations': 10,
                     'MaxTimeForExecutionInSeconds': 0 }
 
-def get_execution_parameters(options, args, parameters):
-    """  Obtains execution parameters.
-    Args:
-        parameters (:dictionary) : Parameter 'parameters' represent initial 
-            values of execution parameters
-        options : Parameter `options` represents options of the execution.
-        args (:list): Parameter `args` represents the argument list.
-    Returns:
-        dictionary: Execution parameters after reading command line.
+def get_execution_parameters(options:dict, args:list, parameters)->dict:
+    """  Obtains execution parameters
+    :param options:dict -- represents options of the execution started from command line
+    :param args:list -- represents the argument list of the command line
+    :param parameters:dictionary -- represent initial values of execution parameters
+    :return: dict -- Execution parameters after reading command line.
     """
-
     if len(args) == 0:
         raise ValueError("Error!\nCommand line parameters:\n" + usage_explanation(parameters))
     if len(args) > 300:
@@ -113,11 +109,10 @@ def get_execution_parameters(options, args, parameters):
 
     return parameters
 
-def usage_explanation(parameters):
+def usage_explanation(parameters:dict)->str:
     """  Create usage explanation text.
-
-    Args:
-        parameters : Parameter `parameters` is a dictionary that represents parameters of the execution.
+    :param parameters:dict --  represents parameters of the execution.
+    :return: str -- explanation fot the usage that should be printed
     """
     ret = ""
     ret += "InputFile=<file_name>\t(mandatory, string) \n"

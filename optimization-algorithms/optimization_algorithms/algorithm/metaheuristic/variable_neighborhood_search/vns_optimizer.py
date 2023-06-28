@@ -9,15 +9,16 @@ from target_problem.target_problem import TargetProblem
 
 class VnsOptimizer(Metaheuristic):
     
-    def __init__(self, is_minimization:bool, evaluations_max:int, target_problem:TargetProblem=None)->None:
+    def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, target_problem:TargetProblem=None)->None:
         """
         Create new VnsOptimizer instance
         :param is_minimization:bool -- is minimum is seek for
         :param evaluations_max:int -- maximum number of evaluations for algorithm execution
         :param seconds_max:int -- maximum number of seconds for algorithm execution
+        :param random_seed:int -- random seed for metaheuristic execution
         :param target_problem:TargetProblem -- problem to be solved
         """
-        super().__init__('vns', is_minimization, evaluations_max, target_problem)
+        super().__init__('vns', is_minimization, evaluations_max, seconds_max, random_seed, target_problem)
 
     def __copy__(self):
         """

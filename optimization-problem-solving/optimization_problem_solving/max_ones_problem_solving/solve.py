@@ -17,8 +17,8 @@ from utils.files import ensure_dir
 
 from utils.logger import logger
 
-from utils.command_line import get_execution_parameters
-from utils.command_line import default_parameters
+from command_line import get_execution_parameters
+from command_line import default_parameters
 
 
 # Script should be executed from repository root folder
@@ -56,7 +56,7 @@ def main():
     solution = MaxOnesSolution()
     logger.info('Solution: {}'.format(solution))
 
-    optimizer = VnsOptimizer(False, 0, problem)
+    optimizer = VnsOptimizer(is_minimization=False, evaluations_max=0, seconds_max=10, random_seed=0, target_problem=problem)
     logger.info('Optimizer: {}'.format(optimizer))
 
     logger.debug('Execution ended.')    
