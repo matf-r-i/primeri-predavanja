@@ -205,7 +205,8 @@ class TargetSolution(metaclass=ABCMeta):
         s += 'objective_value=' + str(self.objective_value) + delimiter
         s += 'is_feasible=' + str(self.is_feasible) + delimiter
         s += 'solution_code=' + self.solution_code() + delimiter
-        s += 'evaluation_cache_control_statistics={' + self.evaluation_cache_control_statistics.string_representation(delimiter) + '}' + delimiter
+        s += 'evaluation_cache_control_statistics={' + self.evaluation_cache_control_statistics.string_representation(
+                delimiter) + '}' 
         return s
 
     @abstractmethod

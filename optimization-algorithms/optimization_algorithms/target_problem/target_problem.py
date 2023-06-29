@@ -81,7 +81,7 @@ class TargetProblem(metaclass=ABCMeta):
         :return: str -- string representation of target solution instance
         """        
         s = 'name=' + self.name + delimiter
-        s += 'file path=' + str(self.file_path) + delimiter
+        s += 'file path=' + str(self.file_path) 
         return s
 
     @abstractmethod

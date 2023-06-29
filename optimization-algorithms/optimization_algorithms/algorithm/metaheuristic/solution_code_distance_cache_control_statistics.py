@@ -105,7 +105,7 @@ class SolutionCodeDistanceCacheControlStatistics:
         """        
         s = 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.hit_count) + delimiter
-        s += 'cache_requests_count=' + str(self.requests_count) + delimiter
+        s += 'cache_requests_count=' + str(self.requests_count) 
         return s
 
     def __str__(self)->str:

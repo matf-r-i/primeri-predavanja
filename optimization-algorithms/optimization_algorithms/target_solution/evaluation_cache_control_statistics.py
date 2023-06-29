@@ -28,5 +28,5 @@ class EvaluationCacheControlStatistics:
         """        
         s = 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
-        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) + delimiter
+        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) 
         return s

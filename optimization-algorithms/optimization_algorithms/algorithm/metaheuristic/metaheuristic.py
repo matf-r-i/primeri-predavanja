@@ -180,8 +180,8 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         s += '__best_solution={' + str(self.__best_solution) + '}'+ delimiter
         s += '__solution_code_distance_cache_cs={' + str(self.__solution_code_distance_cache_cs) + '}' + delimiter
         if self.execution_ended is not None and self.execution_started is not None:
-            s += 'execution time=' + str( (self.execution_ended - self.execution_started).total_seconds() ) +  delimiter
-        s += 'total local optima found=' + str(len(self.__all_solution_codes)) + delimiter
+            s += 'execution time=' + str( (self.execution_ended - self.execution_started).total_seconds() ) + delimiter
+        s += 'total local optima found=' + str(len(self.__all_solution_codes)) 
         return s
 
     @abstractmethod
@@ -200,7 +200,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: str -- string representation of the Metaheuristic instance
         """
         s = self.string_representation('\n')
-        s += '__all_solution_codes=' + str(self.__all_solution_codes) + delimiter
+        s += '__all_solution_codes=' + str(self.__all_solution_codes) 
         return s
 
     @abstractmethod

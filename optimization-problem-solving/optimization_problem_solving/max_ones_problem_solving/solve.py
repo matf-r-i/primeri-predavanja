@@ -51,12 +51,11 @@ def main():
 
     problem = MaxOnesProblem('file_path')
     problem.load_from_file('clean')
-    logger.info('Problem: {}'.format(problem))
 
     solution = MaxOnesSolution()
-    logger.info('Solution: {}'.format(solution))
 
-    optimizer = VnsOptimizer(is_minimization=False, evaluations_max=0, seconds_max=10, random_seed=0, target_problem=problem)
+    optimizer = VnsOptimizer(is_minimization=False, evaluations_max=0, seconds_max=10, random_seed=0, 
+            target_problem=problem, initial_solution=solution)
     logger.info('Optimizer: {}'.format(optimizer))
 
     logger.debug('Execution ended.')    

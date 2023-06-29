@@ -145,7 +145,7 @@ class Algorithm(metaclass=ABCMeta):
         s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
         s += '__evaluation' + str(self.__evaluation) + delimiter
         s += 'execution_started' + str(self.execution_started) + delimiter
-        s += 'execution_ended' + str(self.execution_ended) + delimiter
+        s += 'execution_ended' + str(self.execution_ended) 
         return s
 
     @abstractmethod
