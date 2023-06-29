@@ -26,10 +26,10 @@ default_parameters = {'InputFile': 'XXX.in',
 
 def get_execution_parameters(options:dict, args:list, parameters)->dict:
     """  Obtains execution parameters
-    :param options:dict -- represents options of the execution started from command line
-    :param args:list -- represents the argument list of the command line
-    :param parameters:dictionary -- represent initial values of execution parameters
-    :return: dict -- Execution parameters after reading command line.
+    :param options:dict -- options of the execution started from command line
+    :param args:list -- argument list of the command line
+    :param parameters:dictionary -- initial values of execution parameters
+    :return: dict -- execution parameters after reading command line.
     """
     if len(args) == 0:
         raise ValueError("Error!\nCommand line parameters:\n" + usage_explanation(parameters))

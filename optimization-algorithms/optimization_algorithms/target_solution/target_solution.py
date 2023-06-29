@@ -177,14 +177,6 @@ class TargetSolution(metaclass=ABCMeta):
         """        
         raise NotImplementedError
 
-    def local_search_best_improvement(self)->None:
-        """
-        Executes best improvement variant of the local search procedure 
-        """
-        while True:
-            if not self.best_1_change:
-                break
-
     @abstractmethod
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
@@ -198,7 +190,7 @@ class TargetSolution(metaclass=ABCMeta):
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -238,7 +230,7 @@ class TargetSolution(metaclass=ABCMeta):
     def __format__(self, spec:str)->str:
         """
         Formatted the target solution instance
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
         return self.string_representation('|')

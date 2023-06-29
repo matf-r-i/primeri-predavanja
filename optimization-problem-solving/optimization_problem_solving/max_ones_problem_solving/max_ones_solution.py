@@ -90,7 +90,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
             indentation_end:str='}',)->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -121,7 +121,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     def __format__(self, spec:str)->str:
         """
         Formatted the target solution instance
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
         return self.string_representation('|')

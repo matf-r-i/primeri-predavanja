@@ -70,7 +70,7 @@ class TargetProblem(metaclass=ABCMeta):
     def load_from_file(data_representation: str)->None:
         """
         Read target problem data from file
-        :param data_representation: str -- Data representation within file
+        :param data_representation: str -- data representation within file
         """
         raise NotImplementedError
 
@@ -78,7 +78,7 @@ class TargetProblem(metaclass=ABCMeta):
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -113,7 +113,7 @@ class TargetProblem(metaclass=ABCMeta):
     def __format__(self, spec:str)->str:
         """
         Formatted the target problem instance
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted target problem instance
         """
         return self.string_representation('|')

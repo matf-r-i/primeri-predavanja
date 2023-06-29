@@ -101,7 +101,7 @@ class SolutionCodeDistanceCacheControlStatistics:
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -135,7 +135,7 @@ class SolutionCodeDistanceCacheControlStatistics:
     def __format__(self, spec:str)->str:
         """
         Formatted the cache control and statistics structure
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted cache control and statistics structure
         """
         return self.string_representation('|')

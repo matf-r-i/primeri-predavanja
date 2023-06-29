@@ -105,7 +105,7 @@ class Algorithm(metaclass=ABCMeta):
     def execution_started(self)->datetime:
         """
         Property getter for time when execution started
-        :return: datetime -- When execution started 
+        :return: datetime -- time when execution started 
         """
         return self.__execution_started
 
@@ -113,7 +113,7 @@ class Algorithm(metaclass=ABCMeta):
     def execution_started(self, value:datetime)->None:
         """
         Property setter for time when execution started
-        :param value:datetime -- Time when execution started
+        :param value:datetime -- time when execution started
         """
         self.__execution_started = value
 
@@ -121,7 +121,7 @@ class Algorithm(metaclass=ABCMeta):
     def execution_ended(self)->datetime:
         """
         Property getter for time when execution ended
-        :return: datetime -- When execution ended 
+        :return: datetime -- time when execution ended 
         """
         return self.__execution_ended
 
@@ -129,7 +129,7 @@ class Algorithm(metaclass=ABCMeta):
     def execution_ended(self, value:datetime)->None:
         """
         Property setter for time when execution ended
-        :param value:datetime -- Time when execution ended
+        :param value:datetime -- time when execution ended
         """
         self.__execution_ended = value
 
@@ -137,7 +137,7 @@ class Algorithm(metaclass=ABCMeta):
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -178,7 +178,7 @@ class Algorithm(metaclass=ABCMeta):
     def __format__(self, spec:str)->str:
         """
         Formatted the algorithm instance
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted algorithm instance
         """
         return self.string_representation('|')

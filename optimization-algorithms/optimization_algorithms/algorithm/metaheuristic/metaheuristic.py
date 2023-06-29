@@ -95,6 +95,17 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         delta = datetime.now() - self.__execution_started
         return delta.total_seconds()
 
+    def local_search_best_improvement(self, solution:TargetSolution)->TargetSolution:
+        """
+        Executes best improvement variant of the local search procedure 
+        :param solution:TargetSolution -- solution which is initial point for local search
+        :return: TargetSolution -- result of the local search procedure 
+        """
+        while True:
+            if not solution.best_1_change():
+                break
+        return solution
+
     def main_loop(self)->None:
         """
         Main loop of the metaheuristic algorithm
@@ -114,8 +125,8 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     def is_first_solution_better(self, sol1:TargetSolution, sol2:TargetSolution)->bool:
         """
         Checks if first solution is better than the second one
-        :param sol1:TargetSolution -- First solution
-        :param sol2:TargetSolution -- Second solution
+        :param sol1:TargetSolution -- first solution
+        :param sol2:TargetSolution -- second solution
         :return: bool -- true if first solution is better, false if first solution is worse, None if fitnesses of both solutions are equal
         """
         fit1 = sol1.fitness_value;
@@ -141,7 +152,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Copies function argument to become the best solution within metaheuristic instance and update info about time 
         and iteration when the best solution is updated 
-        :param solution:TargetSolution -- Source solution
+        :param solution:TargetSolution -- solution that is source for coping operation
         """
         if self.__best_solution is None:
             self__best_solution = solution.copy()
@@ -178,7 +189,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -231,7 +242,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     def __format__(self, spec:str)->str:
         """
         Formatted the Metaheuristic instance
-        :param spec: str -- Format specification
+        :param spec: str -- format specification
         :return: str -- formatted Metaheuristic instance
         """
         s = self.string_representation('|')

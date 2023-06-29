@@ -154,7 +154,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
-        :param delimiter: str -- Delimiter between fields
+        :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_start -- indentation start string 
         :param indentation_end -- indentation end string 
@@ -193,7 +193,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
     def __format__(self, spec:str)->str:
         """
         Formatted the VnsOptimizer instance
-        :param spec: str -- Format specification 
+        :param spec: str -- format specification 
         :return: str -- formatted VnsOptimizer instance
         """
         s = self.string_representation('|')
