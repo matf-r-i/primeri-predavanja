@@ -87,17 +87,29 @@ class VnsOptimizer(Metaheuristic):
         """
         pass
 
-    def string_representation(self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
-        String representation of the VnsOptimizer instance
+        String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: str -- string representation of VnsOptimizer instance
-        """        
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
+        :return: str -- string representation of target solution instance
+        """             
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start  
         s = super().string_representation(delimiter)
-        s += 'current_solution={' + str(self.current_solution) + '}' + delimiter 
+        s += delimiter
+        s += 'current_solution=' + self.current_solution.string_representation(delimiter=delimiter, 
+                indentation=indentation+1) + delimiter 
         s += 'k_min=' + str(self.k_min) + delimiter 
         s += 'k_max=' + str(self.k_max) 
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
+
 
     def __str__(self)->str:
         """

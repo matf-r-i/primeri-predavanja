@@ -74,14 +74,23 @@ class TargetProblem(metaclass=ABCMeta):
         """
         pass
 
-    def string_representation( self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
         :return: str -- string representation of target solution instance
-        """        
-        s = 'name=' + self.name + delimiter
+        """          
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start  
+        s += 'name=' + self.name + delimiter
         s += 'file path=' + str(self.file_path) 
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
 
     @abstractmethod

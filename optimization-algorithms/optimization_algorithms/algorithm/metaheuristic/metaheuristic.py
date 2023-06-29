@@ -166,23 +166,39 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             dist = TargetSolution.solution_code_distance(code_x, code_y)
             return dist
 
-    def string_representation(self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
-        String representation of the Metaheuristic instance
+        String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: str -- string representation of Metaheuristic instance
-        """        
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
+        :return: str -- string representation of target solution instance
+        """       
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start  
         s = super().string_representation(delimiter)
+        s += delimiter
         s += 'random_seed=' + str(self.random_seed) + delimiter
         s += '__iteration=' + str(self.__iteration) + delimiter
         s += '__iteration_best_found=' + str(self.__iteration_best_found) + delimiter
         s += '__second_best_found=' + str(self.__second_best_found) + delimiter
-        s += '__best_solution={' + str(self.__best_solution) + '}'+ delimiter
-        s += '__solution_code_distance_cache_cs={' + str(self.__solution_code_distance_cache_cs) + '}' + delimiter
+        if self.__best_solution is not None:
+            s += '__best_solution=' + self.__best_solution.string_representation(delimiter=delimiter, 
+                    indentation=indentation+1) + delimiter
+        else:
+            s += '__best_solution=None' + delimiter
+        s += '__solution_code_distance_cache_cs=' + self.__solution_code_distance_cache_cs.string_representation(
+                delimiter=delimiter, indentation=indentation+1) + delimiter
         if self.execution_ended is not None and self.execution_started is not None:
             s += 'execution time=' + str( (self.execution_ended - self.execution_started).total_seconds() ) + delimiter
         s += 'total local optima found=' + str(len(self.__all_solution_codes)) 
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
+
 
     @abstractmethod
     def __str__(self)->str:

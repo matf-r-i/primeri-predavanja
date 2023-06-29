@@ -133,20 +133,30 @@ class Algorithm(metaclass=ABCMeta):
         """
         self.__execution_ended = value
 
-    def string_representation(self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
-        String representation of the Algorithm instance
+        String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: str -- string representation of the Algorithm instance
-        """        
-        s = 'name=' + self.name + delimiter
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
+        :return: str -- string representation of target solution instance
+        """            
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start  
+        s += 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
         s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
         s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
-        s += '__evaluation' + str(self.__evaluation) + delimiter
-        s += 'execution_started' + str(self.execution_started) + delimiter
-        s += 'execution_ended' + str(self.execution_ended) 
+        s += '__evaluation=' + str(self.__evaluation) + delimiter
+        s += 'execution_started=' + str(self.execution_started) + delimiter
+        s += 'execution_ended=' + str(self.execution_ended) 
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
+
 
     @abstractmethod
     def __str__(self)->str:

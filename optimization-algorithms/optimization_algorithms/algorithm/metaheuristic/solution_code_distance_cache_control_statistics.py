@@ -97,15 +97,24 @@ class SolutionCodeDistanceCacheControlStatistics:
         """
         self.__cache = value
 
-    def string_representation(self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
-        String representation of the cache control and statistics structure
+        String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
-        :return: str -- string representation of cache control and statistics structure
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
+        :return: str -- string representation of target solution instance
         """        
-        s = 'is_caching=' + str(self.is_caching) + delimiter
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start  
+        s += 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.hit_count) + delimiter
         s += 'cache_requests_count=' + str(self.requests_count) 
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
 
     def __str__(self)->str:

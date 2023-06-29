@@ -194,19 +194,28 @@ class TargetSolution(metaclass=ABCMeta):
         """
         pass
 
-    def string_representation( self, delimiter:str)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
+        indentation_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- Delimiter between fields
+        :param indentation:int -- level of indentation
+        :param indentation_start -- indentation start string 
+        :param indentation_end -- indentation end string 
         :return: str -- string representation of target solution instance
-        """        
-        s = 'name=' + self.name + delimiter
+        """         
+        s = ''
+        for i in range(0, indentation-1):
+            s += indentation_start     
+        s += 'name=' + self.name + delimiter
         s += 'fitness_value=' + str(self.fitness_value) + delimiter
         s += 'objective_value=' + str(self.objective_value) + delimiter
         s += 'is_feasible=' + str(self.is_feasible) + delimiter
         s += 'solution_code=' + self.solution_code() + delimiter
-        s += 'evaluation_cache_control_statistics={' + self.evaluation_cache_control_statistics.string_representation(
-                delimiter) + '}' 
+        s += 'evaluation_cache_control_statistics=' + self.evaluation_cache_control_statistics.string_representation(
+                delimiter=delimiter, indentation=indentation+1)   
+        for i in range(0, indentation-1):
+            s += indentation_end 
         return s
 
     @abstractmethod
