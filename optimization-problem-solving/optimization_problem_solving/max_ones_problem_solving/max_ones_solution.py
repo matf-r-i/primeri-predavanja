@@ -5,7 +5,9 @@ sys.path.append(directory.parent.parent)
 
 from target_solution.target_solution import TargetSolution
 
-class MaxOnesSolution(TargetSolution):
+from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
+
+class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     
     def __init__(self)->None:
         """
@@ -52,13 +54,13 @@ class MaxOnesSolution(TargetSolution):
         """
         Recalculation of the solution code for the target solution
         """
-        pass
+        return None
 
     def random_init(self)->None:
         """
         Random initialization of the target solution
         """
-        pass
+        return None
 
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
@@ -75,6 +77,14 @@ class MaxOnesSolution(TargetSolution):
         """        
         return False
 
+    def randomize(k:int, solution_codes:list[str])->bool:
+        """
+        Randomizes solution codes 
+        :param k:int -- parameter for VNS
+        :param solution_codes:list[str] -- solution codes that should be randomized
+        :return: bool -- if randomization is successful 
+        """    
+        return False
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str='{', 
             indentation_end:str='}',)->str:

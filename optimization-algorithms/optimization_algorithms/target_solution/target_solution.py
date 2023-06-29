@@ -115,7 +115,7 @@ class TargetSolution(metaclass=ABCMeta):
         Solution code of the target solution
         :return: str -- solution code 
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def calculate_fitness(self)->float:
@@ -123,21 +123,21 @@ class TargetSolution(metaclass=ABCMeta):
         Fitness calculation of the target solution
         :return: float -- fitness value of the solution instance 
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def recalculate_solution_code(self)->None:
         """
         Recalculation of the solution code for the target solution
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def random_init(self)->None:
         """
         Random initialization of the target solution
         """
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def calculate_fitness_try_consult_cache(target_solution):
@@ -175,7 +175,7 @@ class TargetSolution(metaclass=ABCMeta):
         Change the best one within solution 
         :return: bool -- if the best one is changed, or not
         """        
-        pass
+        raise NotImplementedError
 
     def local_search_best_improvement(self)->None:
         """
@@ -192,7 +192,7 @@ class TargetSolution(metaclass=ABCMeta):
         :param solution_code_1:str -- solution code for the first solution
         :param solution_code_2:str -- solution code for the second solution
         """
-        pass
+        raise NotImplementedError
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
         indentation_end:str ='}')->str:

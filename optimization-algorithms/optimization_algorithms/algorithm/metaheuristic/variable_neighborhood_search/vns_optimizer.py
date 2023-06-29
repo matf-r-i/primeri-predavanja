@@ -3,7 +3,7 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-from typing import Dict, TypeVar
+from typing import Dict, TypeVar, Generic
 
 from metaheuristic import Metaheuristic
 
@@ -11,12 +11,14 @@ from target_problem.target_problem import TargetProblem
 
 from target_solution.target_solution import TargetSolution
 
-S = TypeVar("S", bound=TargetSolution) 
+from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
 
-class VnsOptimizer(Metaheuristic):
+S_co = TypeVar("S_co", covariant=True, bound=TargetSolution) # and bound by TargetSolutionVnsSupport 
+
+class VnsOptimizer(Metaheuristic, Generic[S_co]):
     
     def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
-        target_problem:TargetProblem=None, initial_solution:S=None, k_min:int=1, k_max:int=3, 
+        target_problem:TargetProblem=None, initial_solution:S_co=None, k_min:int=1, k_max:int=3, 
                 max_local_optima:int=1)->None:
         """
         Create new VnsOptimizer instance
@@ -31,7 +33,7 @@ class VnsOptimizer(Metaheuristic):
         :param max_local_optima:int -- max_local_optima parameter for VNS
         """
         super().__init__('vns', is_minimization, evaluations_max, seconds_max, random_seed, target_problem)
-        self.__current_solution = initial_solution
+        self.__current_solution:S_co = initial_solution
         self.__k_min = k_min
         self.__k_max = k_max
         self.__max_local_optima = max_local_optima
@@ -52,7 +54,7 @@ class VnsOptimizer(Metaheuristic):
         return self.__copy__()
 
     @property
-    def current_solution(self)->S:
+    def current_solution(self)->S_co:
         """
         Property getter for the current solution used during VNS execution
         :return: instance of the TargetSolution class subtype -- current solution of the problem 
@@ -75,17 +77,78 @@ class VnsOptimizer(Metaheuristic):
         """
         return self.__k_max
 
-    def main_loop_iteration(self)->None:
-        """
-        One iteration within main loop of the VNS algorithm
-        """
-        pass
-
     def init(self)->None:
         """
         Initialization of the VNS algorithm
         """
-        pass
+        self.__k_current = self.k_min
+        self.current_solution.evaluate();
+        self.copy_to_best_solution(self.current_solution);
+
+    def __shaking__(self)->bool:
+        """
+        Shaking phase of the VNS algorithm
+        :return: bool -- if shaking is succesfull 
+        """
+        """
+        private bool Shaking()
+        {
+            var shakingPoints = SelectShakingPoints();
+            if (shakingPoints == null)
+            {
+                Log.Debug("it: {0}\ttime: {1:0}s\tm: {2}\tk: {3}\tSkipping"/*\tbestSolCode: {9}"*/, iteration, ElapsedSeconds(), mCurrent, kCurrent);
+                return false;
+            }
+            if (!currentSolution.Randomize(kCurrent, shakingPoints))
+                return false;
+            var km = new KeyValuePair<int, double>(mCurrent, kCurrent);
+            if (shakingCounts.ContainsKey(km))
+                shakingCounts[km]++;
+            else
+                shakingCounts[km] = 1;
+            iteration++;
+            evaluation++;
+            currentSolution.Evaluate();
+            currentSolution.LocalSearchBestImprovement();
+            PrintStatus(currentSolution);
+
+            //remembering whole history - only informative, not used in algorithm search decision making - therefore, it can be disabled if memory is issue
+            allSolutionCodes.Add(currentSolution.SolutionCode());
+            //we do not need to enter this in case of classic VNS - it uses randomness so it messes with randgen so for different maxLocalOptima and mMax=0 gives different results which is confusing
+            if (mMax > 0 && !AddLocalOptima(currentSolution))
+                return false;
+
+            bool? newBetter = FirstSolutionBetter(currentSolution, bestSolution);
+            if (!newBetter.HasValue)
+            {
+                Log.Debug("Same solution quality, generating random true with probability 0.5");
+                return RandomNumbers.NextDouble() < 0.5;
+            }
+            if (newBetter.Value)
+            {
+                //new best
+                if (improvementCounts.ContainsKey(km))
+                    improvementCounts[km]++;
+                else
+                    improvementCounts[km] = 1;
+                improvementChronology.Add(iteration - 1, km);
+            }
+            return newBetter.Value;
+        }
+        """
+
+
+    def main_loop_iteration(self)->None:
+        """
+        One iteration within main loop of the VNS algorithm
+        """
+        while self.shaking():
+            self.copy_to_best_solution(self.current_solution)
+            self.__k_current = self.k_min
+        if self.__k_current < self.k_max:
+            self.__k_current += 1
+        else:
+            self.__k_current = self.k_min
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
         indentation_end:str ='}')->str:

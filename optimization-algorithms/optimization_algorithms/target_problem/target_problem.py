@@ -72,7 +72,7 @@ class TargetProblem(metaclass=ABCMeta):
         Read target problem data from file
         :param data_representation: str -- Data representation within file
         """
-        pass
+        raise NotImplementedError
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
         indentation_end:str ='}')->str:

@@ -65,19 +65,27 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         return self.__random_seed
 
-    @abstractmethod
-    def main_loop_iteration(self)->None:
+    @property
+    def best_solution(self)->TargetSolution:
         """
-        One iteration within main loop of the metaheuristic algorithm
+        Property getter for the best solution obtained during metaheuristic execution
+        :return: TargetSolution -- best solution so far 
         """
-        pass
+        return self.__best_solution
 
     @abstractmethod
     def init(self)->None:
         """
         Initialization of the metaheuristic algorithm
         """
-        pass
+        raise NotImplementedError
+
+    @abstractmethod
+    def main_loop_iteration(self)->None:
+        """
+        One iteration within main loop of the metaheuristic algorithm
+        """
+        raise NotImplementedError
 
     def elapsed_seconds(self)->float:
         """
