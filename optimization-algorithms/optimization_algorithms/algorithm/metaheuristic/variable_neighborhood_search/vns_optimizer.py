@@ -98,7 +98,7 @@ class VnsOptimizer(Metaheuristic):
         :return: str -- string representation of target solution instance
         """             
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start  
         s = super().string_representation(delimiter)
         s += delimiter
@@ -106,7 +106,7 @@ class VnsOptimizer(Metaheuristic):
                 indentation=indentation+1) + delimiter 
         s += 'k_min=' + str(self.k_min) + delimiter 
         s += 'k_max=' + str(self.k_max) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 

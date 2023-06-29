@@ -48,10 +48,10 @@ class MaxOnesProblem(TargetProblem):
         :return: str -- string representation of target solution instance
         """          
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start 
         s+= super().string_representation(delimiter)
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 

@@ -144,7 +144,7 @@ class Algorithm(metaclass=ABCMeta):
         :return: str -- string representation of target solution instance
         """            
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start  
         s += 'name=' + self.name + delimiter
         s += 'is_minimization=' + str(self.is_minimization) + delimiter
@@ -153,7 +153,7 @@ class Algorithm(metaclass=ABCMeta):
         s += '__evaluation=' + str(self.__evaluation) + delimiter
         s += 'execution_started=' + str(self.execution_started) + delimiter
         s += 'execution_ended=' + str(self.execution_ended) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 

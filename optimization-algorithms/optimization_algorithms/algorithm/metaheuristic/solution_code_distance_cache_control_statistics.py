@@ -108,12 +108,12 @@ class SolutionCodeDistanceCacheControlStatistics:
         :return: str -- string representation of target solution instance
         """        
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start  
         s += 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.hit_count) + delimiter
         s += 'cache_requests_count=' + str(self.requests_count) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 

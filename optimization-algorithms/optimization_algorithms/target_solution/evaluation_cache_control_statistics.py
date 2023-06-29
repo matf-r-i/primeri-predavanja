@@ -31,11 +31,11 @@ class EvaluationCacheControlStatistics:
         :return: str -- string representation of target solution instance
         """       
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start      
         s += 'is_caching=' + str(self.is_caching) + delimiter
         s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
         s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s

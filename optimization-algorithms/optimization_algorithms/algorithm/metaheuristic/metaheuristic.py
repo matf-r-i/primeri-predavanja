@@ -177,7 +177,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: str -- string representation of target solution instance
         """       
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start  
         s = super().string_representation(delimiter)
         s += delimiter
@@ -195,7 +195,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         if self.execution_ended is not None and self.execution_started is not None:
             s += 'execution time=' + str( (self.execution_ended - self.execution_started).total_seconds() ) + delimiter
         s += 'total local optima found=' + str(len(self.__all_solution_codes)) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 

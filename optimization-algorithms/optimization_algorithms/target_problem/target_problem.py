@@ -85,11 +85,11 @@ class TargetProblem(metaclass=ABCMeta):
         :return: str -- string representation of target solution instance
         """          
         s = ''
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_start  
         s += 'name=' + self.name + delimiter
         s += 'file path=' + str(self.file_path) 
-        for i in range(0, indentation-1):
+        for i in range(0, indentation):
             s += indentation_end 
         return s
 
