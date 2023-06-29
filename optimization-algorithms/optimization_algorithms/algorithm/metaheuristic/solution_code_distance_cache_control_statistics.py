@@ -1,6 +1,6 @@
 class SolutionCodeDistanceCacheControlStatistics:
 
-    def __init__(self, is_caching:bool=False, hit_count:int=0, requests_count:int=0, cache:dict={})->None:
+    def __init__(self, is_caching:bool=False, hit_count:int=0, requests_count:int=0, cache:dict[dict[str]]={})->None:
         """
         Create new cache, control and statistics for solution code distance calculation instance
         :param is_caching:bool -- if caching will be applied during calculation of the solution code distances
@@ -104,7 +104,7 @@ class SolutionCodeDistanceCacheControlStatistics:
         :return: str -- string representation of cache control and statistics structure
         """        
         s = 'is_caching=' + str(self.is_caching) + delimiter
-        s = 'cache_hit_count=' + str(self.hit_count) + delimiter
+        s += 'cache_hit_count=' + str(self.hit_count) + delimiter
         s += 'cache_requests_count=' + str(self.requests_count) + delimiter
         return s
 

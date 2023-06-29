@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 class TargetProblem(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, file_path:str )->None:
+    def __init__(self, name:str, file_path:str)->None:
         """
         Create new TargetProblem instance
         :param name:str -- name of the target problem

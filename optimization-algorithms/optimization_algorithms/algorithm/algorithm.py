@@ -101,6 +101,38 @@ class Algorithm(metaclass=ABCMeta):
         """
         self.__evaluation = value
 
+    @property
+    def execution_started(self)->datetime:
+        """
+        Property getter for time when execution started
+        :return: datetime -- When execution started 
+        """
+        return self.__execution_started
+
+    @execution_started.setter
+    def execution_started(self, value:datetime)->None:
+        """
+        Property setter for time when execution started
+        :param value:datetime -- Time when execution started
+        """
+        self.__execution_started = value
+
+    @property
+    def execution_ended(self)->datetime:
+        """
+        Property getter for time when execution ended
+        :return: datetime -- When execution ended 
+        """
+        return self.__execution_ended
+
+    @execution_ended.setter
+    def execution_ended(self, value:datetime)->None:
+        """
+        Property setter for time when execution ended
+        :param value:datetime -- Time when execution ended
+        """
+        self.__execution_ended = value
+
     def string_representation(self, delimiter:str)->str:
         """
         String representation of the Algorithm instance
@@ -112,8 +144,8 @@ class Algorithm(metaclass=ABCMeta):
         s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
         s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
         s += '__evaluation' + str(self.__evaluation) + delimiter
-        s += '__execution_started' + str(self.__execution_started) + delimiter
-        s += '__execution_ended' + str(self.__execution_ended) + delimiter
+        s += 'execution_started' + str(self.execution_started) + delimiter
+        s += 'execution_ended' + str(self.execution_ended) + delimiter
         return s
 
     @abstractmethod

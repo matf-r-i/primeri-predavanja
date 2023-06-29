@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
-        "metaheuristic"
-    ]
+        "eccs",
+        "metaheuristic",
+        "scdc"
+    ],
+    "editor.indentSize": "tabSize",
+    "editor.rulers": [120, 200]
 }

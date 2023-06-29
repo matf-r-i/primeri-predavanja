@@ -3,13 +3,20 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
+from typing import Dict, TypeVar
+
 from metaheuristic import Metaheuristic
 
 from target_problem.target_problem import TargetProblem
 
+from target_solution.target_solution import TargetSolution
+
+S = TypeVar("S", bound=TargetSolution) 
+
 class VnsOptimizer(Metaheuristic):
     
-    def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, target_problem:TargetProblem=None)->None:
+    def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
+        target_problem:TargetProblem=None)->None:
         """
         Create new VnsOptimizer instance
         :param is_minimization:bool -- is minimum is seek for
@@ -33,6 +40,18 @@ class VnsOptimizer(Metaheuristic):
         :return: VnsOptimizer -- new VnsOptimizer instance with the same properties
         """
         return self.__copy__()
+
+    def main_loop_iteration(self)->None:
+        """
+        One iteration within main loop of the metaheuristic algorithm
+        """
+        pass
+
+    def init(self)->None:
+        """
+        Initialization of the metaheuristic algorithm
+        """
+        pass
 
     def string_representation(self, delimiter:str)->str:
         """

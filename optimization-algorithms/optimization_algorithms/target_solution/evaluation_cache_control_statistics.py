@@ -3,7 +3,7 @@ class EvaluationCacheControlStatistics:
     """
     Cache that is used during evaluation for previously obtained solutions
     """
-    cache:dict = {}
+    cache:dict[str] = {}
     
     """
     If caching is used during evaluation, or not
