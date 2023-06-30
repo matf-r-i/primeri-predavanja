@@ -55,7 +55,7 @@ def main():
     solution = MaxOnesSolution()
 
     optimizer = VnsOptimizer(is_minimization=False, evaluations_max=0, seconds_max=10, random_seed=0, 
-            target_problem=problem, initial_solution=solution)
+            keep_all_solution_codes=False, target_problem=problem, initial_solution=solution)
     logger.info('Optimizer: {}'.format(optimizer))
 
     logger.debug('Execution ended.')    

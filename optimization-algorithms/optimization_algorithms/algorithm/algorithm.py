@@ -27,8 +27,8 @@ class Algorithm(metaclass=ABCMeta):
         self.__seconds_max = seconds_max
         self.__target_problem = target_problem
         self.__evaluation = 0
-        self.__execution_started = None
-        self.__execution_ended = None
+        self.__execution_started:datetime = None
+        self.__execution_ended:datetime = None
 
     @abstractmethod
     def __copy__(self):

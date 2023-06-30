@@ -20,7 +20,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
     @abstractmethod
     def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
-            remember_all_solution_codes:bool=False, target_problem:TargetProblem=None)->None:
+            keep_all_solution_codes:bool=False, target_problem:TargetProblem=None)->None:
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
@@ -28,7 +28,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :param evaluations_max:int -- maximum number of evaluations for algorithm execution
         :param seconds_max:int -- maximum number of seconds for algorithm execution
         :param random_seed:int -- random seed for metaheuristic execution
-        :param remember_all_solution_codes:bool -- if all solution codes will be remembered        
+        :param keep_all_solution_codes:bool -- if all solution codes will be remembered        
         :param target_problem:TargetProblem -- problem to be solved
         """
         super().__init__(name, is_minimization, evaluations_max, seconds_max, target_problem)
@@ -40,8 +40,8 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         self.__iteration_best_found = 0
         self.__second_best_found = 0.0
         self.__best_solution = None
-        self.__all_solution_codes = {}
-        self.__remember_all_solution_codes = remember_all_solution_codes
+        self.__keep_all_solution_codes = keep_all_solution_codes
+        self.__all_solution_codes:set(str) = set()
         self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
@@ -82,8 +82,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Property setter the iteration of metaheuristic execution
         :param value:datetime -- iteration
         """
-        self.iteration = value
-
+        self.__iteration = value
 
     @property
     def best_solution(self)->TargetSolution:
@@ -92,6 +91,30 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: TargetSolution -- best solution so far 
         """
         return self.__best_solution
+
+    @property
+    def keep_all_solution_codes(self)->bool:
+        """
+        Property getter for decision should be kept all solution codes
+        :return: bool -- decision should be kept all solution codes
+        """
+        return self.__keep_all_solution_codes
+
+    @property
+    def all_solution_codes(self)->set(str):
+        """
+        Property getter for the all solution codes
+        :return: set(str) -- all solution codes
+        """
+        return self.__all_solution_codes
+
+    @all_solution_codes.setter
+    def all_solution_codes(self, value:set(str))->None:
+        """
+        Property setter the all solution codes
+        :param value:set(str) -- all solution codes
+        """
+        self.__all_solution_codes = value
 
     @abstractmethod
     def init(self)->None:
