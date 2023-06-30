@@ -19,14 +19,16 @@ from target_solution.target_solution import TargetSolution
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, target_problem:TargetProblem=None)->None:
+    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
+            remember_all_solution_codes:bool=False, target_problem:TargetProblem=None)->None:
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
-        :param is_minimization:bool -- is minimum is seek for
+        :param is_minimization:bool -- if minimum is looked for
         :param evaluations_max:int -- maximum number of evaluations for algorithm execution
         :param seconds_max:int -- maximum number of seconds for algorithm execution
         :param random_seed:int -- random seed for metaheuristic execution
+        :param remember_all_solution_codes:bool -- if all solution codes will be remembered        
         :param target_problem:TargetProblem -- problem to be solved
         """
         super().__init__(name, is_minimization, evaluations_max, seconds_max, target_problem)
@@ -39,6 +41,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         self.__second_best_found = 0.0
         self.__best_solution = None
         self.__all_solution_codes = {}
+        self.__remember_all_solution_codes = remember_all_solution_codes
         self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
@@ -64,6 +67,23 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :return: int -- random seed 
         """
         return self.__random_seed
+
+    @property
+    def iteration(self)->int:
+        """
+        Property getter for the iteration of metaheuristic execution
+        :return: int -- iteration
+        """
+        return self.__iteration
+
+    @iteration.setter
+    def iteration(self, value:int)->None:
+        """
+        Property setter the iteration of metaheuristic execution
+        :param value:datetime -- iteration
+        """
+        self.iteration = value
+
 
     @property
     def best_solution(self)->TargetSolution:

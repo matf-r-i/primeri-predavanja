@@ -36,8 +36,9 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         self.__current_solution:S_co = initial_solution
         self.__k_min = k_min
         self.__k_max = k_max
-        self.__max_local_optima = max_local_optima
+        self.__max_local_optima = max_local_optima        
         self.__local_optima:Dict[str, float] = {}
+        self.__shaking_counts:Dict[int,int] = {}
 
     def __copy__(self):
         """
@@ -85,58 +86,54 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         self.current_solution.evaluate();
         self.copy_to_best_solution(self.current_solution);
 
+    def __select_shaking_points__(self)->list[str]:
+        """
+        Selecting shaking point for the VNS algorithm
+        :return: list[str] -- list with solution codes that represents start of the shaking 
+        """
+        return [self.current_solution.solution_code]
+
     def __shaking__(self)->bool:
         """
         Shaking phase of the VNS algorithm
-        :return: bool -- if shaking is succesfull 
+        :return: bool -- if shaking is successful 
         """
+        shaking_points = self.__select_shaking_points__()
+        if not self.current_solution.randomize(self.__k_current, shaking_points):
+            return False
+        if self.__k_current in self.__shaking_counts:
+            self.__shaking_counts[self.__k_current] += 1
+        else:
+            self.__shaking_counts[self.__k_current] = 1
+        self.iteration += 1
+        self.evaluation += 1
+        self.current_solution.evaluate()
+        self.current_solution = self.local_search_best_improvement(self.current_solution)
+        logger.debug(self.current_solution)
         """
-        private bool Shaking()
+        //remembering whole history - only informative, not used in algorithm search decision making - therefore, it can be disabled if memory is issue
+        allSolutionCodes.Add(currentSolution.SolutionCode());
+        //we do not need to enter this in case of classic VNS - it uses randomness so it messes with randgen so for different maxLocalOptima and mMax=0 gives different results which is confusing
+        if (mMax > 0 && !AddLocalOptima(currentSolution))
+            return false;
+
+        bool? newBetter = FirstSolutionBetter(currentSolution, bestSolution);
+        if (!newBetter.HasValue)
         {
-            var shakingPoints = SelectShakingPoints();
-            if (shakingPoints == null)
-            {
-                Log.Debug("it: {0}\ttime: {1:0}s\tm: {2}\tk: {3}\tSkipping"/*\tbestSolCode: {9}"*/, iteration, ElapsedSeconds(), mCurrent, kCurrent);
-                return false;
-            }
-            if (!currentSolution.Randomize(kCurrent, shakingPoints))
-                return false;
-            var km = new KeyValuePair<int, double>(mCurrent, kCurrent);
-            if (shakingCounts.ContainsKey(km))
-                shakingCounts[km]++;
-            else
-                shakingCounts[km] = 1;
-            iteration++;
-            evaluation++;
-            currentSolution.Evaluate();
-            currentSolution.LocalSearchBestImprovement();
-            PrintStatus(currentSolution);
-
-            //remembering whole history - only informative, not used in algorithm search decision making - therefore, it can be disabled if memory is issue
-            allSolutionCodes.Add(currentSolution.SolutionCode());
-            //we do not need to enter this in case of classic VNS - it uses randomness so it messes with randgen so for different maxLocalOptima and mMax=0 gives different results which is confusing
-            if (mMax > 0 && !AddLocalOptima(currentSolution))
-                return false;
-
-            bool? newBetter = FirstSolutionBetter(currentSolution, bestSolution);
-            if (!newBetter.HasValue)
-            {
-                Log.Debug("Same solution quality, generating random true with probability 0.5");
-                return RandomNumbers.NextDouble() < 0.5;
-            }
-            if (newBetter.Value)
-            {
-                //new best
-                if (improvementCounts.ContainsKey(km))
-                    improvementCounts[km]++;
-                else
-                    improvementCounts[km] = 1;
-                improvementChronology.Add(iteration - 1, km);
-            }
-            return newBetter.Value;
+            Log.Debug("Same solution quality, generating random true with probability 0.5");
+            return RandomNumbers.NextDouble() < 0.5;
         }
+        if (newBetter.Value)
+        {
+            //new best
+            if (improvementCounts.ContainsKey(km))
+                improvementCounts[km]++;
+            else
+                improvementCounts[km] = 1;
+            improvementChronology.Add(iteration - 1, km);
+        }
+        return newBetter.Value;
         """
-
 
     def main_loop_iteration(self)->None:
         """
