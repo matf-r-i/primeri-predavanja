@@ -41,7 +41,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         self.__second_best_found = 0.0
         self.__best_solution = None
         self.__keep_all_solution_codes = keep_all_solution_codes
-        self.__all_solution_codes:set(str) = set()
+        self.__all_solution_codes:set[str] = set()
         self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
@@ -101,18 +101,18 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         return self.__keep_all_solution_codes
 
     @property
-    def all_solution_codes(self)->set(str):
+    def all_solution_codes(self)->set[str]:
         """
         Property getter for the all solution codes
-        :return: set(str) -- all solution codes
+        :return: set[str] -- all solution codes
         """
         return self.__all_solution_codes
 
     @all_solution_codes.setter
-    def all_solution_codes(self, value:set(str))->None:
+    def all_solution_codes(self, value:set[str])->None:
         """
         Property setter the all solution codes
-        :param value:set(str) -- all solution codes
+        :param value:set[str] -- all solution codes
         """
         self.__all_solution_codes = value
 
