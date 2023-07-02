@@ -22,7 +22,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
     
     def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
         keep_all_solution_codes:bool=False, target_problem:TargetProblem=None, initial_solution:S_co=None, 
-        k_min:int=1, k_max:int=3, max_local_optima:int=3)->None:
+        k_min:int=1, k_max:int=3, max_local_optima:int=3, local_search_type:str='local_search_best_improvement' )->None:
         """
         Create new VnsOptimizer instance
         :param is_minimization:bool -- is minimum is seek for
@@ -41,7 +41,8 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         self.__current_solution:S_co = initial_solution
         self.__k_min = k_min
         self.__k_max = k_max
-        self.__max_local_optima = max_local_optima        
+        self.__max_local_optima = max_local_optima
+        self.__local_search_type = local_search_type        
         self.__local_optima:Dict[str, float] = {}
         self.__shaking_counts:Dict[int,int] = {}
 
@@ -131,7 +132,11 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         self.iteration += 1
         self.evaluation += 1
         self.current_solution.evaluate()
-        self.current_solution = self.local_search_best_improvement(self.current_solution)
+        if self.__local_search_type == 'local_search_best_improvement':
+            self.current_solution = self.local_search_best_improvement(self.current_solution)
+        else:
+            raise ValueError( 'Value \'{} \' for VNS local_search_type is not supported'.format(
+                    self.__local_search_type))
         logger.debug(self.current_solution)
         if self.keep_all_solution_codes:
             self.all_solution_codes.add(self.current_solution)
@@ -172,6 +177,8 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
                 indentation=indentation+1) + delimiter 
         s += 'k_min=' + str(self.k_min) + delimiter 
         s += 'k_max=' + str(self.k_max) 
+        s += '__max_local_optima=' + str(self.__max_local_optima) 
+        s += '__local_search_type=' + str(self.__local_search_type) 
         for i in range(0, indentation):
             s += indentation_end 
         return s
