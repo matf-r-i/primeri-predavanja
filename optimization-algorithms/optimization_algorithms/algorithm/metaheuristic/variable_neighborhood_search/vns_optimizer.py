@@ -158,29 +158,40 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         else:
             self.__k_current = self.k_min
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='',group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """             
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start  
-        s = super().string_representation(delimiter)
+            s += indentation_symbol  
+        s += group_start + delimiter
+        s = super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
-        s += 'current_solution=' + self.current_solution.string_representation(delimiter=delimiter, 
-                indentation=indentation+1) + delimiter 
-        s += 'k_min=' + str(self.k_min) + delimiter 
-        s += 'k_max=' + str(self.k_max) 
-        s += '__max_local_optima=' + str(self.__max_local_optima) 
-        s += '__local_search_type=' + str(self.__local_search_type) 
+        s += 'current_solution=' + self.current_solution.string_representation(delimiter, indentation + 1, 
+                indentation_symbol, group_start, group_end) + delimiter 
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol  
+        s += 'k_min=' + str(self.k_min) + delimiter 
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'k_max=' + str(self.k_max) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += '__max_local_optima=' + str(self.__max_local_optima) + delimiter 
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += '__local_search_type=' + str(self.__local_search_type) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
 
@@ -206,6 +217,4 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         :param spec: str -- format specification 
         :return: str -- formatted VnsOptimizer instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
-        return self.string_representation('|')
+        return self.string_representation('\n',0,'   ','{', '}')

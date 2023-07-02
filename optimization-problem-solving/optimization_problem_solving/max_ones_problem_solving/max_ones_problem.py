@@ -23,7 +23,7 @@ class MaxOnesProblem(TargetProblem):
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
         pr = MaxOnesProblem(self.__file_path)
-        pr.__dimension = self.__dimension
+        pr.dimension = self.dimension
         return pr
 
     def copy(self):
@@ -32,6 +32,23 @@ class MaxOnesProblem(TargetProblem):
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
         return self.__copy__()
+
+    @property
+    def dimension(self)->int:
+        """
+        Property getter for dimension of the target problem
+        :return: int -- dimension of the target problem instance 
+        """
+        return self.__dimension
+
+    @dimension.setter
+    def dimension(self, value:int)->None:
+        """
+        Property setter for dimension of the target problem
+        """
+        if value < 0:
+            raise ValueError("Dimension less than 0 is not possible.")
+        self.__dimension = value
 
     def load_from_file(self, data_representation:str)->None:
         """
@@ -46,29 +63,34 @@ class MaxOnesProblem(TargetProblem):
                 # skip comments
                 while text_line.startswith("//") or text_line.startswith(";"):
                     text_line = input_file.readline()
-                __dimension = int( text_line.split()[0] )
+                self.dimension = int( text_line.split()[0] )
 
         else:
             raise ValueError('Value for data format \'{} \' is not supported'.format(data_representation))
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """          
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start 
-        s+= super().string_representation(delimiter)
+            s += indentation_symbol  
+        s += group_start + delimiter
+        s+= super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s+= delimiter
-        s+= '__dimension=' + str(__dimension) + delimiter
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol 
+        s += 'dimension=' + str(self.dimension) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
     def __str__(self)->str:
@@ -91,8 +113,6 @@ class MaxOnesProblem(TargetProblem):
         :param spec: str -- format specification
         :return: str -- formatted target problem instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
 
 

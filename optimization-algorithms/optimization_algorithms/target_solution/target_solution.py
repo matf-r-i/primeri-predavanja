@@ -186,28 +186,43 @@ class TargetSolution(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """         
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start     
+            s += indentation_symbol  
+        s += group_start + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol     
         s += 'name=' + self.name + delimiter
-        s += 'fitness_value=' + str(self.fitness_value) + delimiter
-        s += 'objective_value=' + str(self.objective_value) + delimiter
-        s += 'is_feasible=' + str(self.is_feasible) + delimiter
-        s += 'solution_code=' + self.solution_code() + delimiter
-        s += 'evaluation_cache_control_statistics=' + self.evaluation_cache_control_statistics.string_representation(
-                delimiter=delimiter, indentation=indentation+1)   
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol     
+        s += 'fitness_value=' + str(self.fitness_value) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol     
+        s += 'objective_value=' + str(self.objective_value) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol     
+        s += 'is_feasible=' + str(self.is_feasible) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol     
+        s += 'solution_code=' + self.solution_code() + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol     
+        s += 'evaluation_cache_control_statistics=' + self.evaluation_cache_control_statistics.string_representation(
+                delimiter, indentation+1, indentation_symbol, '{', '}')  
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
     @abstractmethod
@@ -233,7 +248,5 @@ class TargetSolution(metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
 

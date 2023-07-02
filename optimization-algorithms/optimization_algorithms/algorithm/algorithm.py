@@ -133,28 +133,46 @@ class Algorithm(metaclass=ABCMeta):
         """
         self.__execution_ended = value
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """            
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start  
+            s += indentation_symbol  
+        s = group_start
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += 'name=' + self.name + delimiter
-        s += 'is_minimization=' + str(self.is_minimization) + delimiter
-        s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
-        s += 'target_problem={' + str(self.target_problem) + '}' + delimiter 
-        s += '__evaluation=' + str(self.__evaluation) + delimiter
-        s += 'execution_started=' + str(self.execution_started) + delimiter
-        s += 'execution_ended=' + str(self.execution_ended) 
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol  
+        s += 'is_minimization=' + str(self.is_minimization) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'evaluations_max=' + str(self.evaluations_max) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'target_problem=' + self.target_problem.string_representation(delimiter, indentation + 1, 
+                indentation_symbol, '{', '}')  + delimiter 
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += '__evaluation=' + str(self.__evaluation) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'execution_started=' + str(self.execution_started) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'execution_ended=' + str(self.execution_ended) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
 
@@ -181,6 +199,4 @@ class Algorithm(metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted algorithm instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')

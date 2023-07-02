@@ -14,8 +14,8 @@ class TargetProblem(metaclass=ABCMeta):
         :param name:str -- name of the target problem
         :param file_path:str -- path of the file with data for the target problem instance 
         """
-        self.__name = name
-        self.__file_path = file_path
+        self.__name:str = name
+        self.__file_path:str = file_path
 
     @abstractmethod
     def __copy__(self):
@@ -49,23 +49,6 @@ class TargetProblem(metaclass=ABCMeta):
         """
         return self.__file_path
 
-    @property
-    def dimension(self)->int:
-        """
-        Property getter for dimension of the target problem
-        :return: int -- dimension of the target problem instance 
-        """
-        return self.__dimension
-
-    @dimension.setter
-    def dimension(self, value:int)->None:
-        """
-        Property setter for dimension of the target problem
-        """
-        if value < 0:
-            raise ValueError("Dimension less than 0 is not possible.")
-        self.__dimension = value
-
     @abstractmethod
     def load_from_file(data_representation: str)->None:
         """
@@ -74,23 +57,30 @@ class TargetProblem(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """          
-        s = ''
+        s =  delimiter
         for i in range(0, indentation):
-            s += indentation_start  
+            s += indentation_symbol  
+        s += group_start + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += 'name=' + self.name + delimiter
-        s += 'file path=' + str(self.file_path) 
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol  
+        s += 'file path=' + str(self.file_path) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
     @abstractmethod
@@ -116,7 +106,5 @@ class TargetProblem(metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted target problem instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
 

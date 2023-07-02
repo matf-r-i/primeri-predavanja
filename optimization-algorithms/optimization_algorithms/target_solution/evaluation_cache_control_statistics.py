@@ -20,22 +20,31 @@ class EvaluationCacheControlStatistics:
     """
     fitness_calculations_count:int = 0
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """       
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start      
+            s += indentation_symbol  
+        s += group_start + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol      
         s += 'is_caching=' + str(self.is_caching) + delimiter
-        s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
-        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) 
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol      
+        s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol      
+        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s

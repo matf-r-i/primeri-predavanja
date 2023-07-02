@@ -228,37 +228,54 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             dist = TargetSolution.solution_code_distance(code_x, code_y)
             return dist
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
-        indentation_end:str ='}')->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
+        group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """       
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start  
-        s = super().string_representation(delimiter)
+            s += indentation_symbol  
+        s += group_start + delimiter
+        s = super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += 'random_seed=' + str(self.random_seed) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += '__iteration=' + str(self.__iteration) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += '__iteration_best_found=' + str(self.__iteration_best_found) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += '__second_best_found=' + str(self.__second_best_found) + delimiter
         if self.__best_solution is not None:
-            s += '__best_solution=' + self.__best_solution.string_representation(delimiter=delimiter, 
-                    indentation=indentation+1) + delimiter
+            s += '__best_solution=' + self.__best_solution.string_representation(delimiter, indentation + 1,
+                    indentation_symbol, group_start, group_end) + delimiter
         else:
+            for i in range(0, indentation):
+                s += indentation_symbol  
             s += '__best_solution=None' + delimiter
         s += '__solution_code_distance_cache_cs=' + self.__solution_code_distance_cache_cs.string_representation(
-                delimiter=delimiter, indentation=indentation+1) + delimiter
+                delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         if self.execution_ended is not None and self.execution_started is not None:
+            for i in range(0, indentation):
+                s += indentation_symbol  
             s += 'execution time=' + str( (self.execution_ended - self.execution_started).total_seconds() ) + delimiter
-        s += 'total local optima found=' + str(len(self.__all_solution_codes)) 
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol  
+        s += 'total local optima found=' + str(len(self.__all_solution_codes)) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += group_end 
         return s
 
 
@@ -288,6 +305,4 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted Metaheuristic instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')

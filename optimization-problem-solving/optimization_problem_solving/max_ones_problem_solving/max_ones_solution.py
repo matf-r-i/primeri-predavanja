@@ -86,22 +86,26 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         """    
         return False
 
-    def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str='{', 
-            indentation_end:str='}',)->str:
+    def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str='{', 
+            group_end:str='}',)->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
-        :param indentation_start -- indentation start string 
-        :param indentation_end -- indentation end string 
+        :param indentation_symbol:str -- indentation symbol
+        :param group_start -- group start string 
+        :param group_end -- group end string 
         :return: str -- string representation of target solution instance
         """        
-        s = ''
+        s = delimiter
         for i in range(0, indentation):
-            s += indentation_start 
-        s+= super().string_representation(delimiter)
+            s += indentation_symbol  
+        s += group_start + delimiter
+        s += super().string_representation(delimiter, indentation, indentation_symbol, '', '')
+        s += delimiter
         for i in range(0, indentation):
-            s += indentation_end 
+            s += indentation_symbol  
+        s += group_end 
         return s
 
     def __str__(self)->str:
@@ -124,7 +128,5 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
-        if spec == "ml":
-            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
 
