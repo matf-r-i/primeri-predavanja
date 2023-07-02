@@ -5,5 +5,12 @@
         "scdc"
     ],
     "editor.indentSize": "tabSize",
-    "editor.rulers": [120, 200]
+    "editor.rulers": [
+        120,
+        200
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }

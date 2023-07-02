@@ -8,7 +8,7 @@ import os
 import logging
 import datetime as dt
 
-from files import ensure_dir
+from utils.files import ensure_dir
 
 '''
 Start logger config
