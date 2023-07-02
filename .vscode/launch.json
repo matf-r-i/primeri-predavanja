@@ -12,11 +12,9 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "idle",
+                "vns",
                 "--inputFilePath", "inputs/max_ones_problem/dimension_25.txt",
-                "--inputFormat", "txt - dim", 
-                "--randomSeed", "0", 
-                "--maxTimeForExecutionInSeconds", "10",
+                "--inputFormat", "txt", 
                 "--maxNumberIterations", "0"
                 ]        
         }

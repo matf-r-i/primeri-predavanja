@@ -18,7 +18,7 @@ from utils.files import ensure_dir
 
 from utils.logger import logger
 
-from optimization_problem_solving.max_ones_problem_solving.command_line import parse_arguments
+from command_line import parse_arguments
 
 from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
 
@@ -35,13 +35,11 @@ def main():
         parameters = parse_arguments()        
 
         logger.info('Execution parameters: {}'.format(parameters))
-        input_file_path = parameters['InputFilePath']
-        input_format = parameters['InputFormat']
 
         if parameters.algorithm == 'vns':
             logger.debug('VNS started.') 
-            problem = MaxOnesProblem(input_file_path)
-            problem.load_from_file(input_format)
+            problem = MaxOnesProblem(parameters.inputFilePath)
+            problem.load_from_file(parameters.inputFormat)
             solution = MaxOnesSolution()
             optimizer = VnsOptimizer(is_minimization=False, evaluations_max=0, seconds_max=10, random_seed=0, 
                     keep_all_solution_codes=False, target_problem=problem, initial_solution=solution)
