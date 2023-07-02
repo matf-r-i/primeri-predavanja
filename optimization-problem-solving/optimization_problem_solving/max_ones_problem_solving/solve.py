@@ -33,9 +33,7 @@ def main():
     logger.debug('Solver started.')    
     try:
         parameters = parse_arguments()        
-
         logger.info('Execution parameters: {}'.format(parameters))
-
         if parameters.algorithm == 'vns':
             logger.debug('VNS started.') 
             problem = MaxOnesProblem(parameters.inputFilePath)

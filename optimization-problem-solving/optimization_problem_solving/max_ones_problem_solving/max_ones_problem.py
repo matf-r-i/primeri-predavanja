@@ -15,13 +15,16 @@ class MaxOnesProblem(TargetProblem):
         :param file_path:str -- path of the file with data for the parget problem instance 
         """
         super().__init__("MaxOnesProblem", file_path)
+        self.__dimension:int = None
 
     def __copy__(self):
         """
         Internal copy of the MaxOnesProblem problem
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
-        return MaxOnesProblem(self.__file_path)
+        pr = MaxOnesProblem(self.__file_path)
+        pr.__dimension = self.__dimension
+        return pr
 
     def copy(self):
         """
@@ -30,12 +33,23 @@ class MaxOnesProblem(TargetProblem):
         """
         return self.__copy__()
 
-    def load_from_file(self, data_representation: str)->None:
+    def load_from_file(self, data_representation:str)->None:
         """
         Read target problem data from file
         :param data_representation: str -- data representation within file
         """
-        logger.debug("Load parameters: file path={}, data format representation={}".format(self.file_path, data_representation))
+        logger.debug("Load parameters: file path={}, data format representation={}".format(self.file_path, 
+                data_representation))
+        if data_representation=='txt':
+                input_file = open(self.file_path, 'r')
+                text_line = input_file.readline().strip()
+                # skip comments
+                while text_line.startswith("//") or text_line.startswith(";"):
+                    text_line = input_file.readline()
+                __dimension = int( text_line.split()[0] )
+
+        else:
+            raise ValueError('Value for data format \'{} \' is not supported'.format(data_representation))
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_start:str ='{', 
         indentation_end:str ='}')->str:
@@ -51,6 +65,8 @@ class MaxOnesProblem(TargetProblem):
         for i in range(0, indentation):
             s += indentation_start 
         s+= super().string_representation(delimiter)
+        s+= delimiter
+        s+= '__dimension=' + str(__dimension) + delimiter
         for i in range(0, indentation):
             s += indentation_end 
         return s
@@ -75,5 +91,8 @@ class MaxOnesProblem(TargetProblem):
         :param spec: str -- format specification
         :return: str -- formatted target problem instance
         """
+        if spec == "ml":
+            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
+
 

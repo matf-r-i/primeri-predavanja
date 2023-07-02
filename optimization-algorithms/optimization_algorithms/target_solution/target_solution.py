@@ -233,4 +233,7 @@ class TargetSolution(metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
+        if spec == "ml":
+            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
         return self.string_representation('|')
+

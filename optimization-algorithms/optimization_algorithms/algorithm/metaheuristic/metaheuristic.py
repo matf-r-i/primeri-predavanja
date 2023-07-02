@@ -288,5 +288,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :param spec: str -- format specification
         :return: str -- formatted Metaheuristic instance
         """
-        s = self.string_representation('|')
-        return s
+        if spec == "ml":
+            return self.string_representation(delimiter='\n', indentation_start='\t', indentation_end='')
+        return self.string_representation('|')

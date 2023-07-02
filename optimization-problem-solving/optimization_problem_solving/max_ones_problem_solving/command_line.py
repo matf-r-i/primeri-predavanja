@@ -18,30 +18,27 @@ from collections import namedtuple
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument(
-            "--log", 
-            default="warning",
-            help=(
-                "Provide logging level. "
-                "Example --log debug', default='warning'"),
-        )
 
     subparsers = parser.add_subparsers(dest='algorithm')
-    
-    parser_vns = subparsers.add_parser('vns', help='VNS for max_ones_problem help')
-    parser_vns.add_argument('--inputFilePath', type=str, 
-        default='inputs/max_ones_problem/dim_25.txt')
-    parser_vns.add_argument('--inputFormat', type=str, choices=[
-        'txt',
-        'idle'], default = 'txt')    
-    parser_vns.add_argument('--outputDirectory', type=str, 
-        default='outputs/max_ones_problem')
-    parser_vns.add_argument('--maxTimeForExecutionSeconds', type=int, 
-        default=10)    
-    parser_vns.add_argument('--maxNumberIterations', type=int, 
-        default=0)    
 
-    parser_idle = subparsers.add_parser('idle', help='Idle algorithm help')
+    parser_vns = subparsers.add_parser('vns', help='Execute VNS metaheuristic for max_ones_problem.')
+    parser_vns.add_argument('--inputFilePath', type=str, default='inputs/max_ones_problem/dim_25.txt', 
+            help='Input file path for the instance of the problem. ')
+    parser_vns.add_argument('--inputFormat', type=str, choices=['txt', 'idle'], default = 'txt',
+            help='Input file format. ')    
+    parser_vns.add_argument('--outputFilepath', type=str, default='', 
+            help=("File path of the output file. " 
+            "File path '' means that it is within 'outputs' folder."))
+    parser_vns.add_argument('--maxTimeForExecutionSeconds', type=int, default=10, 
+            help=("Maximum time for execution (in seconds).\n " 
+            "Value 0 means that there is no limit on execution time") )    
+    parser_vns.add_argument('--maxNumberIterations', type=int, default=0, 
+            help=("Maximum numbers of iterations during VNS execution.\n " 
+            "Value 0 means that there is no limit on number of iterations") )        
+    parser_vns.add_argument( "--log", default="warning", help=("Provide logging level.\n "
+            "Example --log debug', default='warning'") )
+
+    parser_idle = subparsers.add_parser('idle', help='Execute idle algorithm for max_ones_problem.')
 
     return parser.parse_args()
 
