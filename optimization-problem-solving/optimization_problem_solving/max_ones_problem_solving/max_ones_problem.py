@@ -45,7 +45,6 @@ class MaxOnesProblem(TargetProblem):
                 while text_line.startswith("//") or text_line.startswith(";"):
                     text_line = input_file.readline()
                 self.dimension = int( text_line.split()[0] )
-
         else:
             raise ValueError('Value for data format \'{} \' is not supported'.format(data_format))
 

@@ -49,19 +49,19 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Fitness calculation of the target solution
         :return: float -- fitness value of the current solution 
         """
-        return 0
+        raise NotImplementedError('calculate_fitness')
 
     def recalculate_solution_code(self)->None:
         """
         Recalculation of the solution code for the target solution
         """
-        return None
+        raise NotImplementedError('recalculate_solution_code')
 
     def random_init(self)->None:
         """
         Random initialization of the target solution
         """
-        return None
+        raise NotImplementedError('random_init')
 
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
@@ -69,14 +69,14 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param solution_code_1:str -- solution code for the first solution
         :param solution_code_2:str -- solution code for the second solution
         """
-        return 0
+        raise NotImplementedError('solution_code_distance')
 
     def best_1_change(self)->bool:
         """
         Change the best one within solution 
         :return: bool -- if the best one is changed, or not
         """        
-        return False
+        raise NotImplementedError('best_1_change')
 
     def randomize(k:int, solution_codes:list[str])->bool:
         """
@@ -85,7 +85,8 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 
         """    
-        return False
+        raise NotImplementedError('randomize')
+
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str='{', 
             group_end:str='}',)->str:

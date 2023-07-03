@@ -147,7 +147,7 @@ class TargetSolution(metaclass=ABCMeta):
         :param target_solution:TargetSolution -- target solution whose fitness should be 
         :return: Solution -- solution with calculated fitness value 
         """
-        eccs = target_solution.cache_control_statistics 
+        eccs = target_solution.evaluation_cache_control_statistics 
         eccs.fitness_calculations_count += 1
         if eccs.is_caching:
             code = target_solution.solution_code()

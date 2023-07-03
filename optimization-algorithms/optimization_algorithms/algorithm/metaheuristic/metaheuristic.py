@@ -7,6 +7,8 @@ import random
 
 from abc import ABCMeta, abstractmethod
 
+from datetime import datetime
+
 from algorithm.algorithm import Algorithm
 
 from target_problem.target_problem import TargetProblem

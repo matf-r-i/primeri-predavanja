@@ -91,6 +91,8 @@ def main():
                     seconds_max=parameters.maxTimeForExecutionSeconds, random_seed=r_seed, 
                     keep_all_solution_codes=False, target_problem=problem, initial_solution=solution)
             logger.info('Optimizer: {}'.format(optimizer))
+            optimizer.optimize()
+            logger.info('Best solution: {}'.format(optimizer.best_solution))            
             logger.debug('VNS ended.')
         elif parameters.algorithm == 'idle':
             logger.debug('Idle execution started.')    
