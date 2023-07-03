@@ -168,7 +168,7 @@ class TargetSolution(metaclass=ABCMeta):
         solution = TargetSolution.calculate_fitness_try_consult_cache(self)
         self.objective_value = solution.objective_value;
         self.fitness_value = solution.fitness_value;
-        self.feasible = solution.feasible;
+        self.is_feasible = solution.is_feasible;
 
     @abstractmethod
     def best_1_change(self)->bool:

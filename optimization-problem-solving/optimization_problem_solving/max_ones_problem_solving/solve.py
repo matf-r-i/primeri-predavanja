@@ -85,6 +85,7 @@ def main():
             # problem to be solved
             problem = MaxOnesProblem(parameters.inputFilePath)
             problem.load_from_file(parameters.inputFormat)
+            logger.debug( 'Problem: {}'.format(problem))
             # initial solution for solving
             initial_solution = MaxOnesSolution(problem=problem)
             initial_solution.random_init()

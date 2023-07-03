@@ -215,7 +215,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         else:
             solution.copy_to(self__best_solution)
         self.__second_best_found = (datetime.now() - self.__execution_started).total_seconds()
-        self.__iteration_best_found = iteration
+        self.__iteration_best_found = self.iteration
 
     def calculate_solution_code_distance_try_consult_cache(self, code_x:str, code_y:str)->float:
         """

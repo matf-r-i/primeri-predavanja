@@ -22,6 +22,7 @@ class MaxOnesProblem(TargetProblem):
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
         pr = MaxOnesProblem(self.file_path)
+        pr.dimension = self.dimension
         return pr
 
     def copy(self):
@@ -75,14 +76,15 @@ class MaxOnesProblem(TargetProblem):
         String representation of the target problem instance
         :return: str -- string representation of the target problem instance
         """
-        return self.string_representation('|')
+        return self.string_representation('|', 0, '', '{', '}')
+
 
     def __repr__(self)->str:
         """
         Representation of the target problem instance
         :return: str -- string representation of the problem instance
         """
-        return self.string_representation('\n')
+        return self.string_representation('\n', 0, '   ', '{', '}')
 
     def __format__(self, spec:str)->str:
         """
