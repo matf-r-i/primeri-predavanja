@@ -9,7 +9,7 @@ from target_problem.target_problem import TargetProblem
 
 class MaxOnesProblem(TargetProblem):
     
-    def __init__(self, file_path:str )->None:
+    def __init__(self, file_path:str)->None:
         """
         Create new MaxOnesProblem instance
         :param file_path:str -- path of the file with data for the parget problem instance 
@@ -21,7 +21,7 @@ class MaxOnesProblem(TargetProblem):
         Internal copy of the MaxOnesProblem problem
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
-        pr = MaxOnesProblem(self.__file_path)
+        pr = MaxOnesProblem(self.file_path)
         return pr
 
     def copy(self):

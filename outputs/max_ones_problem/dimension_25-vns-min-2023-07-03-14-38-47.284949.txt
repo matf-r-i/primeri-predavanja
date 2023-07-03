@@ -1,3 +1,0 @@
-VNS started at: 2023-07-03 14:38:47.286300
-Execution parameters: Namespace(algorithm='vns', optimization_type='minimization', outputFilePath='outputs/max_ones_problem/dimension_25.txt', inputFilePath='inputs/max_ones_problem/dimension_25.txt', inputFormat='txt', maxTimeForExecutionSeconds=10, maxNumberIterations=0, randomSeed=0, log='warning')
-RandomSeed is not predefined. Generated seed value:  8848031514588225756

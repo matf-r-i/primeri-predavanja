@@ -72,7 +72,7 @@ class TargetProblem(metaclass=ABCMeta):
     @abstractmethod
     def load_from_file(data_representation: str)->None:
         """
-        Read target problem data from file
+        Read target problem data from file and set intrinsic data
         :param data_representation: str -- data representation within file
         """
         raise NotImplementedError
@@ -80,13 +80,13 @@ class TargetProblem(metaclass=ABCMeta):
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
         group_end:str ='}')->str:
         """
-        String representation of the target solution instance
+        String representation of the target problem instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_symbol:str -- indentation symbol
         :param group_start -- group start string 
         :param group_end -- group end string 
-        :return: str -- string representation of target solution instance
+        :return: str -- string representation of target problem instance
         """          
         s =  delimiter
         for i in range(0, indentation):

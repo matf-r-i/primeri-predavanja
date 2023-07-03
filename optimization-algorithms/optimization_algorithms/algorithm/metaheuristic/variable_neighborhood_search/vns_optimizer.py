@@ -6,6 +6,8 @@ sys.path.append(directory.parent.parent)
 from random import choice
 from random import random
 
+import copy
+
 from typing import Dict, TypeVar, Generic
 
 from metaheuristic import Metaheuristic

@@ -82,15 +82,18 @@ def main():
                 logger.info("RandomSeed is not predefined. Generated seed value:  %d" % r_seed)
                 output_file.write("RandomSeed is not predefined. Generated seed value:  %d\n" % r_seed)
                 random.seed(r_seed)
-            # problem and solution to be solved
+            # problem to be solved
             problem = MaxOnesProblem(parameters.inputFilePath)
             problem.load_from_file(parameters.inputFormat)
-            solution = MaxOnesSolution()
+            # initial solution for solving
+            initial_solution = MaxOnesSolution(problem=problem)
+            initial_solution.random_init()
+            logger.debug('Initial solution: {}'.format(initial_solution))
             # optimizer used for solving problem 
             optimizer = VnsOptimizer(is_minimization=is_minimization, evaluations_max=parameters.maxNumberIterations, 
                     seconds_max=parameters.maxTimeForExecutionSeconds, random_seed=r_seed, 
-                    keep_all_solution_codes=False, target_problem=problem, initial_solution=solution)
-            logger.info('Optimizer: {}'.format(optimizer))
+                    keep_all_solution_codes=False, target_problem=problem, initial_solution=initial_solution)
+            logger.debug('Optimizer: {}'.format(optimizer))
             optimizer.optimize()
             logger.info('Best solution: {}'.format(optimizer.best_solution))            
             logger.debug('VNS ended.')

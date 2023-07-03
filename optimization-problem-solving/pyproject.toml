@@ -8,6 +8,7 @@ packages = [{include = "metaheuristic_problem_solving"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+bitstring = "^4.0.2"
 
 
 [build-system]

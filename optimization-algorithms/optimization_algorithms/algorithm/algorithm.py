@@ -3,6 +3,8 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
+import copy
+
 from abc import ABCMeta, abstractmethod
 
 from datetime import datetime
@@ -25,7 +27,7 @@ class Algorithm(metaclass=ABCMeta):
         self.__is_minimization = is_minimization
         self.__evaluations_max = evaluations_max
         self.__seconds_max = seconds_max
-        self.__target_problem = target_problem
+        self.__target_problem = copy.copy(target_problem)
         self.__evaluation = 0
         self.__execution_started:datetime = None
         self.__execution_ended:datetime = None

@@ -5,6 +5,8 @@ sys.path.append(directory.parent.parent)
 
 import random
 
+import copy
+
 from abc import ABCMeta, abstractmethod
 
 from datetime import datetime
@@ -44,7 +46,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         self.__best_solution = None
         self.__keep_all_solution_codes = keep_all_solution_codes
         self.__all_solution_codes:set[str] = set()
-        self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
+        self.__solution_code_distance_cache_cs = copy.copy(SolutionCodeDistanceCacheControlStatistics(is_caching=True))
 
     @abstractmethod
     def __copy__(self):
