@@ -22,7 +22,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
     
     def __init__(self, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
         keep_all_solution_codes:bool=False, target_problem:TargetProblem=None, initial_solution:S_co=None, 
-        k_min:int=1, k_max:int=3, max_local_optima:int=3, local_search_type:str='local_search_best_improvement' )->None:
+        k_min:int=1, k_max:int=3, max_local_optima:int=3, local_search_type:str='local_search_best_improvement')->None:
         """
         Create new VnsOptimizer instance
         :param is_minimization:bool -- is minimum is seek for
@@ -39,10 +39,11 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         super().__init__('vns', is_minimization, evaluations_max, seconds_max, random_seed, keep_all_solution_codes,
                 target_problem)
         self.__current_solution:S_co = initial_solution
-        self.__k_min = k_min
-        self.__k_max = k_max
-        self.__max_local_optima = max_local_optima
-        self.__local_search_type = local_search_type        
+        self.__k_min:int = k_min
+        self.__k_max:int = k_max
+        self.__max_local_optima:int = max_local_optima
+        self.__local_search_type:str = local_search_type        
+        self.__k_current:int = None
         self.__local_optima:Dict[str, float] = {}
         self.__shaking_counts:Dict[int,int] = {}
 
@@ -51,7 +52,14 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         Internal copy of the current VnsOptimizer
         :return: VnsOptimizer -- new VnsOptimizer instance with the same properties
         """
-        return VnsOptimizer(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
+        vns_opt = VnsOptimizer(self.__is_minimization, self.evaluations_max, self.seconds_max, self.random_seed,
+                self.keep_all_solution_codes, self.__target_problem, self.__current_solution, self.__k_min,
+                self.__k_max, self.__max_local_optima, self.__local_search_type)
+        vns_opt.__current_solution = copy.copy(self.__current_solution)
+        vns_opt.__k_current = self.__k_current
+        vns_opt.__local_optima = copy.copy(self.__local_optima)
+        vns_opt.__shaking_counts = copy.copy(self.__shaking_counts)
+        return vns_opt
 
     def copy(self):
         """
@@ -172,7 +180,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         s = delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += group_start + delimiter
+        s += group_start
         s = super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
         s += 'current_solution=' + self.current_solution.string_representation(delimiter, indentation + 1, 

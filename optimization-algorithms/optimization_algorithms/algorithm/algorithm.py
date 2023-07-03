@@ -36,7 +36,12 @@ class Algorithm(metaclass=ABCMeta):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        return Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__seconds_max, self.__target_problem)
+        alg = Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__seconds_max, 
+                self.__target_problem)
+        alg.__evaluation = self.__evaluation
+        alg.__execution_started = self.__execution_started
+        alg.__execution_ended = self.__execution_ended
+        return alg
 
     @abstractmethod
     def copy(self):

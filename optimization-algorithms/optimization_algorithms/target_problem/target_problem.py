@@ -16,6 +16,7 @@ class TargetProblem(metaclass=ABCMeta):
         """
         self.__name:str = name
         self.__file_path:str = file_path
+        self.__dimension:int = None
 
     @abstractmethod
     def __copy__(self):
@@ -23,7 +24,9 @@ class TargetProblem(metaclass=ABCMeta):
         Internal copy of the current target problem
         :return: TargetProblem -- new TargetProblem instance with the same properties
         """
-        return TargetProblem(self.__name, self.__file_path)
+        pr = TargetProblem(self.__name, self.__file_path)
+        pr.dimension = self.dimension
+        return pr
 
     @abstractmethod
     def copy(self):
@@ -48,6 +51,23 @@ class TargetProblem(metaclass=ABCMeta):
         :return: str -- file path of the target problem instance 
         """
         return self.__file_path
+
+    @property
+    def dimension(self)->int:
+        """
+        Property getter for dimension of the target problem
+        :return: int -- dimension of the target problem instance 
+        """
+        return self.__dimension
+
+    @dimension.setter
+    def dimension(self, value:int)->None:
+        """
+        Property setter for dimension of the target problem
+        """
+        if value < 0:
+            raise ValueError("Dimension less than 0 is not possible.")
+        self.__dimension = value
 
     @abstractmethod
     def load_from_file(data_representation: str)->None:
@@ -78,6 +98,9 @@ class TargetProblem(metaclass=ABCMeta):
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'file path=' + str(self.file_path) + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol 
+        s += 'dimension=' + str(self.dimension) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 

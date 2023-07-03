@@ -20,7 +20,8 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Internal copy of the MaxOnesSolution problem
         :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
-        return MaxOnesSolution()
+        sol = MaxOnesSolution()
+        return sol
 
     def copy(self):
         """
@@ -100,7 +101,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         s = delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += group_start + delimiter
+        s += group_start
         s += super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
         for i in range(0, indentation):

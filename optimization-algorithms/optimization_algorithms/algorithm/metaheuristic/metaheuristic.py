@@ -50,7 +50,16 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Internal copy of the current metaheuristic
         :return: Metaheuristic -- new Metaheuristic instance with the same properties
         """
-        return Metaheuristic(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
+        met = Metaheuristic(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
+        met.__random_seed = self.__random_seed
+        met.__iteration = self.__iteration
+        met.__iteration_best_found = self.__iteration_best_found
+        met.__second_best_found = self.__second_best_found
+        met.__best_solution = copy.copy(self.__best_solution)
+        met.__keep_all_solution_codes = self.__keep_all_solution_codes
+        met.__all_solution_codes = copy.copy(self.__all_solution_codes)
+        met.__solution_code_distance_cache_cs = copy.copy(self.__solution_code_distance_cache_cs)
+        return met
 
     @abstractmethod
     def copy(self):
@@ -242,7 +251,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         s = delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += group_start + delimiter
+        s += group_start
         s = super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
         for i in range(0, indentation):

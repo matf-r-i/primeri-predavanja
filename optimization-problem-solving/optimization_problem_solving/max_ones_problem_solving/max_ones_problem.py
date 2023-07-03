@@ -15,7 +15,6 @@ class MaxOnesProblem(TargetProblem):
         :param file_path:str -- path of the file with data for the parget problem instance 
         """
         super().__init__("MaxOnesProblem", file_path)
-        self.__dimension:int = None
 
     def __copy__(self):
         """
@@ -23,7 +22,6 @@ class MaxOnesProblem(TargetProblem):
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
         pr = MaxOnesProblem(self.__file_path)
-        pr.dimension = self.dimension
         return pr
 
     def copy(self):
@@ -33,31 +31,14 @@ class MaxOnesProblem(TargetProblem):
         """
         return self.__copy__()
 
-    @property
-    def dimension(self)->int:
-        """
-        Property getter for dimension of the target problem
-        :return: int -- dimension of the target problem instance 
-        """
-        return self.__dimension
-
-    @dimension.setter
-    def dimension(self, value:int)->None:
-        """
-        Property setter for dimension of the target problem
-        """
-        if value < 0:
-            raise ValueError("Dimension less than 0 is not possible.")
-        self.__dimension = value
-
-    def load_from_file(self, data_representation:str)->None:
+    def load_from_file(self, data_format:str)->None:
         """
         Read target problem data from file
-        :param data_representation: str -- data representation within file
+        :param data_format: str -- data format of the file
         """
         logger.debug("Load parameters: file path={}, data format representation={}".format(self.file_path, 
-                data_representation))
-        if data_representation=='txt':
+                data_format))
+        if data_format=='txt':
                 input_file = open(self.file_path, 'r')
                 text_line = input_file.readline().strip()
                 # skip comments
@@ -66,7 +47,7 @@ class MaxOnesProblem(TargetProblem):
                 self.dimension = int( text_line.split()[0] )
 
         else:
-            raise ValueError('Value for data format \'{} \' is not supported'.format(data_representation))
+            raise ValueError('Value for data format \'{} \' is not supported'.format(data_format))
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
         group_end:str ='}')->str:
@@ -82,12 +63,9 @@ class MaxOnesProblem(TargetProblem):
         s = delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += group_start + delimiter
+        s += group_start
         s+= super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s+= delimiter
-        for i in range(0, indentation):
-            s += indentation_symbol 
-        s += 'dimension=' + str(self.dimension) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 

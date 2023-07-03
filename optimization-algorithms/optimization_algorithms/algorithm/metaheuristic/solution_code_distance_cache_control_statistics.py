@@ -18,7 +18,8 @@ class SolutionCodeDistanceCacheControlStatistics:
         Internal copy of the current cache, control and statistics for solution code distance calculation
         :return: SolutionCodeDistanceCacheControlStatistics -- new cache, control and statistics for solution code distance calculation
         """
-        return SolutionCodeDistanceCacheControlStatistics(self.__is_caching, self.__hit_count, self.__requests_count, self.__cache)
+        scd_ccs = SolutionCodeDistanceCacheControlStatistics(self.__is_caching, self.__hit_count, self.__requests_count, self.__cache)
+        return scd_ccs
 
     def copy(self):
         """

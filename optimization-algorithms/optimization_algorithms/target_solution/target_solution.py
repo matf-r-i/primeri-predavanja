@@ -33,7 +33,8 @@ class TargetSolution(metaclass=ABCMeta):
         Internal copy of the current target solution
         :return: TargetSolution -- new TargetSolution instance with the same properties
         """
-        return TargetSolution(self.__name, self.__fitness_value, self.__objective_value)
+        ts = TargetSolution(self.__name, self.__fitness_value, self.__objective_value)
+        return ts
 
     @abstractmethod
     def copy(self):
