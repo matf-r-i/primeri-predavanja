@@ -3,7 +3,6 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-
 import os
 import logging
 import datetime as dt

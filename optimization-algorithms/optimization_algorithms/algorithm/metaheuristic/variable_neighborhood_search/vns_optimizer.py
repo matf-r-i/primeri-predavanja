@@ -3,20 +3,17 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
+from copy import deepcopy
 from random import choice
 from random import random
+from typing import TypeVar, Generic
+from typing import Generic
 
-import copy
-
-from typing import Dict, TypeVar, Generic
-
-from metaheuristic import Metaheuristic
-
+from utils.logger import logger
 from target_problem.target_problem import TargetProblem
-
 from target_solution.target_solution import TargetSolution
-
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
+from metaheuristic import Metaheuristic
 
 S_co = TypeVar("S_co", covariant=True, bound=TargetSolution) # and bound by TargetSolutionVnsSupport 
 
@@ -53,12 +50,12 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         :return: VnsOptimizer -- new VnsOptimizer instance with the same properties
         """
         vns_opt = VnsOptimizer(self.evaluations_max, self.seconds_max, self.random_seed, self.keep_all_solution_codes, 
-                copy.deepcopy(self.__target_problem), copy.deepcopy(self.__current_solution), self.__k_min, 
+                deepcopy(self.__target_problem), deepcopy(self.__current_solution), self.__k_min, 
                 self.__k_max, self.__max_local_optima, self.__local_search_type)
         vns_opt.__current_solution = self.__current_solution
         vns_opt.__k_current = self.__k_current
-        vns_opt.__local_optima = copy.deepcopy(self.__local_optima)
-        vns_opt.__shaking_counts = copy.deepcopy(self.__shaking_counts)
+        vns_opt.__local_optima = deepcopy(self.__local_optima)
+        vns_opt.__shaking_counts = deepcopy(self.__shaking_counts)
         return vns_opt
 
     def copy(self):
@@ -75,6 +72,14 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         :return: instance of the TargetSolution class subtype -- current solution of the problem 
         """
         return self.__current_solution
+
+    @current_solution.setter
+    def current_solution(self, value:S_co)->None:
+        """
+        Property setter for for the current solution used during VNS execution
+        :param value:S_co -- the current solution
+        """
+        self.__current_solution = value
 
     @property
     def k_min(self)->int:
@@ -105,7 +110,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         Selecting shaking point for the VNS algorithm
         :return: list[str] -- list with solution codes that represents start of the shaking 
         """
-        return [self.current_solution.solution_code]
+        return [self.current_solution.solution_code()]
 
     def __add_local_optima__(self, current_solution:TargetSolution)->bool:
         """
@@ -113,16 +118,16 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         :param current_solution:TargetSolution -- solution to be added to local optima structure
         :return: bool -- if adding is successful e.g. current_solution is new element in the structure
         """       
-        if current_solution.solution_code in self.__local_optima:
+        if current_solution.solution_code() in self.__local_optima:
             return False
         if len(self.__local_optima) >= self.__max_local_optima:
             # removing random, just taking care not to remove the best ones
             while True:
                 code = random.choice(self.__local_optima.keys())
-                if code != self.best_solution.solution_code:
+                if code != self.best_solution.solution_code():
                     del self.__local_optima[code]
                     break
-        self.__local_optima[current_solution.solution_code]=current_solution.fitness_value
+        self.__local_optima[current_solution.solution_code()]=current_solution.fitness_value
         return True
 
     def __shaking_ls__(self)->bool:
@@ -130,7 +135,10 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         Shaking phase of the VNS algorithm
         :return: bool -- if result obtain by shaking is better than initial
         """
-        shaking_points = self.__select_shaking_points__()
+        #logger.debug('__shaking_ls__ - start')
+        #logger.debug('Current: {}'.format(self.current_solution))
+        #logger.debug('Best: {}'.format(self.current_solution))
+        shaking_points:list[str] = self.__select_shaking_points__()
         if not self.current_solution.vns_randomize(self.__k_current, shaking_points):
             return False
         if self.__k_current in self.__shaking_counts:
@@ -148,10 +156,10 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         logger.debug(self.current_solution)
         if self.keep_all_solution_codes:
             self.all_solution_codes.add(self.current_solution)
-        new_is_better = self.is_first_solution_better(self.current_solution, self.best_solution);
+        new_is_better = self.is_first_solution_better(self.current_solution, self.best_solution)
         if new_is_better is None:
             logger.debug("Same solution quality, generating random true with probability 0.5");
-            return random.random() < 0.5
+            return random() < 0.5
         return new_is_better
 
     def main_loop_iteration(self)->None:

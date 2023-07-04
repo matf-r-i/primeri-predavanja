@@ -3,24 +3,20 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-import copy
-
+from copy import deepcopy
+from random import choice
 from random import random
-
 from bitstring import BitArray
 
 
 from utils.logger import logger
-
 from target_problem.target_problem import TargetProblem
-
 from target_solution.target_solution import TargetSolution
-
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
-
 from max_ones_problem import MaxOnesProblem
 
-class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
+#class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
+class MaxOnesSolution(TargetSolution):
     
     def __init__(self, problem:MaxOnesProblem)->None:
         """
@@ -29,16 +25,14 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         super().__init__("MaxOnesSolution", fitness_value=None, objective_value=None, is_feasible=False)
         self.__problem:MaxOnesProblem = problem
         self.__representation:BitArray = BitArray()
-        self.__representation_str = str(self.__representation)
 
     def __copy__(self):
         """
         Internal copy of the MaxOnesSolution problem
         :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
-        sol = MaxOnesSolution(copy.deepcopy(self.__problem))
-        sol.__representation = copy.deepcopy(self.__representation)
-        sol.__representation_str = self.__representation_str
+        sol = MaxOnesSolution(deepcopy(self.__problem))
+        sol.__representation = deepcopy(self.__representation)
         return sol
 
     def copy(self):
@@ -105,7 +99,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Solution code of the target solution
         :return: str -- solution code 
         """
-        return self.__representation_str
+        return str(self.representation)
 
     def calculate_fitness(self)->float:
         """
@@ -118,7 +112,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
                 fit += 1
         return fit
 
-    def __representation_str_to_bit_array__(self, representation_str:str)->BitArray:
+    def __representation_string_to_bit_array__(self, representation_str:str)->BitArray:
         """
         Obtain BitArray representation from string representation
         :param representation_str:str -- solution's representation as string
@@ -130,7 +124,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         """
         Recalculation of the solution code for the target solution
         """
-        self.__representation_str = str(self.representation)
+        return
 
     def solution_code_distance(solution_code_1:str, solution_code_2:str)->float:
         """
@@ -138,8 +132,8 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param solution_code_1:str -- solution code for the first solution
         :param solution_code_2:str -- solution code for the second solution
         """
-        rep_1:BitArray = self.__representation_str_to_bit_array__(solution_code_1)
-        rep_2:BitArray = self.__representation_str_to_bit_array__(solution_code_1)
+        rep_1:BitArray = self.__representation_string_to_bit_array__(solution_code_1)
+        rep_2:BitArray = self.__representation_string_to_bit_array__(solution_code_1)
         result = (rep_1 ^ rep_2).count(True)
         return result 
 
@@ -158,7 +152,10 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
                 best_fv = new_fv
             self.representation.invert(i)
         if best_ind is not None:
+            self.representation.invert(best_ind)
             self.evaluate()
+            if self.fitness_value != best_fv:
+                raise Exception('Fitness calculation within best_1_change function is not correct.')
             return True
         return False
 
@@ -170,9 +167,32 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 
         """    
-        raise NotImplementedError('vns_randomize')
-
-
+        tries:int = 0
+        limit:int = 1000000
+        while tries < limit:
+            positions:list[int] = []
+            for i in range(0,k):
+                positions.append(choice(range(k)))
+            new_representation:BitArray = deepcopy(self.representation)
+            for p in positions:
+                new_representation.invert(p)
+            all_ok:bool = True
+            logger.debug(solution_codes)
+            for sc in solution_codes:
+                sc_representation = self.__representation_string_to_bit_array__(sc)
+                if sc_representation is not None and sc_representation != '':
+                    comp_result:int = (sc_representation ^ new_representation).count(value=1)
+                    if comp_result > k:
+                        all_ok = False
+            if all_ok:
+                break
+        if tries < limit:
+            self.representation = new_representation
+            self.evaluate()
+            return True
+        else:
+            return False 
+        
     def string_representation(self, delimiter:str='\n', indentation:int=0, indentation_symbol:str='   ', 
             group_start:str='{', group_end:str='}',)->str:
         """
@@ -196,6 +216,10 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         s += delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
+        s += 'representation=' + str(self.__representation)
+        s += delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
         s += group_end 
         return s
 
@@ -204,7 +228,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         String representation of the target solution instance
         :return: str -- string representation of the target solution instance
         """
-        return self.string_representation('|', 0, '', '{', '}')
+        return self.string_representation('\n', 0, '   ', '{', '}')
 
     def __repr__(self)->str:
         """
@@ -219,5 +243,5 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param spec: str -- format specification
         :return: str -- formatted target solution instance
         """
-        return self.string_representation('|')
+        return self.string_representation('\n', 0, '   ', '{', '}')
 

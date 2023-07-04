@@ -3,24 +3,16 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-import random
-
-import copy
-
+from random import random
+from copy import deepcopy
+from datetime import datetime
 from abc import ABCMeta, abstractmethod
 
-from datetime import datetime
-
 from utils.logger import logger
-
 from algorithm.algorithm import Algorithm
-
 from target_problem.target_problem import TargetProblem
-
 from solution_code_distance_cache_control_statistics import SolutionCodeDistanceCacheControlStatistics
-
 from target_solution.target_solution import TargetSolution
-
 
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
@@ -55,15 +47,15 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Internal copy of the current metaheuristic
         :return: Metaheuristic -- new Metaheuristic instance with the same properties
         """
-        met = Metaheuristic(self.__name, self.__evaluations_max, copy.deepcopy(self.__target_problem))
+        met = Metaheuristic(self.__name, self.__evaluations_max, deepcopy(self.__target_problem))
         met.__random_seed = self.__random_seed
         met.__iteration = self.__iteration
         met.__iteration_best_found = self.__iteration_best_found
         met.__second_best_found = self.__second_best_found
-        met.__best_solution = copy.deepcopy(self.__best_solution)
+        met.__best_solution = deepcopy(self.__best_solution)
         met.__keep_all_solution_codes = self.__keep_all_solution_codes
-        met.__all_solution_codes = copy.deepcopy(self.__all_solution_codes)
-        met.__solution_code_distance_cache_cs = copy.deepcopy(self.__solution_code_distance_cache_cs)
+        met.__all_solution_codes = deepcopy(self.__all_solution_codes)
+        met.__solution_code_distance_cache_cs = deepcopy(self.__solution_code_distance_cache_cs)
         return met
 
     @abstractmethod
@@ -196,8 +188,14 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             raise ValueError('Information if minimization or maximization is set within metaheuristic target problem'
                     'have to be defined.')
         is_minimization:bool = self.target_problem.is_minimization
-        fit1 = sol1.fitness_value;
-        fit2 = sol2.fitness_value;
+        if sol1 is None:
+            fit1:float = None
+        else:
+            fit1:float = sol1.calculate_fitness();
+        if sol2 is None:
+            fit2:float = None
+        else:
+            fit2:float = sol2.calculate_fitness();
         # with fitness is better than without fitness
         if fit1 is None:
             if fit2 is not None:

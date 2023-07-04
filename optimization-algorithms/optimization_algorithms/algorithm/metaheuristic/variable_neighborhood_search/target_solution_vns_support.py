@@ -16,4 +16,5 @@ class TargetSolutionVnsSupport(metaclass=ABCMeta):
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 
         """        
-        raise NotImplementedError
+        raise NotImplemented
+

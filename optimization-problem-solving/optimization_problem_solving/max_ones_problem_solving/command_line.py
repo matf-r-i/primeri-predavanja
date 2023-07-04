@@ -1,6 +1,5 @@
-""" The :mod:`command_line` module is used for obtaining execution parameters for execution of the 
-    optimizers for max ones problem.
-
+""" The :mod:`command_line` module is used for obtaining execution parameters for execution of the optimizers for max 
+        ones problem.
 """
 
 import path
@@ -11,10 +10,7 @@ sys.path.append(directory.parent.parent)
 import os
 import logging
 import datetime as dt
-
 from argparse import ArgumentParser
-
-from collections import namedtuple
 
 def parse_arguments():
         parser = ArgumentParser()

@@ -4,9 +4,9 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-import random
+from random import randrange
+from random import seed
 from datetime import datetime
-from collections import namedtuple
 
 # Script should be executed from repository root folder
 OPTIMIZATION_ALGORITHM_DIR = './optimization-algorithms/optimization_algorithms'
@@ -15,16 +15,11 @@ sys.path.append(abs_path)
 # Previous code should be commented out when pip install started to work
 
 from utils.files import ensure_dir 
-
 from utils.logger import logger
-
 from command_line import parse_arguments
-
-from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
-
 from max_ones_problem_solving.max_ones_problem import MaxOnesProblem
-
 from max_ones_problem_solving.max_ones_solution import MaxOnesSolution
+from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
 
 def main():
     """ 
@@ -78,10 +73,10 @@ def main():
                 output_file.write("RandomSeed is predefined. Predefined seed value:  %d\n" % r_seed)
                 random.seed(r_seed)
             else:
-                r_seed = random.randrange(sys.maxsize)
+                r_seed = randrange(sys.maxsize)
                 logger.info("RandomSeed is not predefined. Generated seed value:  %d" % r_seed)
                 output_file.write("RandomSeed is not predefined. Generated seed value:  %d\n" % r_seed)
-                random.seed(r_seed)
+                seed(r_seed)
             # problem to be solved
             problem = MaxOnesProblem(parameters.inputFilePath)
             problem.load_from_file(parameters.inputFormat)

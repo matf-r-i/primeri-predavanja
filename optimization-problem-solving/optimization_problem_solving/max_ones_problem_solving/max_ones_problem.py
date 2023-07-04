@@ -4,7 +4,6 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
 from utils.logger import logger
-
 from target_problem.target_problem import TargetProblem
 
 class MaxOnesProblem(TargetProblem):
