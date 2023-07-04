@@ -9,26 +9,26 @@ from abc import ABCMeta, abstractmethod
 
 from datetime import datetime
 
+from utils.logger import logger
+
 from target_problem.target_problem import TargetProblem
 
 class Algorithm(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, target_problem:TargetProblem=None)->None:
+    def __init__(self, name:str, evaluations_max:int, seconds_max:int, target_problem:TargetProblem)->None:
         """
         Create new Algorithm instance
         :param name:str -- name of the algorithm
-        :param is_minimization:bool -- is minimum is seek for
         :param evaluations_max:int -- maximum number of evaluations for algorithm execution
         :param seconds_max:int -- maximum number of seconds for algorithm execution
         :param target_problem:TargetProblem -- problem to be solved
         """
-        self.__name = name
-        self.__is_minimization = is_minimization
-        self.__evaluations_max = evaluations_max
-        self.__seconds_max = seconds_max
-        self.__target_problem = copy.copy(target_problem)
-        self.__evaluation = 0
+        self.__name:str = name
+        self.__evaluations_max:int = evaluations_max
+        self.__seconds_max:int = seconds_max
+        self.__target_problem:TargetProblem = target_problem
+        self.__evaluation:int = 0
         self.__execution_started:datetime = None
         self.__execution_ended:datetime = None
 
@@ -38,10 +38,9 @@ class Algorithm(metaclass=ABCMeta):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        alg = Algorithm(self.__name, self.__is_minimization, self.__evaluations_max, self.__seconds_max, 
-                self.__target_problem)
+        alg = Algorithm(self.__name, self.__evaluations_max, self.__seconds_max, copy.deepcopy(self.__target_problem))
         alg.__evaluation = self.__evaluation
-        alg.__execution_started = self.__execution_started
+        alg.__execution_started = self.__execution_started # datetime is not mutable, so deepcopy is not required
         alg.__execution_ended = self.__execution_ended
         return alg
 
@@ -60,14 +59,6 @@ class Algorithm(metaclass=ABCMeta):
         :return: str -- name of the algorithm instance 
         """
         return self.__name
-
-    @property
-    def is_minimization(self)->bool:
-        """
-        Property getter for the name of the algorithm
-        :return: bool -- if minimization takes place 
-        """
-        return self.__is_minimization
 
     @property
     def evaluations_max(self)->int:
@@ -158,9 +149,6 @@ class Algorithm(metaclass=ABCMeta):
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'name=' + self.name + delimiter
-        for i in range(0, indentation):
-            s += indentation_symbol  
-        s += 'is_minimization=' + str(self.is_minimization) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'evaluations_max=' + str(self.evaluations_max) + delimiter

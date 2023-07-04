@@ -8,13 +8,15 @@ from abc import ABCMeta, abstractmethod
 class TargetProblem(metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, name:str, file_path:str)->None:
+    def __init__(self, name:str, is_minimization:bool, file_path:str)->None:
         """
         Create new TargetProblem instance
         :param name:str -- name of the target problem
+        :param is_minimization:bool --should minimum or maximum be determined
         :param file_path:str -- path of the file with data for the target problem instance 
         """
         self.__name:str = name
+        self.__is_minimization = is_minimization
         self.__file_path:str = file_path
         self.__dimension:int = None
 
@@ -24,7 +26,7 @@ class TargetProblem(metaclass=ABCMeta):
         Internal copy of the current target problem
         :return: TargetProblem -- new TargetProblem instance with the same properties
         """
-        pr = TargetProblem(self.__name, self.__file_path)
+        pr = TargetProblem(self.__name, self.__is_minimization, self.__file_path)
         pr.dimension = self.dimension
         return pr
 
@@ -43,6 +45,14 @@ class TargetProblem(metaclass=ABCMeta):
         :return: str -- name of the target problem instance 
         """
         return self.__name
+
+    @property
+    def is_minimization(self)->bool:
+        """
+        Property getter for the name of the algorithm
+        :return: bool -- if minimization takes place 
+        """
+        return self.__is_minimization
 
     @property
     def file_path(self)->str:
@@ -95,6 +105,9 @@ class TargetProblem(metaclass=ABCMeta):
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'name=' + self.name + delimiter
+        for i in range(0, indentation):
+            s += indentation_symbol  
+        s += 'is_minimization=' + str(self.is_minimization) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'file path=' + str(self.file_path) + delimiter

@@ -8,10 +8,10 @@ class SolutionCodeDistanceCacheControlStatistics:
         :param requests_count:int -- count of the overall cache requests 
         :param cache:dict -- cache that stores distances among solution codes
         """
-        self.__is_caching = is_caching
-        self.__hit_count = hit_count
-        self.__requests_count = requests_count
-        self.__cache = cache
+        self.__is_caching:bool = is_caching
+        self.__hit_count:int = hit_count
+        self.__requests_count:int = requests_count
+        self.__cache:dict[dict[str]] = cache
 
     def __copy__(self):
         """

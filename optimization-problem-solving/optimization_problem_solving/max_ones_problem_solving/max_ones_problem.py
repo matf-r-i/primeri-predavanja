@@ -14,7 +14,7 @@ class MaxOnesProblem(TargetProblem):
         Create new MaxOnesProblem instance
         :param file_path:str -- path of the file with data for the parget problem instance 
         """
-        super().__init__("MaxOnesProblem", file_path)
+        super().__init__("MaxOnesProblem", False, file_path)
 
     def __copy__(self):
         """
@@ -22,7 +22,6 @@ class MaxOnesProblem(TargetProblem):
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
         pr = MaxOnesProblem(self.file_path)
-        pr.dimension = self.dimension
         return pr
 
     def copy(self):
@@ -32,7 +31,7 @@ class MaxOnesProblem(TargetProblem):
         """
         return self.__copy__()
 
-    def load_from_file(self, data_format:str)->None:
+    def load_from_file(self, data_format:str='txt')->None:
         """
         Read target problem data from file
         :param data_format: str -- data format of the file

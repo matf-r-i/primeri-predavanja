@@ -15,7 +15,7 @@ class TargetSolution(metaclass=ABCMeta):
     evaluation_cache_control_statistics:EvaluationCacheControlStatistics = EvaluationCacheControlStatistics()
     
     @abstractmethod
-    def __init__(self, name:str, fitness_value:float=None, objective_value:float=None, is_feasible:bool=False)->None:
+    def __init__(self, name:str, fitness_value:float, objective_value:float, is_feasible:bool)->None:
         """
         Create new TargetSolution instance
         :param name:str -- name of the target solution
@@ -33,7 +33,7 @@ class TargetSolution(metaclass=ABCMeta):
         Internal copy of the current target solution
         :return: TargetSolution -- new TargetSolution instance with the same properties
         """
-        ts = TargetSolution(self.__name, self.__fitness_value, self.__objective_value)
+        ts = TargetSolution(self.__name, self.__fitness_value, self.__objective_value, self.__is_feasible)
         return ts
 
     @abstractmethod

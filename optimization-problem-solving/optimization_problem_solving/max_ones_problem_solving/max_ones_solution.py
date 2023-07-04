@@ -22,12 +22,12 @@ from max_ones_problem import MaxOnesProblem
 
 class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     
-    def __init__(self, problem:MaxOnesProblem=None)->None:
+    def __init__(self, problem:MaxOnesProblem)->None:
         """
         Create new MaxOnesSolution instance
         """
-        super().__init__("MaxOnesSolution")
-        self.__problem:MaxOnesProblem = copy.copy(problem)
+        super().__init__("MaxOnesSolution", fitness_value=None, objective_value=None, is_feasible=False)
+        self.__problem:MaxOnesProblem = problem
         self.__representation:BitArray = BitArray()
         self.__representation_str = str(self.__representation)
 
@@ -37,8 +37,8 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
         sol = MaxOnesSolution()
-        sol.__problem = copy.copy(self.__problem)
-        sol.__representation = self.__representation
+        sol.__problem = self.__problem
+        sol.__representation = copy.deepcopy(self.__representation)
         sol.__representation_str = self.__representation_str
         return sol
 

@@ -23,30 +23,29 @@ from target_solution.target_solution import TargetSolution
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
     @abstractmethod
-    def __init__(self, name:str, is_minimization:bool, evaluations_max:int=0, seconds_max:int=0, random_seed:int=0, 
-            keep_all_solution_codes:bool=False, target_problem:TargetProblem=None)->None:
+    def __init__(self, name:str, evaluations_max:int, seconds_max:int, random_seed:int, 
+            keep_all_solution_codes:bool, target_problem:TargetProblem)->None:
         """
         Create new Metaheuristic instance
         :name:str -- name of the metaheuristic
-        :param is_minimization:bool -- if minimum is looked for
         :param evaluations_max:int -- maximum number of evaluations for algorithm execution
         :param seconds_max:int -- maximum number of seconds for algorithm execution
         :param random_seed:int -- random seed for metaheuristic execution
         :param keep_all_solution_codes:bool -- if all solution codes will be remembered        
         :param target_problem:TargetProblem -- problem to be solved
         """
-        super().__init__(name, is_minimization, evaluations_max, seconds_max, target_problem)
+        super().__init__(name, evaluations_max, seconds_max, target_problem)
         if random_seed is not None and isinstance(random_seed, int) and random_seed != 0:
-            self.__random_seed = random_seed
+            self.__random_seed:int = random_seed
         else:
-            self.__random_seed = random.randrange(sys.maxsize)
-        self.__iteration = 0
-        self.__iteration_best_found = 0
-        self.__second_best_found = 0.0
-        self.__best_solution = None
-        self.__keep_all_solution_codes = keep_all_solution_codes
+            self.__random_seed:int = random.randrange(sys.maxsize)
+        self.__iteration:int = 0
+        self.__iteration_best_found:int = 0
+        self.__second_best_found:float = 0.0
+        self.__best_solution:TargetSolution = None
+        self.__keep_all_solution_codes:bool = keep_all_solution_codes
         self.__all_solution_codes:set[str] = set()
-        self.__solution_code_distance_cache_cs = copy.copy(SolutionCodeDistanceCacheControlStatistics(is_caching=True))
+        self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
     def __copy__(self):
@@ -54,15 +53,15 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Internal copy of the current metaheuristic
         :return: Metaheuristic -- new Metaheuristic instance with the same properties
         """
-        met = Metaheuristic(self.__name, self.__is_minimization, self.__evaluations_max, self.__target_problem)
+        met = Metaheuristic(self.__name, self.__evaluations_max, copy.deepcopy(self.__target_problem))
         met.__random_seed = self.__random_seed
         met.__iteration = self.__iteration
         met.__iteration_best_found = self.__iteration_best_found
         met.__second_best_found = self.__second_best_found
-        met.__best_solution = copy.copy(self.__best_solution)
+        met.__best_solution = copy.deepcopy(self.__best_solution)
         met.__keep_all_solution_codes = self.__keep_all_solution_codes
-        met.__all_solution_codes = copy.copy(self.__all_solution_codes)
-        met.__solution_code_distance_cache_cs = copy.copy(self.__solution_code_distance_cache_cs)
+        met.__all_solution_codes = copy.deepcopy(self.__all_solution_codes)
+        met.__solution_code_distance_cache_cs = copy.deepcopy(self.__solution_code_distance_cache_cs)
         return met
 
     @abstractmethod
@@ -183,8 +182,15 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Checks if first solution is better than the second one
         :param sol1:TargetSolution -- first solution
         :param sol2:TargetSolution -- second solution
-        :return: bool -- true if first solution is better, false if first solution is worse, None if fitnesses of both solutions are equal
+        :return: bool -- true if first solution is better, false if first solution is worse, None if fitnesses of both 
+                solutions are equal
         """
+        if self.target_problem is None:
+            raise ValueError('Target problem have to be defined within metaheuristic.')
+        if self.target_problem.is_minimization is None:
+            raise ValueError('Information if minimization or maximization is set within metaheuristic target problem'
+                    'have to be defined.')
+        is_minimization:bool = self.target_problem.is_minimization
         fit1 = sol1.fitness_value;
         fit2 = sol2.fitness_value;
         # with fitness is better than without fitness
@@ -196,7 +202,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         elif fit2 is None:
             return True
         # if better, return true
-        if (self.is_minimization and fit1 < fit2) or (not self.is_minimization and fit1 > fit2):
+        if (is_minimization and fit1 < fit2) or (is_minimization and fit1 > fit2):
             return True
         # if same fitness, return None
         if fit1 == fit2:

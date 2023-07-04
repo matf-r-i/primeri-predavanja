@@ -91,9 +91,9 @@ def main():
             initial_solution.random_init()
             logger.debug('Initial solution: {}'.format(initial_solution))
             # optimizer used for solving problem 
-            optimizer = VnsOptimizer(is_minimization=is_minimization, evaluations_max=parameters.maxNumberIterations, 
+            optimizer = VnsOptimizer(evaluations_max=parameters.maxNumberIterations, 
                     seconds_max=parameters.maxTimeForExecutionSeconds, random_seed=r_seed, 
-                    keep_all_solution_codes=False, target_problem=problem, initial_solution=initial_solution)
+                    keep_all_solution_codes=False, initial_solution=initial_solution)
             logger.debug('Optimizer: {}'.format(optimizer))
             optimizer.optimize()
             logger.info('Best solution: {}'.format(optimizer.best_solution))            
