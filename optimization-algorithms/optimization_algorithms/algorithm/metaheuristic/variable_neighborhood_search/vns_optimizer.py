@@ -131,7 +131,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         :return: bool -- if result obtain by shaking is better than initial
         """
         shaking_points = self.__select_shaking_points__()
-        if not self.current_solution.randomize(self.__k_current, shaking_points):
+        if not self.current_solution.vns_randomize(self.__k_current, shaking_points):
             return False
         if self.__k_current in self.__shaking_counts:
             self.__shaking_counts[self.__k_current] += 1
@@ -158,7 +158,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         """
         One iteration within main loop of the VNS algorithm
         """
-        while self.shaking():
+        while self.__shaking_ls__():
             self.copy_to_best_solution(self.current_solution)
             self.__k_current = self.k_min
         if self.__k_current < self.k_max:

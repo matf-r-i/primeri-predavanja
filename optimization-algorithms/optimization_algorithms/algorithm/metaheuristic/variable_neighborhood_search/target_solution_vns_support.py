@@ -8,9 +8,10 @@ from abc import ABCMeta, abstractmethod
 class TargetSolutionVnsSupport(metaclass=ABCMeta):
     
     @abstractmethod
-    def randomize(k:int, solution_codes:list[str])->bool:
+    def vns_randomize(k:int, solution_codes:list[str])->bool:
         """
-        Randomizes solution codes 
+        Random VNS shaking of k parts such that new solution code does not differ more than k from all solution codes 
+        inside shakingPoints
         :param k:int -- parameter for VNS
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 

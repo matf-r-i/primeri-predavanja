@@ -11,6 +11,8 @@ from abc import ABCMeta, abstractmethod
 
 from datetime import datetime
 
+from utils.logger import logger
+
 from algorithm.algorithm import Algorithm
 
 from target_problem.target_problem import TargetProblem
@@ -165,8 +167,11 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Main loop of the metaheuristic algorithm
         """
-        while self.evaluation < self.evaluations_max and self.elapsed_seconds() < self.__seconds_max:
-                main_loop_iteration(self)
+        while (self.evaluations_max == 0 or self.evaluation < self.evaluations_max) and (self.seconds_max == 
+                0 or self.elapsed_seconds() < self.seconds_max):
+            self.main_loop_iteration()
+            logger.debug('Iteration:{}, Evaluations:{}, Bit code:{}'.format(self.iteration, self.evaluation,
+                str(self.best_solution.representation)))
 
     def optimize(self)->None:
         """
@@ -202,7 +207,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         elif fit2 is None:
             return True
         # if better, return true
-        if (is_minimization and fit1 < fit2) or (is_minimization and fit1 > fit2):
+        if (is_minimization and fit1 < fit2) or (not is_minimization and fit1 > fit2):
             return True
         # if same fitness, return None
         if fit1 == fit2:

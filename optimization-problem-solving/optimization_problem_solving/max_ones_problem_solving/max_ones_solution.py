@@ -36,8 +36,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Internal copy of the MaxOnesSolution problem
         :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
-        sol = MaxOnesSolution()
-        sol.__problem = self.__problem
+        sol = MaxOnesSolution(copy.deepcopy(self.__problem))
         sol.__representation = copy.deepcopy(self.__representation)
         sol.__representation_str = self.__representation_str
         return sol
@@ -149,80 +148,29 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Change the best one within solution 
         :return: bool -- if the best one is changed, or not
         """        
+        best_ind:int = None
+        best_fv:float = self.fitness_value
+        for i in range(0, len(self.representation)):
+            self.representation.invert(i) 
+            new_fv = self.calculate_fitness()
+            if new_fv > best_fv:
+                best_ind = i
+                best_fv = new_fv
+            self.representation.invert(i)
+        if best_ind is not None:
+            self.evaluate()
+            return True
+        return False
+
+    def vns_randomize(self, k:int, solution_codes:list[str])->bool:
         """
-            int besti = -1, bestj = -1, tmp;
-            double bestfv = fitnessValue.Value;
-
-            for (int i = 1; i < permutation.Length; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    //zamenom na mestima i i j azuriraju se okolni susedi oko i i j, dakle (i-1,i) i (i,i+1) kao i (j-1,j) i (j,j+1)
-                    //specijalno kada su i i j uzastopni - racunica je malo drugacija (jednostavnija)
-                    int iPrev = i - 1, iNext = i + 1, jPrev = j - 1, jNext = j + 1;
-                    if (i == 0)
-                        iPrev = permutation.Length - 1;
-                    else if (i == permutation.Length - 1)
-                        iNext = 0;
-
-                    if (j == 0)
-                        jPrev = permutation.Length - 1;
-                    else if (j == permutation.Length - 1)
-                        jNext = 0;
-                    double lostCost = 0;
-                    double gainedCost = 0;
-                    if (i == jPrev)
-                    {
-                        lostCost = problem.DistanceMatrix[permutation[j]][permutation[jNext]] + problem.DistanceMatrix[permutation[iPrev]][permutation[i]];
-                        gainedCost = problem.DistanceMatrix[permutation[i]][permutation[jNext]] + problem.DistanceMatrix[permutation[iPrev]][permutation[j]];
-                    }
-                    else if (i == jNext)
-                    {
-                        lostCost = problem.DistanceMatrix[permutation[jPrev]][permutation[j]] + problem.DistanceMatrix[permutation[i]][permutation[iNext]];
-                        gainedCost = problem.DistanceMatrix[permutation[jPrev]][permutation[i]] + problem.DistanceMatrix[permutation[j]][permutation[iNext]];
-                    }
-                    else
-                    {
-
-                        lostCost = problem.DistanceMatrix[permutation[iPrev]][permutation[i]] + problem.DistanceMatrix[permutation[i]][permutation[iNext]]
-                            + problem.DistanceMatrix[permutation[jPrev]][permutation[j]] + problem.DistanceMatrix[permutation[j]][permutation[jNext]];
-                        gainedCost = problem.DistanceMatrix[permutation[iPrev]][permutation[j]] + problem.DistanceMatrix[permutation[j]][permutation[iNext]]
-                            + problem.DistanceMatrix[permutation[jPrev]][permutation[i]] + problem.DistanceMatrix[permutation[i]][permutation[jNext]];
-                    }
-                    double newfv = fitnessValue.Value + gainedCost - lostCost;
-
-                    if (newfv < bestfv)
-                    {
-                        bestfv = newfv;
-                        besti = i;
-                        bestj = j;
-                    }
-                }
-            }
-            if (besti != -1)
-            {
-                tmp = permutation[besti];
-                permutation[besti] = permutation[bestj];
-                permutation[bestj] = tmp;
-                Evaluate();
-                if (bestfv != fitnessValue.Value)
-                    throw new Exception("Fast best 1 improvement does not work well.");
-                //Debug.Assert(bestfv == fitnessValue.Value);
-                //Log.Debug($"Improved to {@bestfv}");
-                return true;
-            }
-            return false;
-        """
-        raise NotImplementedError('best_1_change')
-
-    def randomize(k:int, solution_codes:list[str])->bool:
-        """
-        Randomizes solution codes 
+        Random VNS shaking of k parts such that new solution code does not differ more than k from all solution codes 
+        inside shakingPoints 
         :param k:int -- parameter for VNS
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 
         """    
-        raise NotImplementedError('randomize')
+        raise NotImplementedError('vns_randomize')
 
 
     def string_representation(self, delimiter:str='\n', indentation:int=0, indentation_symbol:str='   ', 
@@ -244,7 +192,8 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         s += delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += self.problem.string_representation(delimiter, indentation+1, '', '{', '}')
+        s += 'problem=' + self.problem.string_representation(delimiter, indentation+1, indentation_symbol, '{', '}')
+        s += delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 
