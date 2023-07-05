@@ -10,7 +10,12 @@ sys.path.append(directory.parent.parent)
 import os
 import logging
 import datetime as dt
+from collections import namedtuple
 from argparse import ArgumentParser
+
+DefaultCommandLineParameters = namedtuple('DefaultCommandLineParams', ['name', 'age', 'DOB'])
+
+DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('Nandini', '19', '2541997')
 
 def parse_arguments():
         parser = ArgumentParser()

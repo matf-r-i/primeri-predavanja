@@ -7,6 +7,7 @@ sys.path.append(directory.parent.parent)
 from random import randrange
 from random import seed
 from datetime import datetime
+from collections import namedtuple
 
 # Script should be executed from repository root folder
 OPTIMIZATION_ALGORITHM_DIR = './optimization-algorithms/optimization_algorithms'
@@ -16,6 +17,7 @@ sys.path.append(abs_path)
 
 from utils.files import ensure_dir 
 from utils.logger import logger
+from command_line import DEFAULT_COMMAND_LINE_PARAMETERS
 from command_line import parse_arguments
 from max_ones_problem_solving.max_ones_problem import MaxOnesProblem
 from max_ones_problem_solving.max_ones_solution import MaxOnesSolution
@@ -27,6 +29,7 @@ def main():
     """
     logger.debug('Solver started.')    
     try:
+        parameters = DEFAULT_COMMAND_LINE_PARAMETERS
         parameters = parse_arguments()        
         logger.info('Execution parameters: {}'.format(parameters))
         if parameters.algorithm == 'vns':

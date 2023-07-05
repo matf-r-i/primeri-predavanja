@@ -15,8 +15,7 @@ from target_solution.target_solution import TargetSolution
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
 from max_ones_problem import MaxOnesProblem
 
-#class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
-class MaxOnesSolution(TargetSolution):
+class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     
     def __init__(self, problem:MaxOnesProblem)->None:
         """
@@ -168,7 +167,7 @@ class MaxOnesSolution(TargetSolution):
         :return: bool -- if randomization is successful 
         """    
         tries:int = 0
-        limit:int = 1000000
+        limit:int = 10000
         while tries < limit:
             positions:list[int] = []
             for i in range(0,k):
@@ -177,7 +176,7 @@ class MaxOnesSolution(TargetSolution):
             for p in positions:
                 new_representation.invert(p)
             all_ok:bool = True
-            logger.debug(solution_codes)
+            #logger.debug(solution_codes)
             for sc in solution_codes:
                 sc_representation = self.__representation_string_to_bit_array__(sc)
                 if sc_representation is not None and sc_representation != '':

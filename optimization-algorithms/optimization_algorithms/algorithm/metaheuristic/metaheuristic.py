@@ -250,8 +250,11 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             dist = TargetSolution.solution_code_distance(code_x, code_y)
             return dist
 
+    def wtrite_to_output():
+        pass
+
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
-        group_end:str ='}')->str:
+            group_end:str ='}')->str:
         """
         String representation of the target solution instance
         :param delimiter: str -- delimiter between fields

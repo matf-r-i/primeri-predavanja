@@ -153,13 +153,15 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         else:
             raise ValueError( 'Value \'{} \' for VNS local_search_type is not supported'.format(
                     self.__local_search_type))
-        logger.debug(self.current_solution)
         if self.keep_all_solution_codes:
             self.all_solution_codes.add(self.current_solution)
         new_is_better = self.is_first_solution_better(self.current_solution, self.best_solution)
         if new_is_better is None:
             logger.debug("Same solution quality, generating random true with probability 0.5");
             return random() < 0.5
+        #logger.debug('__shaking_ls__ - end')
+        #logger.debug('Current: {}'.format(self.current_solution))
+        #logger.debug('Best: {}'.format(self.current_solution))
         return new_is_better
 
     def main_loop_iteration(self)->None:
