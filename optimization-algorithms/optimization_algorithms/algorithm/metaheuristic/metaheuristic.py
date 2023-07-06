@@ -221,9 +221,9 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         :param solution:TargetSolution -- solution that is source for coping operation
         """
         if self.__best_solution is None:
-            self__best_solution = solution.copy()
+            self.__best_solution = solution.copy()
         else:
-            solution.copy_to(self__best_solution)
+            solution.copy_to(self.__best_solution)
         self.__second_best_found = (datetime.now() - self.execution_started).total_seconds()
         self.__iteration_best_found = self.iteration
 

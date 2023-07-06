@@ -30,8 +30,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Internal copy of the MaxOnesSolution problem
         :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
-        sol = MaxOnesSolution(deepcopy(self.__problem))
-        sol.__representation = deepcopy(self.__representation)
+        sol = deepcopy(self)
         return sol
 
     def copy(self):
@@ -46,7 +45,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Copy the MaxOnesSolution to the already existing destination MaxOnesSolution
         :param destination:MaxOnesSolution -- destination MaxOnesSolution
         """
-        return self.copy_to(destination)
+        destination = self.__copy__()
 
     @property
     def representation(self)->BitArray:
@@ -123,7 +122,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         :param representation_str:str -- solution's representation as string
         :return: BitArray -- solution's representation as BitArray
         """
-        return BitArray(representation_str)
+        ret:BitArray(bin=representation_str)
 
     def recalculate_solution_code(self)->None:
         """
