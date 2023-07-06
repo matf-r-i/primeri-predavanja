@@ -8,12 +8,12 @@ from random import choice
 from random import random
 from bitstring import BitArray
 
-
 from utils.logger import logger
 from target_problem.target_problem import TargetProblem
+from max_ones_problem import MaxOnesProblem
+from target_solution.target_solution import ObjectiveFitnessFeasibility
 from target_solution.target_solution import TargetSolution
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
-from max_ones_problem import MaxOnesProblem
 
 class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     
@@ -98,18 +98,24 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         Solution code of the target solution
         :return: str -- solution code 
         """
-        return str(self.representation)
+        s:str = ''
+        for bit in self.representation:
+            if bit:
+                s += '1'
+            else:
+                s += '0'
+        return s
 
-    def calculate_fitness(self)->float:
+    def calculate_fitness(self)->ObjectiveFitnessFeasibility:
         """
         Fitness calculation of the max ones solution
-        :return: float -- fitness value of the current solution 
+        :return: ObjectiveFitnessFeasibility -- objective value, fitness value and feasibility of the solution instance  
         """
-        fit = 0
+        ones_count = 0
         for i in range(self.problem.dimension):
             if self.representation[i]:
-                fit += 1
-        return fit
+                ones_count += 1
+        return ObjectiveFitnessFeasibility(ones_count, ones_count, True)
 
     def __representation_string_to_bit_array__(self, representation_str:str)->BitArray:
         """
@@ -145,7 +151,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         best_fv:float = self.fitness_value
         for i in range(0, len(self.representation)):
             self.representation.invert(i) 
-            new_fv = self.calculate_fitness()
+            new_fv = self.calculate_fitness().fitness_value
             if new_fv > best_fv:
                 best_ind = i
                 best_fv = new_fv

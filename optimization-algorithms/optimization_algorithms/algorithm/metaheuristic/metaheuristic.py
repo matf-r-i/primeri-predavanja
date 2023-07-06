@@ -141,7 +141,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Calculate time elapsed during execution of the metaheuristic algorithm 
         :return: float -- elapsed time (in seconds)
         """
-        delta = datetime.now() - self.__execution_started
+        delta = datetime.now() - self.execution_started
         return delta.total_seconds()
 
     def local_search_best_improvement(self, solution:TargetSolution)->TargetSolution:
@@ -159,8 +159,9 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Main loop of the metaheuristic algorithm
         """
+        elapsed_seconds:int = self.elapsed_seconds()
         while (self.evaluations_max == 0 or self.evaluation < self.evaluations_max) and (self.seconds_max == 
-                0 or self.elapsed_seconds() < self.seconds_max):
+                0 or elapsed_seconds < self.seconds_max):
             self.main_loop_iteration()
             logger.debug('Iteration:{}, Evaluations:{}, Bit code:{}'.format(self.iteration, self.evaluation,
                 str(self.best_solution.representation)))
@@ -169,10 +170,10 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Executing optimization by the metaheuristic algorithm
         """
-        self.__execution_started = datetime.now();
+        self.execution_started = datetime.now();
         self.init();
         self.main_loop();
-        self.__execution_ended = datetime.now();
+        self.execution_ended = datetime.now();
 
     def is_first_solution_better(self, sol1:TargetSolution, sol2:TargetSolution)->bool:
         """
@@ -191,11 +192,11 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         if sol1 is None:
             fit1:float = None
         else:
-            fit1:float = sol1.calculate_fitness();
+            fit1:float = sol1.calculate_fitness().fitness_value;
         if sol2 is None:
             fit2:float = None
         else:
-            fit2:float = sol2.calculate_fitness();
+            fit2:float = sol2.calculate_fitness().fitness_value;
         # with fitness is better than without fitness
         if fit1 is None:
             if fit2 is not None:
@@ -223,7 +224,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             self__best_solution = solution.copy()
         else:
             solution.copy_to(self__best_solution)
-        self.__second_best_found = (datetime.now() - self.__execution_started).total_seconds()
+        self.__second_best_found = (datetime.now() - self.execution_started).total_seconds()
         self.__iteration_best_found = self.iteration
 
     def calculate_solution_code_distance_try_consult_cache(self, code_x:str, code_y:str)->float:

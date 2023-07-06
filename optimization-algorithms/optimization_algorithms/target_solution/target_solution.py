@@ -3,9 +3,14 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
+from collections import namedtuple
 from abc import ABCMeta, abstractmethod
 
 from target_solution.evaluation_cache_control_statistics import EvaluationCacheControlStatistics
+
+ObjectiveFitnessFeasibility = namedtuple('ObjectiveFitnessFeasibility', ['objective_value', 
+                'fitness_value', 
+                'is_feasible'])
 
 class TargetSolution(metaclass=ABCMeta):
     
@@ -119,10 +124,10 @@ class TargetSolution(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def calculate_fitness(self)->float:
+    def calculate_fitness(self)->ObjectiveFitnessFeasibility:
         """
         Fitness calculation of the target solution
-        :return: float -- fitness value of the solution instance 
+        :return: ObjectiveFitnessFeasibility -- objective value, fitness value and feasibility of the solution instance 
         """
         raise NotImplementedError
 
@@ -154,11 +159,17 @@ class TargetSolution(metaclass=ABCMeta):
             if code in eccs.cache:
                 eccs.cache_hit_count += 1
                 return eccs.cache[code]
-            target_solution.fitness_value = target_solution.calculate_fitness()
+            triplet:ObjectiveFitnessFeasibility = target_solution.calculate_fitness()
+            target_solution.objective_value = triplet.objective_value
+            target_solution.fitness_value = triplet.fitness_value
+            target_solution.is_feasible = triplet.is_feasible
             eccs.cache[code] = target_solution
             return target_solution
         else:
-            target_solution.fitness_value = target_solution.calculate_fitness()
+            triplet:ObjectiveFitnessFeasibility = target_solution.calculate_fitness()
+            target_solution.objective_value = triplet.objective_value
+            target_solution.fitness_value = triplet.fitness_value
+            target_solution.is_feasible = triplet.is_feasible
             return target_solution
 
     def evaluate(self)->None:

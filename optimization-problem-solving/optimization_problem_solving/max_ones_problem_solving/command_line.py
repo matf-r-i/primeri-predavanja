@@ -20,7 +20,12 @@ DefaultCommandLineParameters = namedtuple('DefaultCommandLineParams', ['algorith
                 'inputFormat', 
                 'maxNumberIterations', 
                 'maxTimeForExecutionSeconds', 
-                'randomSeed'
+                'randomSeed',
+                'keepAllSolutionCodes',
+                'kMin',
+                'kMax',
+                'maxLocalOptima',
+                'localSearchType'
 ])
 
 DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('vns', 
@@ -28,9 +33,14 @@ DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('vns',
                 'outputs/max_ones_problem/dimension_25.txt', 
                 'inputs/max_ones_problem/dimension_25.txt', 
                 'txt', 
-                '0', 
-                '10', 
-                '0'
+                0, 
+                10, 
+                0,
+                False, 
+                1,
+                3,
+                5,
+                'local_search_best_improvement'
 )
 
 def parse_arguments():
@@ -57,6 +67,18 @@ def parse_arguments():
         parser_vns.add_argument('--randomSeed', type=int, default=0, 
                 help=("Random seed for the VNS execution. " 
                 "Value 0 means that random seed will be obtained from system timer.") )        
+        parser_vns.add_argument('--keepAllSolutionCodes', type=bool, default=False, 
+                help=("Should all solution codes be keep during metaheuristic execution.") )        
+        parser_vns.add_argument('--kMin', type=int, default=1, 
+                help=("VNS parameter k min.") )    
+        parser_vns.add_argument('--kMax', type=int, default=3, 
+                help=("VNS parameter k max.") )    
+        parser_vns.add_argument('--maxLocalOptima', type=int, default=3, 
+                help=("VNS parameter maximum number of local optima kept during execution.") )    
+        parser_vns.add_argument('--localSearchType', type=str, 
+                choices=['local_search_best_improvement', 'local_search_first_improvement'],  
+                default='local_search_best_improvement', 
+                help=("VNS parameter that determines local search type."))
         parser_vns.add_argument( "--log", default="warning", help=("Provide logging level. "
                 "Example --log debug', default='warning'") )
 

@@ -69,13 +69,15 @@ def main():
             start_time = datetime.now()
             output_file.write("VNS started at: %s\n" % str(start_time))
             output_file.write('Execution parameters: {}\n'.format(parameters))
+            # input file setup
             input_file_path:str = parameters.inputFilePath
             input_format:str = parameters.inputFormat
-            max_number_iterations:int = int(parameters.maxNumberIterations)
-            max_time_for_execution_in_seconds = int(parameters.maxTimeForExecutionSeconds)
-            # set random seed
+            # finishing criteria setup
+            max_number_iterations:int = parameters.maxNumberIterations
+            max_time_for_execution_in_seconds = parameters.maxTimeForExecutionSeconds
+            # random seed setup
             if( int(parameters.randomSeed) > 0 ):
-                r_seed:int = int(parameters.randomSeed)
+                r_seed:int = parameters.randomSeed
                 logger.info("RandomSeed is predefined. Predefined seed value:  %d" % r_seed)
                 output_file.write("RandomSeed is predefined. Predefined seed value:  %d\n" % r_seed)
                 random.seed(r_seed)
@@ -84,17 +86,26 @@ def main():
                 logger.info("RandomSeed is not predefined. Generated seed value:  %d" % r_seed)
                 output_file.write("RandomSeed is not predefined. Generated seed value:  %d\n" % r_seed)
                 seed(r_seed)
+            # bookkeeping setup
+            keep_all_solution_codes:bool = parameters.keepAllSolutionCodes
+            # parameters for VNS process setup
+            k_min:int = parameters.kMin
+            k_max:int = parameters.kMax
+            max_local_optima = parameters.maxLocalOptima
+            local_search_type = parameters.localSearchType
             # problem to be solved
             problem = MaxOnesProblem(input_file_path)
             problem.load_from_file(input_format)
             # initial solution for solving
             initial_solution = MaxOnesSolution(problem=problem)
             initial_solution.random_init()
-            logger.debug('Initial solution: {}'.format(initial_solution))
+            #logger.debug('Initial solution: {}'.format(initial_solution))
+            # optimizer used for solving
             optimizer = VnsOptimizer(evaluations_max=max_number_iterations, 
                     seconds_max=max_time_for_execution_in_seconds, random_seed=r_seed, 
-                    keep_all_solution_codes=False, target_problem=problem, initial_solution=initial_solution,
-                    k_min=1, k_max=3, max_local_optima=5, local_search_type='local_search_best_improvement')
+                    keep_all_solution_codes=keep_all_solution_codes, target_problem=problem, 
+                    initial_solution=initial_solution, k_min=k_min, k_max=k_max, max_local_optima=max_local_optima, 
+                    local_search_type=local_search_type)
             logger.debug('Optimizer: {}'.format(optimizer))
             optimizer.optimize()
             logger.info('Best solution: {}'.format(optimizer.best_solution))            
@@ -112,7 +123,6 @@ def main():
         else:
             logger.exception('Exception: %s\n' % str(exp))
         
-
 # This means that if this script is executed, then 
 # main() will be executed
 
