@@ -13,9 +13,25 @@ import datetime as dt
 from collections import namedtuple
 from argparse import ArgumentParser
 
-DefaultCommandLineParameters = namedtuple('DefaultCommandLineParams', ['name', 'age', 'DOB'])
+DefaultCommandLineParameters = namedtuple('DefaultCommandLineParams', ['algorithm', 
+                'optimization_type', 
+                'outputFilePath', 
+                'inputFilePath', 
+                'inputFormat', 
+                'maxNumberIterations', 
+                'maxTimeForExecutionSeconds', 
+                'randomSeed'
+])
 
-DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('Nandini', '19', '2541997')
+DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('vns', 
+                'maximization', 
+                'outputs/max_ones_problem/dimension_25.txt', 
+                'inputs/max_ones_problem/dimension_25.txt', 
+                'txt', 
+                '0', 
+                '10', 
+                '0'
+)
 
 def parse_arguments():
         parser = ArgumentParser()
@@ -32,12 +48,12 @@ def parse_arguments():
                 help='Input file path for the instance of the problem. ')
         parser_vns.add_argument('--inputFormat', type=str, choices=['txt', 'idle'], default = 'txt',
                 help='Input file format. ')    
-        parser_vns.add_argument('--maxTimeForExecutionSeconds', type=int, default=10, 
-                help=("Maximum time for execution (in seconds).\n " 
-                "Value 0 means that there is no limit on execution time.") )    
         parser_vns.add_argument('--maxNumberIterations', type=int, default=0, 
                 help=("Maximum numbers of iterations during VNS execution. " 
                 "Value 0 means that there is no limit on number of iterations.") )        
+        parser_vns.add_argument('--maxTimeForExecutionSeconds', type=int, default=10, 
+                help=("Maximum time for execution (in seconds).\n " 
+                "Value 0 means that there is no limit on execution time.") )    
         parser_vns.add_argument('--randomSeed', type=int, default=0, 
                 help=("Random seed for the VNS execution. " 
                 "Value 0 means that random seed will be obtained from system timer.") )        

@@ -30,7 +30,7 @@ def main():
     logger.debug('Solver started.')    
     try:
         parameters = DEFAULT_COMMAND_LINE_PARAMETERS
-        parameters = parse_arguments()        
+        #parameters = parse_arguments()        
         logger.info('Execution parameters: {}'.format(parameters))
         if parameters.algorithm == 'vns':
             logger.debug('VNS started.') 
@@ -38,7 +38,7 @@ def main():
             if parameters.optimization_type == 'minimization':
                 is_minimization:bool = True
             elif parameters.optimization_type == 'maximization':
-                is_minimization = False
+                is_minimization:bool = False
             else:
                 raise ValueError("Either minimization or maximization should be selected.")
             # output file path setup
@@ -69,6 +69,10 @@ def main():
             start_time = datetime.now()
             output_file.write("VNS started at: %s\n" % str(start_time))
             output_file.write('Execution parameters: {}\n'.format(parameters))
+            input_file_path:str = parameters.inputFilePath
+            input_format:str = parameters.inputFormat
+            max_number_iterations:int = int(parameters.maxNumberIterations)
+            max_time_for_execution_in_seconds = int(parameters.maxTimeForExecutionSeconds)
             # set random seed
             if( int(parameters.randomSeed) > 0 ):
                 r_seed:int = int(parameters.randomSeed)
@@ -81,14 +85,14 @@ def main():
                 output_file.write("RandomSeed is not predefined. Generated seed value:  %d\n" % r_seed)
                 seed(r_seed)
             # problem to be solved
-            problem = MaxOnesProblem(parameters.inputFilePath)
-            problem.load_from_file(parameters.inputFormat)
+            problem = MaxOnesProblem(input_file_path)
+            problem.load_from_file(input_format)
             # initial solution for solving
             initial_solution = MaxOnesSolution(problem=problem)
             initial_solution.random_init()
             logger.debug('Initial solution: {}'.format(initial_solution))
-            optimizer = VnsOptimizer(evaluations_max=parameters.maxNumberIterations, 
-                    seconds_max=parameters.maxTimeForExecutionSeconds, random_seed=r_seed, 
+            optimizer = VnsOptimizer(evaluations_max=max_number_iterations, 
+                    seconds_max=max_time_for_execution_in_seconds, random_seed=r_seed, 
                     keep_all_solution_codes=False, target_problem=problem, initial_solution=initial_solution,
                     k_min=1, k_max=3, max_local_optima=5, local_search_type='local_search_best_improvement')
             logger.debug('Optimizer: {}'.format(optimizer))

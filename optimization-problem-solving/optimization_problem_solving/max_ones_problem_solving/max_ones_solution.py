@@ -84,7 +84,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         """
         Random initialization of the target solution
         """
-        logger.debug( "Solution:\n" + str(self))
+        #logger.debug( "\nSolution: {}".format(self))
         self.representation = BitArray(self.problem.dimension)
         for i in range(self.problem.dimension):
             if random() > 0.5:
