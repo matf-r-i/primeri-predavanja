@@ -3,6 +3,7 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
+from copy import deepcopy
 from collections import namedtuple
 from abc import ABCMeta, abstractmethod
 
@@ -38,7 +39,7 @@ class TargetSolution(metaclass=ABCMeta):
         Internal copy of the current target solution
         :return: TargetSolution -- new TargetSolution instance with the same properties
         """
-        ts = TargetSolution(self.__name, self.__fitness_value, self.__objective_value, self.__is_feasible)
+        ts = deepcopy(self)
         return ts
 
     @abstractmethod
@@ -55,10 +56,7 @@ class TargetSolution(metaclass=ABCMeta):
         Copy the current target solution to the already existing destination target solution
         :param destination:TargetSolution -- destination target solution
         """
-        destination.name = self.name
-        destination.fitness_value = self.fitness_value
-        destination.objective_value = self.objective_value
-        destination.is_feasible = self.is_feasible
+        destination =  copy(self)
 
     @property
     def name(self)->str:

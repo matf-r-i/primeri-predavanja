@@ -3,6 +3,7 @@ import sys
 path = Path().joinpath().joinpath('..')
 sys.path.append(str(path))
 
+from copy import deepcopy
 from abc import ABCMeta, abstractmethod
 
 class TargetProblem(metaclass=ABCMeta):
@@ -26,8 +27,7 @@ class TargetProblem(metaclass=ABCMeta):
         Internal copy of the current target problem
         :return: TargetProblem -- new TargetProblem instance with the same properties
         """
-        pr = TargetProblem(self.__name, self.__is_minimization, self.__file_path)
-        pr.dimension = self.dimension
+        pr = deepcopy(self)
         return pr
 
     @abstractmethod

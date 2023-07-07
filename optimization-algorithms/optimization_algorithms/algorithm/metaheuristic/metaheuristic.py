@@ -35,7 +35,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             self.__random_seed:int = random.randrange(sys.maxsize)
         self.__iteration:int = 0
         self.__iteration_best_found:int = 0
-        self.__second_best_found:float = 0.0
+        self.__second_when_best_obtained:float = 0.0
         self.__best_solution:TargetSolution = None
         self.__keep_all_solution_codes:bool = keep_all_solution_codes
         self.__all_solution_codes:set[str] = set()
@@ -47,15 +47,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         Internal copy of the current metaheuristic
         :return: Metaheuristic -- new Metaheuristic instance with the same properties
         """
-        met = Metaheuristic(self.__name, self.__evaluations_max, deepcopy(self.__target_problem))
-        met.__random_seed = self.__random_seed
-        met.__iteration = self.__iteration
-        met.__iteration_best_found = self.__iteration_best_found
-        met.__second_best_found = self.__second_best_found
-        met.__best_solution = deepcopy(self.__best_solution)
-        met.__keep_all_solution_codes = self.__keep_all_solution_codes
-        met.__all_solution_codes = deepcopy(self.__all_solution_codes)
-        met.__solution_code_distance_cache_cs = deepcopy(self.__solution_code_distance_cache_cs)
+        met = deepcopy(self)
         return met
 
     @abstractmethod
@@ -220,11 +212,8 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         and iteration when the best solution is updated 
         :param solution:TargetSolution -- solution that is source for coping operation
         """
-        if self.__best_solution is None:
-            self.__best_solution = solution.copy()
-        else:
-            solution.copy_to(self.__best_solution)
-        self.__second_best_found = (datetime.now() - self.execution_started).total_seconds()
+        self.__best_solution = solution.copy()
+        self.__second_when_best_obtained = (datetime.now() - self.execution_started).total_seconds()
         self.__iteration_best_found = self.iteration
 
     def calculate_solution_code_distance_try_consult_cache(self, code_x:str, code_y:str)->float:
@@ -282,7 +271,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         s += '__iteration_best_found=' + str(self.__iteration_best_found) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += '__second_best_found=' + str(self.__second_best_found) + delimiter
+        s += '__second_when_best_obtained=' + str(self.__second_when_best_obtained) + delimiter
         if self.__best_solution is not None:
             s += '__best_solution=' + self.__best_solution.string_representation(delimiter, indentation + 1,
                     indentation_symbol, group_start, group_end) + delimiter

@@ -49,13 +49,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         Internal copy of the current VnsOptimizer
         :return: VnsOptimizer -- new VnsOptimizer instance with the same properties
         """
-        vns_opt = VnsOptimizer(self.evaluations_max, self.seconds_max, self.random_seed, self.keep_all_solution_codes, 
-                deepcopy(self.__target_problem), deepcopy(self.__current_solution), self.__k_min, 
-                self.__k_max, self.__max_local_optima, self.__local_search_type)
-        vns_opt.__current_solution = self.__current_solution
-        vns_opt.__k_current = self.__k_current
-        vns_opt.__local_optima = deepcopy(self.__local_optima)
-        vns_opt.__shaking_counts = deepcopy(self.__shaking_counts)
+        vns_opt = deepcopy(self)
         return vns_opt
 
     def copy(self):

@@ -3,6 +3,9 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
+from copy import deepcopy
+
+
 from utils.logger import logger
 from target_problem.target_problem import TargetProblem
 
@@ -20,7 +23,7 @@ class MaxOnesProblem(TargetProblem):
         Internal copy of the MaxOnesProblem problem
         :return: MaxOnesProblem -- new MaxOnesProblem instance with the same properties
         """
-        pr = MaxOnesProblem(self.file_path)
+        pr = deepcopy(self)
         return pr
 
     def copy(self):

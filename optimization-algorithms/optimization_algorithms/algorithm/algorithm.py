@@ -35,10 +35,7 @@ class Algorithm(metaclass=ABCMeta):
         Internal copy of the current algorithm
         :return: Algorithm -- new Algorithm instance with the same properties
         """
-        alg = Algorithm(self.__name, self.__evaluations_max, self.__seconds_max, deepcopy(self.__target_problem))
-        alg.__evaluation = self.__evaluation
-        alg.__execution_started = self.__execution_started # datetime is not mutable, so deepcopy is not required
-        alg.__execution_ended = self.__execution_ended
+        alg = deepcopy(self)
         return alg
 
     @abstractmethod

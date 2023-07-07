@@ -1,3 +1,10 @@
+import path
+import sys
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent.parent)
+
+from copy import deepcopy
+
 class SolutionCodeDistanceCacheControlStatistics:
 
     def __init__(self, is_caching:bool=False, hit_count:int=0, requests_count:int=0, cache:dict[dict[str]]={})->None:
@@ -18,7 +25,7 @@ class SolutionCodeDistanceCacheControlStatistics:
         Internal copy of the current cache, control and statistics for solution code distance calculation
         :return: SolutionCodeDistanceCacheControlStatistics -- new cache, control and statistics for solution code distance calculation
         """
-        scd_ccs = SolutionCodeDistanceCacheControlStatistics(self.__is_caching, self.__hit_count, self.__requests_count, self.__cache)
+        scd_ccs = deepcopy(self)
         return scd_ccs
 
     def copy(self):
