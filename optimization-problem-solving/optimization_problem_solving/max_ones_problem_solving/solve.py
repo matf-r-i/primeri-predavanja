@@ -86,6 +86,10 @@ def main():
                 logger.info("RandomSeed is not predefined. Generated seed value:  %d" % r_seed)
                 output_file.write("RandomSeed is not predefined. Generated seed value:  %d\n" % r_seed)
                 seed(r_seed)
+            # evaluation cache setup
+            evaluation_cache_is_used:bool = parameters.evaluationCacheIsUsed
+            if evaluation_cache_is_used:
+                pass
             # bookkeeping setup
             keep_all_solution_codes:bool = parameters.keepAllSolutionCodes
             # parameters for VNS process setup
