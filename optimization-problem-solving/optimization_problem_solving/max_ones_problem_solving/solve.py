@@ -106,9 +106,10 @@ def main():
                     keep_all_solution_codes=keep_all_solution_codes, target_problem=problem, 
                     initial_solution=initial_solution, k_min=k_min, k_max=k_max, max_local_optima=max_local_optima, 
                     local_search_type=local_search_type)
-            logger.debug('Optimizer: {}'.format(optimizer))
+            #logger.debug('Optimizer: {}'.format(optimizer))
             optimizer.optimize()
             logger.info('Best solution: {}'.format(optimizer.best_solution))            
+            logger.debug('Optimizer: {}'.format(optimizer))
             logger.debug('VNS ended.')
         elif parameters.algorithm == 'idle':
             logger.debug('Idle execution started.')    
