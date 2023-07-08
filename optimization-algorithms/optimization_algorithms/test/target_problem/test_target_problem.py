@@ -5,18 +5,18 @@ sys.path.append(directory.parent.parent)
 
 import unittest   
 
-from optimization_algorithms.target_problem.target_problem import TargetProblem  
+from target_problem import TargetProblem  
 
 class Test_TestTargetProblem(unittest.TestCase):
     
     def setUp(self):
-        self.__target_problem = TargetProblem(name='Miki', file_path='Paja', is_minimization = True)
+        self.__target_problem = TargetProblem(name='Mickey', file_path='Donald', is_minimization = True)
     
     def test_name_getter(self):
-        self.assertEqual(self.__target_problem.name, 'Miki')
+        self.assertEqual(self.__target_problem.name, 'Mickey')
 
     def test_file_path_getter(self):
-        self.assertEqual(self.__target_problem.file_path, 'Paja')
+        self.assertEqual(self.__target_problem.file_path, 'Donald')
 
     def test_is_minimization_getter(self):
         self.assertTrue(self.__target_problem.is_minimization)

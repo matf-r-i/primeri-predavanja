@@ -73,8 +73,8 @@ def main():
             ensure_dir(output_file_dir)
             output_file = open(output_file_path, "w", encoding="utf-8")
             start_time = datetime.now()
-            output_file.write("VNS started at: %s\n" % str(start_time))
-            output_file.write('Execution parameters: {}\n'.format(parameters))
+            output_file.write("# VNS started at: %s\n" % str(start_time))
+            output_file.write('# Execution parameters: {}\n'.format(parameters))
             # input file setup
             input_file_path:str = parameters['inputFilePath']
             input_format:str = parameters['inputFormat']
