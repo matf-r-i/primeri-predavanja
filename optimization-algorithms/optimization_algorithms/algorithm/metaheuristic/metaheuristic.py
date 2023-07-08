@@ -16,6 +16,11 @@ from target_solution.target_solution import TargetSolution
 
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
     
+    """
+    Cache that is used during calculation of the solution code distances
+    """
+    solution_code_distance_cache_cs:SolutionCodeDistanceCacheControlStatistics = SolutionCodeDistanceCacheControlStatistics()
+
     @abstractmethod
     def __init__(self, name:str, evaluations_max:int, seconds_max:int, random_seed:int, 
             keep_all_solution_codes:bool, target_problem:TargetProblem)->None:
@@ -39,7 +44,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         self.__best_solution:TargetSolution = None
         self.__keep_all_solution_codes:bool = keep_all_solution_codes
         self.__all_solution_codes:set[str] = set()
-        self.__solution_code_distance_cache_cs = SolutionCodeDistanceCacheControlStatistics(is_caching=True)
 
     @abstractmethod
     def __copy__(self):
@@ -279,7 +283,7 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             for i in range(0, indentation):
                 s += indentation_symbol  
             s += '__best_solution=None' + delimiter
-        s += '__solution_code_distance_cache_cs=' + self.__solution_code_distance_cache_cs.string_representation(
+        s += '__solution_code_distance_cache_cs=' + self.solution_code_distance_cache_cs.string_representation(
                 delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         if self.execution_ended is not None and self.execution_started is not None:
             for i in range(0, indentation):

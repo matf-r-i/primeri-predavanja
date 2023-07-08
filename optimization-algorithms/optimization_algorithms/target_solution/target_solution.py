@@ -19,7 +19,7 @@ class TargetSolution(metaclass=ABCMeta):
     """
     Cache that is used during evaluation for previously obtained solutions
     """
-    evaluation_cache_control_statistics:EvaluationCacheControlStatistics = EvaluationCacheControlStatistics()
+    evaluation_cache_cs:EvaluationCacheControlStatistics = EvaluationCacheControlStatistics()
     
     @abstractmethod
     def __init__(self, name:str, fitness_value:float, objective_value:float, is_feasible:bool)->None:
@@ -153,8 +153,8 @@ class TargetSolution(metaclass=ABCMeta):
         :param target_problem:TargetProblem -- problem that is solved
         :return: TargetSolution -- solution with calculated objection value, fitness value and feasibility
         """
-        eccs = target_solution.evaluation_cache_control_statistics 
-        eccs.fitness_calculations_count += 1
+        eccs = target_solution.evaluation_cache_cs 
+        eccs.cache_request_count += 1
         if eccs.is_caching:
             code = target_solution.solution_code()
             if code in eccs.cache:
@@ -235,7 +235,7 @@ class TargetSolution(metaclass=ABCMeta):
         s += 'solution_code=' + self.solution_code() + delimiter
         for i in range(0, indentation):
             s += indentation_symbol     
-        s += 'evaluation_cache_control_statistics=' + self.evaluation_cache_control_statistics.string_representation(
+        s += 'evaluation_cache_cs=' + self.evaluation_cache_cs.string_representation(
                 delimiter, indentation+1, indentation_symbol, '{', '}')  
         for i in range(0, indentation):
             s += indentation_symbol  

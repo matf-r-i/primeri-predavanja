@@ -1,15 +1,20 @@
+import path
+import sys
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent.parent)
+
 class EvaluationCacheControlStatistics:
-    
-    """
-    Cache that is used during evaluation for previously obtained solutions
-    """
-    cache:dict[str] = {}
-    
+
     """
     If caching is used during evaluation, or not
     """
     is_caching:bool = False
 
+    """
+    Cache that is used during evaluation for previously obtained solutions
+    """
+    cache:dict[str] = {}
+    
     """
     If caching is used during evaluation, cache hit is counted
     """
@@ -18,7 +23,7 @@ class EvaluationCacheControlStatistics:
     """
     number of fitness calculations that is counted
     """
-    fitness_calculations_count:int = 0
+    cache_request_count:int = 0
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
         group_end:str ='}')->str:
@@ -43,7 +48,7 @@ class EvaluationCacheControlStatistics:
         s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol      
-        s += 'fitness_calculations_count=' + str(self.fitness_calculations_count) + delimiter
+        s += 'cache_request_count=' + str(self.cache_request_count) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 

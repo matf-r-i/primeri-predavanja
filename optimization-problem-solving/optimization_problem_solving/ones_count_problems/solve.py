@@ -88,8 +88,8 @@ def main():
                 seed(r_seed)
             # evaluation cache setup
             evaluation_cache_is_used:bool = parameters.evaluationCacheIsUsed
-            if evaluation_cache_is_used:
-                pass
+            # calculation distances cache setup
+            calculation_solution_distance_cache_is_used = parameters.calculationSolutionDistanceCacheIsUsed
             # bookkeeping setup
             keep_all_solution_codes:bool = parameters.keepAllSolutionCodes
             # parameters for VNS process setup
@@ -102,6 +102,7 @@ def main():
             problem.load_from_file(input_format)
             # initial solution for solving
             initial_solution = OnesCountSolution()
+            initial_solution.evaluation_cache_cs.is_caching = evaluation_cache_is_used
             initial_solution.random_init(problem=problem)
             #logger.debug('Initial solution: {}'.format(initial_solution))
             # optimizer used for solving
@@ -112,6 +113,7 @@ def main():
                     local_search_type=local_search_type)
             #logger.debug('Optimizer: {}'.format(optimizer))
             optimizer.optimize()
+            optimizer.solution_code_distance_cache_cs.is_caching = calculation_solution_distance_cache_is_used
             logger.info('Best solution: {}'.format(optimizer.best_solution))            
             logger.debug('Optimizer: {}'.format(optimizer))
             logger.debug('VNS ended.')

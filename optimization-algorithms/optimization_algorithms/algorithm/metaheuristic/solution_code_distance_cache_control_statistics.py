@@ -3,107 +3,27 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-from copy import deepcopy
-
 class SolutionCodeDistanceCacheControlStatistics:
 
-    def __init__(self, is_caching:bool=False, hit_count:int=0, requests_count:int=0, cache:dict[dict[str]]={})->None:
-        """
-        Create new cache, control and statistics for solution code distance calculation instance
-        :param is_caching:bool -- if caching will be applied during calculation of the solution code distances
-        :param hit_count:int -- count of the cache hits
-        :param requests_count:int -- count of the overall cache requests 
-        :param cache:dict -- cache that stores distances among solution codes
-        """
-        self.__is_caching:bool = is_caching
-        self.__hit_count:int = hit_count
-        self.__requests_count:int = requests_count
-        self.__cache:dict[dict[str]] = cache
+    """
+    If caching is used during calculation of the solution code distances, or not
+    """
+    is_caching:bool = False
 
-    def __copy__(self):
-        """
-        Internal copy of the current cache, control and statistics for solution code distance calculation
-        :return: SolutionCodeDistanceCacheControlStatistics -- new cache, control and statistics for solution code distance calculation
-        """
-        scd_ccs = deepcopy(self)
-        return scd_ccs
+    """
+    Cache that is used during calculation for previously obtained solution code distances
+    """
+    cache:dict[dict[str]] = {}
+    
+    """
+    If caching is used during calculation of the solution code distances, cache hit is counted
+    """
+    cache_hit_count:int = 0
 
-    def copy(self):
-        """
-        Copy the current cache, control and statistics for solution code distance calculation
-        :return: SolutionCodeDistanceCacheControlStatistics -- new cache, control and statistics for solution code distance calculation with the same properties
-        """
-        return self.__copy__()
-
-    def copy_to(self, destination)->None:
-        """
-        Copy the current cache, control and statistics for solution code distance calculation to the already existing destination instance
-        :param destination:SolutionCodeDistanceCacheControlStatistics -- destination cache, control and statistics for solution code distance calculation
-        """
-        destination.is_caching = self.is_caching
-        destination.hit_count = self.hit_count
-        destination.requests_count = self.requests_count
-        destination.cache = self.cache
-
-    @property
-    def is_caching(self)->bool:
-        """
-        Property getter for checking if caching is activated
-        :return: bool -- if caching is activated 
-        """
-        return self.__is_caching
-
-    @is_caching.setter
-    def is_caching(self, value:bool)->None:
-        """
-        Property setter for info if caching is activated
-        """
-        self.__is_caching = value
-
-    @property
-    def hit_count(self)->int:
-        """
-        Property getter for cache hit count 
-        :return: int -- cache hit count 
-        """
-        return self.__hit_count
-
-    @hit_count.setter
-    def hit_count(self, value:int)->None:
-        """
-        Property setter for hit count
-        """
-        self.__hit_count = value
-
-    @property
-    def requests_count(self)->int:
-        """
-        Property getter for cache requests count 
-        :return: int -- cache requests count 
-        """
-        return self.__requests_count
-
-    @requests_count.setter
-    def requests_count(self, value:int)->None:
-        """
-        Property setter for requests count
-        """
-        self.__requests_count = value
-
-    @property
-    def cache(self)->dict:
-        """
-        Property getter for cache 
-        :return: dict -- cache  
-        """
-        return self.__cache
-
-    @cache.setter
-    def cache(self, value:int)->None:
-        """
-        Property setter for cache
-        """
-        self.__cache = value
+    """
+    overall number of calculation of the solution code distances
+    """
+    cache_request_count:int = 0
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
         group_end:str ='}')->str:
@@ -125,10 +45,10 @@ class SolutionCodeDistanceCacheControlStatistics:
         s += 'is_caching=' + str(self.is_caching) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += 'cache_hit_count=' + str(self.hit_count) + delimiter
+        s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += 'cache_requests_count=' + str(self.requests_count) + delimiter
+        s += 'cache_requests_count=' + str(self.cache_request_count) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 
