@@ -151,8 +151,11 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
             self.all_solution_codes.add(self.current_solution)
         new_is_better = self.is_first_solution_better(self.current_solution, self.best_solution)
         if new_is_better is None:
-            logger.debug("Same solution quality, generating random true with probability 0.5");
-            return random() < 0.5
+            if self.current_solution.solution_code() == self.best_solution.solution_code():
+                return False
+            else:
+                logger.debug("Same solution quality, generating random true with probability 0.5");
+                return random() < 0.5
         #logger.debug('__shaking_ls__ - end')
         #logger.debug('Current: {}'.format(self.current_solution))
         #logger.debug('Best: {}'.format(self.current_solution))

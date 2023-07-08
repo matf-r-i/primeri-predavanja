@@ -155,9 +155,8 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
         """
         Main loop of the metaheuristic algorithm
         """
-        elapsed_seconds:int = self.elapsed_seconds()
         while (self.evaluations_max == 0 or self.evaluation < self.evaluations_max) and (self.seconds_max == 
-                0 or elapsed_seconds < self.seconds_max):
+                0 or self.elapsed_seconds() < self.seconds_max):
             self.main_loop_iteration()
             logger.debug('Iteration:{}, Evaluations:{}, Bit code:{}'.format(self.iteration, self.evaluation,
                 str(self.best_solution.representation)))

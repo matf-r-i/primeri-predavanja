@@ -10,42 +10,26 @@ sys.path.append(directory.parent.parent)
 import os
 import logging
 import datetime as dt
-from collections import namedtuple
 from argparse import ArgumentParser
 
-DefaultCommandLineParameters = namedtuple('DefaultCommandLineParams', ['algorithm', 
-                'optimization_type', 
-                'outputFilePath', 
-                'inputFilePath', 
-                'inputFormat', 
-                'maxNumberIterations', 
-                'maxTimeForExecutionSeconds', 
-                'randomSeed',
-                'evaluationCacheIsUsed',
-                'calculationSolutionDistanceCacheIsUsed',
-                'keepAllSolutionCodes',
-                'kMin',
-                'kMax',
-                'maxLocalOptima',
-                'localSearchType'
-])
+default_parameters_cl = {
+        'algorithm': 'vns', 
+        'optimization_type': 'maximization', 
+        'outputFilePath':'optimization-problem-solving/optimization_problem_solving/max_ones_problem/outputs/dimension_25.txt', 
+        'inputFilePath': 'optimization-problem-solving/optimization_problem_solving/max_ones_problem/inputs/dimension_25.txt', 
+        'inputFormat': 'txt', 
+        'maxNumberIterations': 0, 
+        'maxTimeForExecutionSeconds': 3, 
+        'randomSeed': 0,
+        'evaluationCacheIsUsed': False,
+        'calculationSolutionDistanceCacheIsUsed': False,
+        'keepAllSolutionCodes': False,
+        'kMin': 1,
+        'kMax': 3,
+        'maxLocalOptima':7,
+        'localSearchType': 'local_search_best_improvement'
+}
 
-DEFAULT_COMMAND_LINE_PARAMETERS = DefaultCommandLineParameters('vns', 
-                'maximization', 
-                'optimization-problem-solving/optimization_problem_solving/max_ones_problem/outputs/dimension_25.txt', 
-                'optimization-problem-solving/optimization_problem_solving/max_ones_problem/inputs/dimension_25.txt', 
-                'txt', 
-                10, 
-                3, 
-                0,
-                False,
-                False,
-                False, 
-                1,
-                3,
-                5,
-                'local_search_best_improvement'
-)
 
 def parse_arguments():
         parser = ArgumentParser()

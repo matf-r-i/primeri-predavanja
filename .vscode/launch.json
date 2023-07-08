@@ -12,10 +12,7 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "vns",
-                "--inputFilePath", "inputs/max_ones_problem/dimension_25.txt",
-                "--inputFormat", "txt", 
-                "--maxNumberIterations", "0"
+                "idle",
                 ]        
         }
     ]
