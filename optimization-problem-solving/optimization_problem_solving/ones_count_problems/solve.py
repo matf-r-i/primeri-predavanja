@@ -19,8 +19,8 @@ from utils.files import ensure_dir
 from utils.logger import logger
 from command_line import DEFAULT_COMMAND_LINE_PARAMETERS
 from command_line import parse_arguments
-from max_ones_problem_solving.max_ones_problem import MaxOnesProblem
-from max_ones_problem_solving.max_ones_solution import MaxOnesSolution
+from ones_count_problems.max_ones_problem import MaxOnesProblem
+from ones_count_problems.ones_count_solution import OnesCountSolution
 from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
 
 def main():
@@ -101,8 +101,8 @@ def main():
             problem = MaxOnesProblem(input_file_path)
             problem.load_from_file(input_format)
             # initial solution for solving
-            initial_solution = MaxOnesSolution(problem=problem)
-            initial_solution.random_init()
+            initial_solution = OnesCountSolution()
+            initial_solution.random_init(problem=problem)
             #logger.debug('Initial solution: {}'.format(initial_solution))
             # optimizer used for solving
             optimizer = VnsOptimizer(evaluations_max=max_number_iterations, 

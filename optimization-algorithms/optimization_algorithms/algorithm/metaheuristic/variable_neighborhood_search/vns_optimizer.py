@@ -96,7 +96,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         Initialization of the VNS algorithm
         """
         self.__k_current = self.k_min
-        self.current_solution.evaluate();
+        self.current_solution.evaluate(self.target_problem);
         self.copy_to_best_solution(self.current_solution);
 
     def __select_shaking_points__(self)->list[str]:
@@ -133,7 +133,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
         #logger.debug('Current: {}'.format(self.current_solution))
         #logger.debug('Best: {}'.format(self.current_solution))
         shaking_points:list[str] = self.__select_shaking_points__()
-        if not self.current_solution.vns_randomize(self.__k_current, shaking_points):
+        if not self.current_solution.vns_randomize(self.target_problem, self.__k_current, shaking_points):
             return False
         if self.__k_current in self.__shaking_counts:
             self.__shaking_counts[self.__k_current] += 1
@@ -141,7 +141,7 @@ class VnsOptimizer(Metaheuristic, Generic[S_co]):
             self.__shaking_counts[self.__k_current] = 1
         self.iteration += 1
         self.evaluation += 1
-        self.current_solution.evaluate()
+        self.current_solution.evaluate(self.target_problem)
         if self.__local_search_type == 'local_search_best_improvement':
             self.current_solution = self.local_search_best_improvement(self.current_solution)
         else:

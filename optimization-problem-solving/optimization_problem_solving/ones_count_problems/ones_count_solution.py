@@ -10,40 +10,38 @@ from bitstring import BitArray
 
 from utils.logger import logger
 from target_problem.target_problem import TargetProblem
-from max_ones_problem import MaxOnesProblem
 from target_solution.target_solution import ObjectiveFitnessFeasibility
 from target_solution.target_solution import TargetSolution
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
 
-class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
+class OnesCountSolution(TargetSolution, TargetSolutionVnsSupport):
     
-    def __init__(self, problem:MaxOnesProblem)->None:
+    def __init__(self)->None:
         """
-        Create new MaxOnesSolution instance
+        Create new OnesCountSolution instance
         """
-        super().__init__("MaxOnesSolution", fitness_value=None, objective_value=None, is_feasible=False)
-        self.__problem:MaxOnesProblem = problem
+        super().__init__("OnesCountSolution", fitness_value=None, objective_value=None, is_feasible=False)
         self.__representation:BitArray = BitArray()
 
     def __copy__(self):
         """
-        Internal copy of the MaxOnesSolution problem
-        :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
+        Internal copy of the OnesCountSolution
+        :return: OnesCountSolution -- new OnesCountSolution instance with the same properties
         """
         sol = deepcopy(self)
         return sol
 
     def copy(self):
         """
-        Copy the MaxOnesSolution
-        :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
+        Copy the OnesCountSolution
+        :return: OnesCountSolution -- new OnesCountSolution instance with the same properties
         """
         return self.__copy__()
         
     def copy_to(self, destination)->None:
         """
-        Copy the MaxOnesSolution to the already existing destination MaxOnesSolution
-        :param destination:MaxOnesSolution -- destination MaxOnesSolution
+        Copy the OnesCountSolution to the already existing destination OnesCountSolution
+        :param destination:OnesCountSolution -- destination OnesCountSolution
         """
         destination = self.__copy__()
 
@@ -63,29 +61,13 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         """
         self.__representation = value
 
-    @property
-    def problem(self)->MaxOnesProblem:
-        """
-        Property getter for the solution's problem
-        :return: MaxOnesProblem -- the solution's problem
-        """
-        return self.__problem
-
-    @problem.setter
-    def problem(self, value:MaxOnesProblem)->None:
-        """
-        Property setter for solution's problem
-        :param value:MaxOnesProblem -- the target solution's problem
-        """
-        self.__problem = value
-
-    def random_init(self)->None:
+    def random_init(self, problem:TargetProblem)->None:
         """
         Random initialization of the target solution
         """
         #logger.debug( "\nSolution: {}".format(self))
-        self.representation = BitArray(self.problem.dimension)
-        for i in range(self.problem.dimension):
+        self.representation = BitArray(problem.dimension)
+        for i in range(problem.dimension):
             if random() > 0.5:
                 self.representation[i] = True
             else:
@@ -105,13 +87,14 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
                 s += '0'
         return s
 
-    def calculate_fitness(self)->ObjectiveFitnessFeasibility:
+    def calculate_objective_fitness_feasibility(self, problem:TargetProblem)->ObjectiveFitnessFeasibility:
         """
         Fitness calculation of the max ones solution
+        :param problem:TargetProblem -- problem that is solved
         :return: ObjectiveFitnessFeasibility -- objective value, fitness value and feasibility of the solution instance  
         """
         ones_count = 0
-        for i in range(self.problem.dimension):
+        for i in range(problem.dimension):
             if self.representation[i]:
                 ones_count += 1
         return ObjectiveFitnessFeasibility(ones_count, ones_count, True)
@@ -141,32 +124,34 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         result = (rep_1 ^ rep_2).count(True)
         return result 
 
-    def best_1_change(self)->bool:
+    def best_1_change(self, problem:TargetProblem)->bool:
         """
         Change the best one within solution 
+        :param problem:TargetProblem -- problem that is solved
         :return: bool -- if the best one is changed, or not
         """        
         best_ind:int = None
         best_fv:float = self.fitness_value
         for i in range(0, len(self.representation)):
             self.representation.invert(i) 
-            new_fv = self.calculate_fitness().fitness_value
+            new_fv = self.calculate_objective_fitness_feasibility(problem).fitness_value
             if new_fv > best_fv:
                 best_ind = i
                 best_fv = new_fv
             self.representation.invert(i)
         if best_ind is not None:
             self.representation.invert(best_ind)
-            self.evaluate()
+            self.evaluate(problem)
             if self.fitness_value != best_fv:
                 raise Exception('Fitness calculation within best_1_change function is not correct.')
             return True
         return False
 
-    def vns_randomize(self, k:int, solution_codes:list[str])->bool:
+    def vns_randomize(self, problem:TargetProblem, k:int, solution_codes:list[str])->bool:
         """
         Random VNS shaking of k parts such that new solution code does not differ more than k from all solution codes 
         inside shakingPoints 
+        :param problem:TargetProblem -- problem that is solved
         :param k:int -- parameter for VNS
         :param solution_codes:list[str] -- solution codes that should be randomized
         :return: bool -- if randomization is successful 
@@ -192,7 +177,7 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
                 break
         if tries < limit:
             self.representation = new_representation
-            self.evaluate()
+            self.evaluate(problem)
             return True
         else:
             return False 
@@ -214,9 +199,6 @@ class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
         s += group_start
         s += super().string_representation(delimiter, indentation, indentation_symbol, '', '')
         s += delimiter
-        for i in range(0, indentation):
-            s += indentation_symbol  
-        s += 'problem=' + self.problem.string_representation(delimiter, indentation+1, indentation_symbol, '{', '}')
         s += delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
