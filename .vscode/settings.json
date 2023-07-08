@@ -17,7 +17,7 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        ".",
+        "./optimization-algorithms",
         "-p",
         "test_*.py"
     ],
