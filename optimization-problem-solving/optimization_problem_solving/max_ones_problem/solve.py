@@ -19,8 +19,8 @@ from utils.files import ensure_dir
 from utils.logger import logger
 from command_line import DEFAULT_COMMAND_LINE_PARAMETERS
 from command_line import parse_arguments
-from ones_count_problems.max_ones_problem import MaxOnesProblem
-from ones_count_problems.ones_count_solution import OnesCountSolution
+from max_ones_problem import MaxOnesProblem
+from max_ones_solution import OnesCountSolution
 from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
 
 def main():
