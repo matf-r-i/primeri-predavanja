@@ -10,7 +10,6 @@ from abc import ABCMeta, abstractmethod
 
 from utils.logger import logger
 from algorithm.algorithm import Algorithm
-from output_control import OutputControl
 from solution_code_distance_cache_control_statistics import SolutionCodeDistanceCacheControlStatistics
 from target_problem.target_problem import TargetProblem
 from target_solution.target_solution import TargetSolution
@@ -21,11 +20,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     Cache that is used during calculation of the solution code distances
     """
     solution_code_distance_cache_cs:SolutionCodeDistanceCacheControlStatistics = SolutionCodeDistanceCacheControlStatistics()
-
-    """
-    Output control
-    """
-    output_control:OutputControl = OutputControl()
 
     @abstractmethod
     def __init__(self, name:str, evaluations_max:int, seconds_max:int, random_seed:int, 
@@ -288,8 +282,6 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             for i in range(0, indentation):
                 s += indentation_symbol  
             s += '__best_solution=None' + delimiter
-        s += 'output_control(static)=' + self.output_control.string_representation(
-                delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         s += 'solution_code_distance_cache_cs(static)=' + self.solution_code_distance_cache_cs.string_representation(
                 delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         if self.execution_ended is not None and self.execution_started is not None:

@@ -33,7 +33,7 @@ class OutputControl:
         s += group_start + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += 'is_writing_to_output=' + str(self.is_writing_to_output) + delimiter
+        s += 'write_to_output=' + str(self.write_to_output) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += 'output_file=' + str(self.output_file) + delimiter

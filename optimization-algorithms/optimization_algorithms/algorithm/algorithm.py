@@ -8,9 +8,16 @@ from datetime import datetime
 from abc import ABCMeta, abstractmethod
 
 from utils.logger import logger
+from output_control import OutputControl
 from target_problem.target_problem import TargetProblem
 
+
 class Algorithm(metaclass=ABCMeta):
+
+    """
+    Output control
+    """
+    output_control:OutputControl = OutputControl()
 
     @abstractmethod
     def __init__(self, name:str, evaluations_max:int, seconds_max:int, target_problem:TargetProblem)->None:
@@ -152,6 +159,8 @@ class Algorithm(metaclass=ABCMeta):
                 indentation_symbol, '{', '}')  + delimiter 
         for i in range(0, indentation):
             s += indentation_symbol  
+        s += 'output_control(static)=' + self.output_control.string_representation(
+                delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         s += '__evaluation=' + str(self.__evaluation) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
