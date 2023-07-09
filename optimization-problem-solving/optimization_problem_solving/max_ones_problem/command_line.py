@@ -15,10 +15,10 @@ from argparse import ArgumentParser
 default_parameters_cl = {
         'algorithm': 'vns', 
         'optimization_type': 'maximization', 
-        'outputFilePath':'optimization-problem-solving/optimization_problem_solving/max_ones_problem/outputs/dimension_25.txt', 
-        'inputFilePath': 'optimization-problem-solving/optimization_problem_solving/max_ones_problem/inputs/dimension_25.txt', 
+        'outputFilePath':'optimization-problem-solving/optimization_problem_solving/max_ones_problem/outputs/dimension_77.csv', 
+        'inputFilePath': 'optimization-problem-solving/optimization_problem_solving/max_ones_problem/inputs/dimension_77.txt', 
         'inputFormat': 'txt', 
-        'maxNumberIterations': 10, 
+        'maxNumberIterations': 20, 
         'maxTimeForExecutionSeconds': 0, 
         'randomSeed': 0,
         'evaluationCacheIsUsed': False,

@@ -3,32 +3,23 @@ import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 
-class SolutionCodeDistanceCacheControlStatistics:
+class OutputControl:
 
     """
-    If caching is used during calculation of the solution code distances, or not
+    If metaheuristic will write to output, or not
     """
-    is_caching:bool = False
+    is_writing_to_output:bool = False
 
     """
-    Cache that is used during calculation for previously obtained solution code distances
+    Output file to which metaheuristic will write
     """
-    cache:dict[dict[str]] = {}
+    output_file = None
     
-    """
-    If caching is used during calculation of the solution code distances, cache hit is counted
-    """
-    cache_hit_count:int = 0
-
-    """
-    overall number of calculation of the solution code distances
-    """
-    cache_request_count:int = 0
 
     def string_representation(self, delimiter:str, indentation:int=0, indentation_symbol:str='', group_start:str ='{', 
         group_end:str ='}')->str:
         """
-        String representation of solution distance calculation cache control statistic 
+        String representation of the target solution instance
         :param delimiter: str -- delimiter between fields
         :param indentation:int -- level of indentation
         :param indentation_symbol:str -- indentation symbol
@@ -42,13 +33,10 @@ class SolutionCodeDistanceCacheControlStatistics:
         s += group_start + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += 'is_caching=' + str(self.is_caching) + delimiter
+        s += 'is_writing_to_output=' + str(self.is_writing_to_output) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
-        s += 'cache_hit_count=' + str(self.cache_hit_count) + delimiter
-        for i in range(0, indentation):
-            s += indentation_symbol  
-        s += 'cache_requests_count=' + str(self.cache_request_count) + delimiter
+        s += 'output_file=' + str(self.output_file) + delimiter
         for i in range(0, indentation):
             s += indentation_symbol  
         s += group_end 

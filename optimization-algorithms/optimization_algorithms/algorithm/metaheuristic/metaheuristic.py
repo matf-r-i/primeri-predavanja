@@ -10,8 +10,9 @@ from abc import ABCMeta, abstractmethod
 
 from utils.logger import logger
 from algorithm.algorithm import Algorithm
-from target_problem.target_problem import TargetProblem
+from output_control import OutputControl
 from solution_code_distance_cache_control_statistics import SolutionCodeDistanceCacheControlStatistics
+from target_problem.target_problem import TargetProblem
 from target_solution.target_solution import TargetSolution
 
 class Metaheuristic(Algorithm, metaclass=ABCMeta):
@@ -20,6 +21,11 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
     Cache that is used during calculation of the solution code distances
     """
     solution_code_distance_cache_cs:SolutionCodeDistanceCacheControlStatistics = SolutionCodeDistanceCacheControlStatistics()
+
+    """
+    Output control
+    """
+    output_control:OutputControl = OutputControl()
 
     @abstractmethod
     def __init__(self, name:str, evaluations_max:int, seconds_max:int, random_seed:int, 
