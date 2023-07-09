@@ -1,3 +1,8 @@
+import path
+import sys
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent)
+
 import os
 
 def ensure_dir(path_to_dir:str)->None:

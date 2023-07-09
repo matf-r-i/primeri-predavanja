@@ -1,7 +1,8 @@
 import path
-import sys
+import sys 
+
 directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
+sys.path.append(directory.parent)
 
 class EvaluationCacheControlStatistics:
 

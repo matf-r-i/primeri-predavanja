@@ -1,14 +1,11 @@
 import path
 import sys
 directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
-sys.path.append(directory.parent.parent.parent)
 sys.path.append(directory.parent.parent.parent.parent)
-sys.path.append(directory.parent.parent.parent.parent.parent)
 
 import unittest   
 
-from algorithm.metaheuristic.variable_neighborhood_search import vns_optimizer  
+from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer 
 
 class Test_TestTargetProblem(unittest.TestCase):
     

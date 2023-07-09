@@ -1,13 +1,13 @@
 import path
 import sys
 directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
+sys.path.append(directory.parent)
 
 import os
 import logging
 import datetime as dt
 
-from utils.files import ensure_dir
+from files import ensure_dir
 
 '''
 Start logger config

@@ -1,7 +1,8 @@
-from pathlib import Path
+import path
 import sys 
-path = Path().joinpath().joinpath('..')
-sys.path.append(str(path))
+
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent)
 
 from copy import deepcopy
 from abc import ABCMeta, abstractmethod

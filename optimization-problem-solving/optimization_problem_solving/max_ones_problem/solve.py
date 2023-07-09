@@ -1,13 +1,5 @@
 import path
-
 import sys
-directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
-
-from random import randrange
-from random import seed
-from datetime import datetime
-from collections import namedtuple
 
 # Script should be executed from repository root folder
 OPTIMIZATION_ALGORITHM_DIR = './optimization-algorithms/optimization_algorithms'
@@ -15,13 +7,23 @@ abs_path = path.Path(OPTIMIZATION_ALGORITHM_DIR).abspath()
 sys.path.append(abs_path)
 # Previous code should be commented out when pip install started to work
 
+
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent)
+
+from random import randrange
+from random import seed
+from datetime import datetime
+from collections import namedtuple
+
+from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
+
 from utils.files import ensure_dir 
 from utils.logger import logger
 from command_line import default_parameters_cl
 from command_line import parse_arguments
 from max_ones_problem import MaxOnesProblem
 from max_ones_solution import OnesCountSolution
-from algorithm.metaheuristic.variable_neighborhood_search.vns_optimizer import VnsOptimizer
 
 def main():
     """ 
