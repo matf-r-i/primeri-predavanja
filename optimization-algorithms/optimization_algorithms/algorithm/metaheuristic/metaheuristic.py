@@ -1,7 +1,7 @@
 import path
 import sys
 directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent.parent)
+sys.path.append(directory.parent.parent)
 
 from random import random
 from copy import deepcopy

@@ -1,7 +1,7 @@
 import path
 import sys
 directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent.parent.parent)
+sys.path.append(directory.parent.parent)
 
 from copy import deepcopy
 from random import choice
@@ -12,8 +12,8 @@ from typing import Generic
 from utils.logger import logger
 from target_problem.target_problem import TargetProblem
 from target_solution.target_solution import TargetSolution
+from algorithm.metaheuristic.metaheuristic import Metaheuristic
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
-from algorithm.metaheuristic import Metaheuristic
 
 S_co = TypeVar("S_co", covariant=True, bound=TargetSolution) # and bound by TargetSolutionVnsSupport 
 

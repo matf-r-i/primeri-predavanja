@@ -1,8 +1,7 @@
-import path
+from pathlib import Path
 import sys 
-
-directory = path.Path(__file__).abspath()
-sys.path.append(directory.parent.parent)
+path = Path().joinpath().joinpath('..')
+sys.path.append(str(path))
 
 from copy import deepcopy
 from datetime import datetime
