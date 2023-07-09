@@ -14,34 +14,34 @@ from target_solution.target_solution import ObjectiveFitnessFeasibility
 from target_solution.target_solution import TargetSolution
 from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
 
-class OnesCountSolution(TargetSolution, TargetSolutionVnsSupport):
+class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
     
     def __init__(self)->None:
         """
-        Create new OnesCountSolution instance
+        Create new MaxOnesSolution instance
         """
-        super().__init__("OnesCountSolution", fitness_value=None, objective_value=None, is_feasible=False)
+        super().__init__("MaxOnesSolution", fitness_value=None, objective_value=None, is_feasible=False)
         self.__representation:BitArray = BitArray()
 
     def __copy__(self):
         """
-        Internal copy of the OnesCountSolution
-        :return: OnesCountSolution -- new OnesCountSolution instance with the same properties
+        Internal copy of the MaxOnesSolution
+        :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
         sol = deepcopy(self)
         return sol
 
     def copy(self):
         """
-        Copy the OnesCountSolution
-        :return: OnesCountSolution -- new OnesCountSolution instance with the same properties
+        Copy the MaxOnesSolution
+        :return: MaxOnesSolution -- new MaxOnesSolution instance with the same properties
         """
         return self.__copy__()
         
     def copy_to(self, destination)->None:
         """
-        Copy the OnesCountSolution to the already existing destination OnesCountSolution
-        :param destination:OnesCountSolution -- destination OnesCountSolution
+        Copy the MaxOnesSolution to the already existing destination MaxOnesSolution
+        :param destination:MaxOnesSolution -- destination MaxOnesSolution
         """
         destination = self.__copy__()
 
