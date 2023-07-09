@@ -288,7 +288,9 @@ class Metaheuristic(Algorithm, metaclass=ABCMeta):
             for i in range(0, indentation):
                 s += indentation_symbol  
             s += '__best_solution=None' + delimiter
-        s += '__solution_code_distance_cache_cs=' + self.solution_code_distance_cache_cs.string_representation(
+        s += 'output_control(static)=' + self.output_control.string_representation(
+                delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
+        s += 'solution_code_distance_cache_cs(static)=' + self.solution_code_distance_cache_cs.string_representation(
                 delimiter, indentation + 1, indentation_symbol, '{', '}') + delimiter
         if self.execution_ended is not None and self.execution_started is not None:
             for i in range(0, indentation):

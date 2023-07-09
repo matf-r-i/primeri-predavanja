@@ -236,7 +236,7 @@ class TargetSolution(metaclass=ABCMeta):
         s += 'solution_code=' + self.solution_code() + delimiter
         for i in range(0, indentation):
             s += indentation_symbol     
-        s += 'evaluation_cache_cs=' + self.evaluation_cache_cs.string_representation(
+        s += 'evaluation_cache_cs(static)=' + self.evaluation_cache_cs.string_representation(
                 delimiter, indentation+1, indentation_symbol, '{', '}')  
         for i in range(0, indentation):
             s += indentation_symbol  

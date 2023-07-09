@@ -15,6 +15,7 @@ from argparse import ArgumentParser
 default_parameters_cl = {
         'algorithm': 'vns', 
         'optimization_type': 'maximization', 
+        'writeToOutputFile': True,
         'outputFilePath':'optimization-problem-solving/optimization_problem_solving/max_ones_problem/outputs/dimension_77.csv', 
         'inputFilePath': 'optimization-problem-solving/optimization_problem_solving/max_ones_problem/inputs/dimension_77.txt', 
         'inputFormat': 'txt', 
@@ -39,6 +40,8 @@ def parse_arguments():
         parser_vns = subparsers.add_parser('vns', help='Execute VNS metaheuristic for max_ones_problem.')
         parser_vns.add_argument('optimization_type', help='Decide if minimization or maximization will be executed.'
                 , nargs='?', choices=('minimization', 'maximization'))
+        parser_vns.add_argument('--writeToOutputFile', type=bool, default=True, 
+                help=("Should results of metaheuristic execution be written to output file.") )        
         parser_vns.add_argument('--outputFilePath', type=str, default='output/out.txt', 
                 help=("File path of the output file. " 
                 "File path '' means that it is within 'outputs' folder."))

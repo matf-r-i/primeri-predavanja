@@ -8,7 +8,7 @@ class OutputControl:
     """
     If metaheuristic will write to output, or not
     """
-    is_writing_to_output:bool = False
+    write_to_output:bool = False
 
     """
     Output file to which metaheuristic will write
