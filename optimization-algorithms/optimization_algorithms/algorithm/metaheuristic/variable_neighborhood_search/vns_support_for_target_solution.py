@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 
 from target_problem.target_problem import TargetProblem
 
-class TargetSolutionVnsSupport(metaclass=ABCMeta):
+class VnsSupportForTargetSolution(metaclass=ABCMeta):
     
     @abstractmethod
     def vns_randomize(k:int, problem:TargetProblem, solution_codes:list[str])->bool:

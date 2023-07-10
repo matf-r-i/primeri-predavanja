@@ -12,9 +12,9 @@ from utils.logger import logger
 from target_problem.target_problem import TargetProblem
 from target_solution.target_solution import ObjectiveFitnessFeasibility
 from target_solution.target_solution import TargetSolution
-from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
+from algorithm.metaheuristic.variable_neighborhood_search.vns_support_for_target_solution import VnsSupportForTargetSolution
 
-class MaxOnesSolution(TargetSolution, TargetSolutionVnsSupport):
+class MaxOnesProblemBinaryRepresentationSolution(TargetSolution, VnsSupportForTargetSolution):
     
     def __init__(self)->None:
         """

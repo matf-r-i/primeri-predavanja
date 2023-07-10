@@ -23,7 +23,7 @@ from utils.logger import logger
 from command_line import default_parameters_cl
 from command_line import parse_arguments
 from max_ones_problem import MaxOnesProblem
-from max_ones_solution import MaxOnesSolution
+from max_ones_problem_binary_representation_solution import MaxOnesProblemBinaryRepresentationSolution
 
 def main():
     """ 
@@ -115,7 +115,7 @@ def main():
             problem = MaxOnesProblem(input_file_path)
             problem.load_from_file(input_format)
             # initial solution for solving
-            initial_solution = MaxOnesSolution()
+            initial_solution = MaxOnesProblemBinaryRepresentationSolution()
             initial_solution.evaluation_cache_cs.is_caching = evaluation_cache_is_used
             initial_solution.random_init(problem=problem)
             #logger.debug('Initial solution: {}'.format(initial_solution))

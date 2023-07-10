@@ -13,9 +13,9 @@ from utils.logger import logger
 from target_problem.target_problem import TargetProblem
 from target_solution.target_solution import TargetSolution
 from algorithm.metaheuristic.metaheuristic import Metaheuristic
-from algorithm.metaheuristic.variable_neighborhood_search.target_solution_vns_support import TargetSolutionVnsSupport
+from algorithm.metaheuristic.variable_neighborhood_search.vns_support_for_target_solution import VnsSupportForTargetSolution
 
-S_co = TypeVar("S_co", covariant=True, bound=TargetSolution) # and bound by TargetSolutionVnsSupport 
+S_co = TypeVar("S_co", covariant=True, bound=TargetSolution) # and bound by VnsSupportForTargetSolution 
 
 class VnsOptimizer(Metaheuristic, Generic[S_co]):
     
