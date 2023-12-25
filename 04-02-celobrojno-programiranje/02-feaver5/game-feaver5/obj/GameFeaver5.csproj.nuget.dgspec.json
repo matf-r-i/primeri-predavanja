@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj": {}
+    "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj": {}
   },
   "projects": {
-    "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj": {
+    "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
+        "projectUniqueName": "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
         "projectName": "GameFeaver5",
-        "projectPath": "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
+        "projectPath": "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
         "packagesPath": "C:\\Users\\Vlado\\.nuget\\packages\\",
-        "outputPath": "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\obj\\",
+        "outputPath": "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

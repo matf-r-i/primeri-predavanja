@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vT5ydY/nJ7dAhlxoBWAaG+VILJ2+L5vrOwYChLxCJequZnSqZr+OEowDv2UJTqVoPHjsxRjVcxDIrbnloowItg==",
+  "dgSpecHash": "KaJX5RH41j3DHN2TwzmkUd7r9khBNlTdUiAldxyriALQPtwtZ1lECQzf7+g6Ax9kmv2l/awLUm4u8sSkuPqbLw==",
   "success": true,
-  "projectFilePath": "C:\\vlado\\Courses\\Matf\\matf-r-i----info\\primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
+  "projectFilePath": "C:\\vlado\\Courses\\Matf\\matf-r-i----primeri-predavanja\\04-02-celobrojno-programiranje\\02-feaver5\\game-feaver5\\GameFeaver5.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vlado\\.nuget\\packages\\googlegson\\2.9.1.1\\googlegson.2.9.1.1.nupkg.sha512",
     "C:\\Users\\Vlado\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.11\\microsoft.aspnetcore.authorization.7.0.11.nupkg.sha512",
