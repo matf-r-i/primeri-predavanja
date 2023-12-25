@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\GameFeaver5.props" />
+</Project>

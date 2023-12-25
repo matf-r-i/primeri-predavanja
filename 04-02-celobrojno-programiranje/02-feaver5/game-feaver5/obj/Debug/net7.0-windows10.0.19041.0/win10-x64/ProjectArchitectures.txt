@@ -1,0 +1,1 @@
+C:\vlado\Courses\Matf\matf-r-i----info\primeri-predavanja\04-02-celobrojno-programiranje\02-feaver5\game-feaver5\GameFeaver5.csproj;x64
