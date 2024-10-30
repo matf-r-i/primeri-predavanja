@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GameFeaver5")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+144c73493b6d30c811ff6d427efba21e71c3b857")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+01b54ccf5a34aefe79545cfaf26eaf82e66fc27b")]
 [assembly: System.Reflection.AssemblyProductAttribute("GameFeaver5")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GameFeaver5")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
