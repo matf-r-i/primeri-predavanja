@@ -10,7 +10,7 @@ b1 = f.addVar(name="number-model-1-by-from-competitor")
 b2 = f.addVar(name="number-model-2-by-from-competitor")
 b3 = f.addVar(name="number-model-3-by-from-competitor")
 
-f.setObjective(50*m1 + 83*m2 + 130*m3 + 61*b1 + 97*b2 + 145*b3, GRB.MINIMIZE)
+f.setObjective(50*m1 + 83*m2 + 130*m3 + 61*b1 + 120*b2 + 145*b3, GRB.MINIMIZE)
 
 f.addConstr(2*m1 + 1.5*m2 + 3*m3 <= 10000, "resource-wiring")
 f.addConstr(1*m1 + 2*m2 + 1*m3 <= 5000, "resources-harnessing")
