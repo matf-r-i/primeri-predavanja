@@ -10,3 +10,11 @@
 # Each edge has an associated distance d > 0. That distance could be travel time, distance in km or the monetary cost associated with traveling from one city to another. Restrictions on the distances lead to special cases of the problem.
 # For example the metric-TSP requires that the triangle inequality holds for all triples of edges (as for the euclidean distance).
 # In this exercise, we will construct a TSP with random points within an Euclidean space.
+
+import math
+
+import pandas as pd
+from plotnine import ggplot, aes, geom_line, geom_point, geom_segment
+
+import xarray as xr 
+from linopy import Model
