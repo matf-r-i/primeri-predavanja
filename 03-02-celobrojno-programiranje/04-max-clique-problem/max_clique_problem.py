@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
 from math import floor
-import linopy
+from linopy import Model
 import networkx as nx
 import numpy as np
 
@@ -28,7 +28,7 @@ def print_solution(objective_value, true_obj, path, time, is_clique):
     print(f"{path_pr}, {objective_value}, {true_obj}, {time}, {is_clique}")
 
 
-def read_graph_file(file_path, verbosity: bool):
+def read_graph_file(file_path:str, verbosity: bool)->nx.Graph:
     """
         Parse .col file and return graph object
     """
@@ -50,15 +50,18 @@ def read_graph_file(file_path, verbosity: bool):
                 continue
         return nx.Graph(edges)
 
+def get_ind_sets(graph: nx.Graph) ->list[set]:
+    # Generate all independent sets using networkx
+    return list(nx.algorithms.approximation.maximum_independent_set(graph))
 
 def get_problem(graph: nx.Graph)->Model:
 
-    ind_sets = get_ind_sets(graph)
+    ind_sets:list[set] = get_ind_sets(graph)
 
-    not_connected_edges_list = list(nx.complement(graph).edges)
+    not_connected_edges_list:list[set] = list(nx.complement(graph).edges)
 
-    list_nodes = list(graph.nodes)
-    list_nodes_int = [int(i) for i in list_nodes]
+    list_nodes:list[nx.NodeView] = list(graph.nodes)
+    list_nodes_int:list[int] = [int(i) for i in list_nodes]
     list_nodes_int.sort()
 
     names = ['x' + str(i) for i in list_nodes_int]
@@ -95,10 +98,9 @@ def get_problem(graph: nx.Graph)->Model:
     return problem
 
 
-verbosity = False
-paths, graphs = [], []
-
-graph = read_graph(path, verbosity)
+verbosity:bool = True
+path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_01.txt'
+graph = read_graph_file(path, verbosity)
 
 problem_max_clique = get_problem(graph)
 problem_max_clique.set_log_stream(None)
