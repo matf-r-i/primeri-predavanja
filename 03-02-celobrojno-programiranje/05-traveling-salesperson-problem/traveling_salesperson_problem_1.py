@@ -22,12 +22,13 @@ from itertools import combinations
 import xarray as xr 
 from linopy import Model
 
-cities = ['A', 'B', 'C', 'D']
+cities = ['A', 'B', 'C', 'D', 'E']
 coordinates = {
     'A': (0, 0),
     'B': (1, 2),
     'C': (3, 1),
-    'D': (4, 0)
+    'D': (0, 1),
+    'E': (5, 3)
 }
 
 # Calculate distances between cities
@@ -36,7 +37,7 @@ distances = {
                     (coordinates[i][1] - coordinates[j][1]) ** 2)
     for i, j in combinations(cities, 2)
 }
-print(distances)
+#print(distances)
 
 # Create distance matrix
 n = len(cities)
@@ -59,7 +60,8 @@ x_coord = pd.Index(range(n), name='x_coord')
 y_coord = pd.Index(range(n), name='y_coord')
 x = model.add_variables(binary=True,  coords=[x_coord,y_coord], name='x')
 print(x)
-u = model.add_variables(integer=True, coords=[y_coord], name='u')
+u_coord = pd.Index(range(n), name='u_coord')
+u = model.add_variables(integer=True, coords=[u_coord], name='u')
 print(u)
 
 # Objective function

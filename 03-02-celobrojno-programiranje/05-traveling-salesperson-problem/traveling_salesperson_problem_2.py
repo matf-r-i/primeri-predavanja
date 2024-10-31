@@ -17,7 +17,7 @@ draw = (
     + aes(x="x", y="y")  
     + geom_point() 
 )
-print(draw)
+#print(draw)
 
 def distance(i:int, j:int)->float:
     c1 = cities.loc[i]
@@ -27,12 +27,16 @@ def distance(i:int, j:int)->float:
 #print(distance(1,2))
 
 # Create distance matrix
+LARGE:float = 99999999
 n:int = cities.shape[0]
 dists = []
 for i in range(n):
     row = []
     for j in range(n):
-        row.append(distance(i,j))
+        if i != j:
+            row.append(distance(i,j))
+        else:
+            row.append(LARGE)
     dists.append(row)
 dist_matrix = xr.DataArray(dists, dims=['x_coord','y_coord']) 
 print(dist_matrix)
@@ -43,9 +47,10 @@ model = Model()
 # Decision variables
 x_coord = pd.Index(range(n), name='x_coord')
 y_coord = pd.Index(range(n), name='y_coord')
+u_coord = pd.Index(range(n), name='u_coord')
 x = model.add_variables(binary=True,  coords=[x_coord,y_coord], name='x')
 print(x)
-u = model.add_variables(integer=True, coords=[y_coord], name='u')
+u = model.add_variables(integer=True, coords=[u_coord], name='u')
 print(u)
 
 # Objective function
@@ -69,7 +74,38 @@ for i in range(1, n):
 
 print(model)   
 
-
 model.solve()
 
 print(model.solution)
+
+start = []
+for i in range(n):
+    if u.solution.data[i] == 0:
+        start.append([cities.loc[i].x, cities.loc[i].y])
+start = pd.DataFrame(start, columns=['x', 'y'])
+#print(selected)
+
+links = []
+for i in range(n):
+    for j in range(i+1, n):
+        if u.solution.data[i] >= 0 and u.solution.data[j]>=0 and \
+            (abs(u.solution.data[i]-u.solution.data[j]) in (1,n-1) ):
+            x1 = cities.loc[u.solution.data[i]].x
+            y1 = cities.loc[u.solution.data[i]].y
+            x2 = cities.loc[u.solution.data[j]].x
+            y2 = cities.loc[u.solution.data[j]].y
+            links.append([x1,y1,x2,y2])
+links = pd.DataFrame(links, columns=['x1', 'y1', 'x2', 'y2'])
+#print(links)
+
+# Draw results data on screen
+draw = (
+    ggplot(cities)  
+    + aes(x="x", y="y")  
+    + geom_point() 
+    + geom_point(data = start,color = "yellow")
+)
+for i in range(len(links)):
+    draw += geom_segment(mapping = aes(x=links.loc[i].x1, y=links.loc[i].y1, 
+            xend=links.loc[i].x2, yend=links.loc[i].y2), color="pink")
+print(draw)
