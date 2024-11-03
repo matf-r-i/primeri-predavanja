@@ -7,33 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-
-def get_non_zero_values_idx(values):
-    return np.nonzero(values)[0]
-
-
-def get_non_zero_values(values):
-    return [x for x in values if x != 0]
-
-
-def check_clique(solution, graph):
-    subgraph = graph.subgraph(solution)
-    num_of_edges = subgraph.number_of_edges()
-    return num_of_edges == int(subgraph.number_of_nodes() * (num_of_edges - 1) / 2)
-
-
-def print_solution(objective_value, true_obj, path, time, is_clique):
-    print(f"graph: {path}")
-    print(f"objective value: {objective_value}")
-    print(f"\ntime exec: {time}")
-    path_pr = path.split('\\')[-1]
-    print(f"{path_pr}, {objective_value}, {true_obj}, {time}, {is_clique}")
-
-
 def read_graph_file(file_path:str, verbosity: bool)->nx.Graph:
-    """
-        Parse .col file and return graph object
-    """
+
     edges = []
     with open(file_path, 'r') as file:
         for line in file:

@@ -72,9 +72,9 @@ model.add_objective( (x * dist_matrix).sum(), sense='min')
 # Constraints
 # Flow Constraints - Each city must have exactly one incoming and one outgoing connection
 for i in range(n):
-    model.add_constraints( (x.loc[i,]).sum() == 1)
+    model.add_constraints((x.loc[i,]).sum() == 1)
 for i in range(n):
-    model.add_constraints( (x.loc[:,i]).sum() == 1)  
+    model.add_constraints((x.loc[:,i]).sum() == 1)  
 
 # Subtour Elimination Constraints (MTZ constraints) - no one of the nodes (except staring one) can not be part of the TSP path more than once
 for i in range(1, n):
