@@ -3,7 +3,9 @@ import sys
 from math import floor
 from linopy import Model
 import networkx as nx
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
 def get_non_zero_values_idx(values):
@@ -50,66 +52,35 @@ def read_graph_file(file_path:str, verbosity: bool)->nx.Graph:
                 continue
         return nx.Graph(edges)
 
-def get_ind_sets(graph: nx.Graph) ->list[set]:
-    # Generate all independent sets using networkx
-    return list(nx.algorithms.approximation.maximum_independent_set(graph))
+def get_max_clique_problem(graph: nx.Graph)->Model:
 
-def get_problem(graph: nx.Graph)->Model:
+    model = Model()
 
-    ind_sets:list[set] = get_ind_sets(graph)
-
-    not_connected_edges_list:list[set] = list(nx.complement(graph).edges)
-
-    list_nodes:list[nx.NodeView] = list(graph.nodes)
-    list_nodes_int:list[int] = [int(i) for i in list_nodes]
-    list_nodes_int.sort()
-
-    names = ['x' + str(i) for i in list_nodes_int]
-    objective = [one] * max(list_nodes_int)
-    lower_bounds = [zero] * max(list_nodes_int)
-    upper_bounds = [one] * max(list_nodes_int)
-
-    problem = Model()
-    problem.objective.set_sense(problem.objective.sense.maximize)
-    problem.variables.add(obj=objective,
-                            lb=lower_bounds,
-                            ub=upper_bounds,
-                            names=names)
-
-    constraints = [[['x' + edges_pair[0], 'x' + edges_pair[1]], [one, one]] for edges_pair in not_connected_edges_list]
-    for ind_set in ind_sets:
-        constraints.append([['x{0}'.format(x) for x in ind_set], [1.0] * len(ind_set)])
-
-    constraint_names = ["c" + str(i) for i in range(len(constraints))]
-
-    rhs = [one] * len(constraints)
-    constraint_senses = ["L"] * len(constraints)
-    # print(constraints)
-    problem.linear_constraints.add(lin_expr=constraints,
-                                    senses=constraint_senses,
-                                    rhs=rhs,
-                                    names=constraint_names)
-    for i in list_nodes_int:
-        if solve_integer:
-            problem.variables.set_types(i - 1, problem.variables.type.binary)
-        else:
-            problem.variables.set_types(i - 1, problem.variables.type.continuous)
-
-    return problem
+    x_coord = pd.Index(range(len(graph.nodes)), name='x_coord')
+    x = model.add_variables(binary=True,  coords=[x_coord], name='x')    
+    
+    # Add objective function
+    model.add_objective(x.sum(), sense = 'max')
+    
+    # Add constraints to ensure no two selected vertices are adjacent
+    for i in range(len(graph.nodes)):
+        for j in range(i+1, len(graph.nodes)):
+            if not graph.has_edge(str(i+1), str(j+1)):
+                model.add_constraints(x.loc[i] + x.loc[j] <= 1)
+    return model
 
 
 verbosity:bool = True
-path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_01.txt'
+path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_02.txt'
 graph = read_graph_file(path, verbosity)
 
-problem_max_clique = get_problem(graph)
-problem_max_clique.set_log_stream(None)
-problem_max_clique.set_results_stream(None)
+nx.draw(graph)
+plt.savefig( path[:len(path)-4] + '.png')
+
+problem_max_clique = get_max_clique_problem(graph)
 problem_max_clique.solve()
 
-values = problem_max_clique.solution.get_values()
-objective_value = problem_max_clique.solution.get_objective_value()
-print_solution(objective_value, objective_value, path, (datetime.now() - start).total_seconds(),
-                check_clique(values, graph))
+
+print(problem_max_clique.solution)
 
 

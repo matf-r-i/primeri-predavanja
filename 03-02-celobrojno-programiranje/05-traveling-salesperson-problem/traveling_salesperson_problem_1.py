@@ -58,27 +58,31 @@ model = Model()
 # Decision variables
 x_coord = pd.Index(range(n), name='x_coord')
 y_coord = pd.Index(range(n), name='y_coord')
+# x[i,j] - Binary variable equal to 1 if the path goes directly from city i to city j, and 0 otherwise
 x = model.add_variables(binary=True,  coords=[x_coord,y_coord], name='x')
 print(x)
 u_coord = pd.Index(range(n), name='u_coord')
+# u[i] - An auxiliary integer variable representing the "position" or "order" in which each city i is visited, used to prevent subtours.
 u = model.add_variables(integer=True, coords=[u_coord], name='u')
 print(u)
 
-# Objective function
+# Objective function - minimize the total travel distance, calculated as the sum of distances multiplied by the decision variables
 model.add_objective( (x * dist_matrix).sum(), sense='min')
 
 # Constraints
+# Flow Constraints - Each city must have exactly one incoming and one outgoing connection
 for i in range(n):
     model.add_constraints( (x.loc[i,]).sum() == 1)
-
 for i in range(n):
     model.add_constraints( (x.loc[:,i]).sum() == 1)  
 
+# Subtour Elimination Constraints (MTZ constraints) - no one of the nodes (except staring one) can not be part of the TSP path more than once
 for i in range(1, n):
     for j in range(1, n):
         if i != j:
             model.add_constraints(u[i] - u[j] + n * x[i, j] <= n - 1)
 
+# Size constraints for ordering indicators
 for i in range(1, n):
     model.add_constraints(u[i] >= 1)
     model.add_constraints(u[i] <= n - 1)

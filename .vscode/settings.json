@@ -9,6 +9,8 @@
         "Opti",
         "plotnine",
         "pylab",
+        "Subtour",
+        "subtours",
         "usecols",
         "xarray",
         "xend",
