@@ -32,7 +32,7 @@ def get_max_clique_problem(graph: nx.Graph)->Model:
     model = Model()
 
     x_coord = pd.Index(range(len(graph.nodes)), name='x_coord')
-    x = model.add_variables(binary=True,  coords=[x_coord], name='x')    
+    x = model.add_variables(binary=True, coords=[x_coord], name='x')    
     
     # Add objective function
     model.add_objective(x.sum(), sense = 'max')
@@ -46,7 +46,7 @@ def get_max_clique_problem(graph: nx.Graph)->Model:
 
 
 verbosity:bool = True
-path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_02.txt'
+path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_01.txt'
 graph = read_graph_file(path, verbosity)
 
 nx.draw(graph)
