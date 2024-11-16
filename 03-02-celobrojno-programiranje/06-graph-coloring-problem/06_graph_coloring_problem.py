@@ -42,7 +42,7 @@ model = linopy.Model()
 vert_coord = pd.Index(range(num_vertices), name='vert_coord')
 col_coord = pd.Index(range(num_colors), name='col_coord')
 x_vars = model.add_variables(binary=True, coords=[vert_coord,col_coord], name='x')
-y_vars = model.add_variables(binary=True, coords=[vert_coord], name='y')
+y_vars = model.add_variables(binary=True, coords=[col_coord], name='y')
 
 # Set objective function: minimize the number of colors used
 model.add_objective( y_vars.sum(), sense='min')
