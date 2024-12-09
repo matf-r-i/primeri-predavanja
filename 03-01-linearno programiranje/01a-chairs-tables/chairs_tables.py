@@ -1,3 +1,6 @@
+#import sys
+#print(sys.executable)
+
 from linopy import Model
 
 m = Model()
