@@ -1,3 +1,4 @@
+import highspy
 import math
 import xarray as xr 
 from linopy import Model
@@ -27,7 +28,7 @@ m.add_objective(  21*x.loc[0,0] + 50*x.loc[0,1] + 40*x.loc[0,2]
 
 print(m)
 
-m.solve()
+m.solve(solver='highs')
 
 print(m.solution)
 

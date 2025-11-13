@@ -1,3 +1,5 @@
+import highspy
+
 from linopy import Model
 
 m = Model()
@@ -23,7 +25,7 @@ m.add_objective( 0.25*x1 + 0.30*x2 + 0.32*x3 + 0.15*x4)
 
 print(m)
 
-m.solve()
+m.solve(solver='')
 
 print(m.solution)
 

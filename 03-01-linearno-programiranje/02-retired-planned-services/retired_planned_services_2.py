@@ -1,3 +1,4 @@
+import highspy
 import xarray as xr
 from linopy import Model
 
@@ -23,7 +24,7 @@ m.add_objective((x*gain).sum())
 
 print(m)
 
-m.solve()
+m.solve(solver='highs')
 
 print(m.solution)
 
