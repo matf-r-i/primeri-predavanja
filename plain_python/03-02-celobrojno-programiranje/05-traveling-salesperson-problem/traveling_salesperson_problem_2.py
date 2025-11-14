@@ -1,4 +1,4 @@
-
+import highspy
 import math
 
 import pandas as pd
@@ -8,7 +8,7 @@ import xarray as xr
 from linopy import Model
 
 # Load data
-cities = pd.read_csv('03-02-celobrojno-programiranje/05-traveling-salesperson-problem/data/cities_02.csv', usecols= ['x','y'])
+cities = pd.read_csv('plain_python/03-02-celobrojno-programiranje/05-traveling-salesperson-problem/data/cities_02.csv', usecols= ['x','y'])
 print(cities)
 
 # Draw loaded data on screen
@@ -80,7 +80,7 @@ for i in range(1, n):
 
 print(model)   
 
-model.solve()
+model.solve(solver='highs')
 
 print(model.solution)
 

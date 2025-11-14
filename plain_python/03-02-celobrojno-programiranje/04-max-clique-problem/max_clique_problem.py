@@ -1,3 +1,4 @@
+import highspy
 from datetime import datetime
 import sys
 from math import floor
@@ -46,14 +47,14 @@ def get_max_clique_problem(graph: nx.Graph)->Model:
 
 
 verbosity:bool = True
-path:str = '03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_02.txt'
+path:str = 'python_plain/03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_02.txt'
 graph = read_graph_file(path, verbosity)
 
 nx.draw(graph)
 plt.savefig( path[:len(path)-4] + '.png')
 
 problem_max_clique = get_max_clique_problem(graph)
-problem_max_clique.solve()
+problem_max_clique.solve(solver='highs')
 
 
 print(problem_max_clique.solution)

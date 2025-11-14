@@ -11,6 +11,7 @@
 # For example the metric-TSP requires that the triangle inequality holds for all triples of edges (as for the euclidean distance).
 # In this exercise, we will construct a TSP with random points within an Euclidean space.
 
+import highspy
 import math
 
 import numpy as np
@@ -90,6 +91,6 @@ for i in range(1, n):
 print(model)   
 
 
-model.solve()
+model.solve(solver='highs')
 
 print(model.solution)

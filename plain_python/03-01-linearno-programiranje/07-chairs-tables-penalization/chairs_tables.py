@@ -1,3 +1,4 @@
+import highspy
 from linopy import Model
 
 model = Model()
@@ -13,7 +14,7 @@ model.add_objective(50*c + 75*t, sense='max')
 
 print(model)
 
-model.solve()
+model.solve(model='highs')
 
 print("{}:{}\n".format(c, c.solution))
 print("{}:{}\n".format(t, t.solution))

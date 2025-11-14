@@ -1,4 +1,4 @@
-
+import highspy
 import math
 
 import pandas as pd
@@ -8,11 +8,11 @@ import xarray as xr
 from linopy import Model
 
 # Load data
-consumer_locations = pd.read_csv('03-02-celobrojno-programiranje/03-p-median-problem/data/consumer_locations.csv', usecols= ['x','y'])
+consumer_locations = pd.read_csv('plain_python/03-02-celobrojno-programiranje/03-p-median-problem/data/consumer_locations.csv', usecols= ['x','y'])
 #print(consumer_locations)
-facility_locations = pd.read_csv('03-02-celobrojno-programiranje/03-p-median-problem/data/facility_locations.csv', usecols= ['x','y'])
+facility_locations = pd.read_csv('plain_python/03-02-celobrojno-programiranje/03-p-median-problem/data/facility_locations.csv', usecols= ['x','y'])
 #print(facility_locations)
-building_costs = pd.read_csv('03-02-celobrojno-programiranje/03-p-median-problem/data/building_costs.csv', usecols= ['building_costs'])
+building_costs = pd.read_csv('plain_python/03-02-celobrojno-programiranje/03-p-median-problem/data/building_costs.csv', usecols= ['building_costs'])
 #print(building_costs)
 
 # Create helper function for distance calculation between consumer and facility
@@ -85,7 +85,7 @@ model.add_constraints( (y).sum() == p)
 
 #print(model)
 
-model.solve()
+model.solve(solver='highs')
 
 print(model.solution)
 

@@ -1,3 +1,4 @@
+import highspy
 import linopy
 import numpy as np
 import pandas as pd
@@ -26,7 +27,7 @@ def read_graph_file(file_path:str, verbosity: bool)->nx.Graph:
         return nx.Graph(edges)
 
 verbosity:bool = True
-path:str = '03-02-celobrojno-programiranje/06-graph-coloring-problem/data/graph_01.txt'
+path:str = 'plain_python/03-02-celobrojno-programiranje/06-graph-coloring-problem/data/graph_01.txt'
 graph = read_graph_file(path, verbosity)
 
 nx.draw(graph)
@@ -64,7 +65,7 @@ for (ii, jj) in graph.edges:
         model.add_constraints(x_vars.loc[i, k] + x_vars.loc[j, k] <= 1)
 
 # Solve the model
-model.solve()
+model.solve(solver='highs')
 
 # Output results
 if model.status == 'ok':

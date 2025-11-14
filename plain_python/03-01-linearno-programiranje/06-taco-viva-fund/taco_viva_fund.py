@@ -1,3 +1,4 @@
+import highspy
 from linopy import Model
 
 m = Model()
@@ -38,7 +39,7 @@ m.add_constraints(1.11 * d1 + 1.058* c4 + 1.035*b5 + 1.018*a6 >= 300, name="cash
 
 print(m)
 
-m.solve()
+m.solve(solver='highs')
 
 print("{}:{}\n".format(a1, a1.solution))
 print("{}:{}\n".format(a2, a2.solution))

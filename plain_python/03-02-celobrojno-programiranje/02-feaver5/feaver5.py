@@ -1,3 +1,4 @@
+import highspy
 import math
 import pandas as pd
 
@@ -38,7 +39,7 @@ m.add_constraints(x.loc[4,4] + x.loc[3,4] + x.loc[4,3] - 2 * y.loc[4,4] == 1)
 
 print(m)
 
-m.solve()
+m.solve(solver='highs')
 
 print(m.solution)
 
