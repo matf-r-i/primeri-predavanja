@@ -51,8 +51,11 @@ m.add_constraints(b.loc[5] == b.loc[4]+p.loc[4]-3500, name="month 6 beginning ba
 m.add_constraints(b.loc[6] == b.loc[5]+p.loc[5]-4000, name="month 7 beginning balance")
 
 costs_production = xr.DataArray([240, 250, 265, 285, 280, 260])
+
+#costs_inventory = 0.015 * costs_production
 costs_inventory = xr.DataArray( 
     [3.6, 3.6/2+3.75/2, 3.75/2+3.98/2, 3.98/2+4.28/2, 4.28/2+4.20/2, 4.20/2+3.9/2, 3.9/2])
+
 m.add_objective((p*costs_production).sum()+(b*costs_inventory).sum())
 
 print(m)
