@@ -15,6 +15,8 @@ m.add_objective(350*x1 + 300*x2, sense='max')
 print(m)
 
 m.solve(solver='highs')
+print("++++++")
+print(m.solution)
 
 print("{}:{}\n".format(x1, x1.solution))
 print("{}:{}\n".format(x2, x2.solution))

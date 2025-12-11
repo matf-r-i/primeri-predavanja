@@ -16,6 +16,8 @@ print(m)
 
 m.solve(solver='highs')
 
+print(m.solution)
+
 print("{}:{}\n".format(x1, x1.solution))
 print("{}:{}\n".format(x2, x2.solution))
 
