@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MauiFeaver5.Shared/MauiFeaver5.Shared.csproj" />
+  <Project Path="MauiFeaver5.Web/MauiFeaver5.Web.csproj" />
+  <Project Path="MauiFeaver5/MauiFeaver5.csproj" />
+</Solution>
