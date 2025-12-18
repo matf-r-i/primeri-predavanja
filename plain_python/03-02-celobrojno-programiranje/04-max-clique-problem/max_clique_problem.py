@@ -47,7 +47,7 @@ def get_max_clique_problem(graph: nx.Graph)->Model:
 
 
 verbosity:bool = True
-path:str = 'plain_python/03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_02.txt'
+path:str = 'plain_python/03-02-celobrojno-programiranje/04-max-clique-problem/data/graph_01.txt'
 graph = read_graph_file(path, verbosity)
 
 nx.draw(graph)

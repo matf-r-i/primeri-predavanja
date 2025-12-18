@@ -27,7 +27,7 @@ def read_graph_file(file_path:str, verbosity: bool)->nx.Graph:
         return nx.Graph(edges)
 
 verbosity:bool = True
-path:str = 'plain_python/03-02-celobrojno-programiranje/06-graph-coloring-problem/data/graph_01.txt'
+path:str = 'plain_python/03-02-celobrojno-programiranje/06-graph-coloring-problem/data/drzave.txt'
 graph = read_graph_file(path, verbosity)
 
 nx.draw(graph)
@@ -66,6 +66,9 @@ for (ii, jj) in graph.edges:
 
 # Solve the model
 model.solve(solver='highs')
+
+print("{}:\n{}\n".format(x_vars, x_vars.solution))
+print("{}:\n{}\n".format(y_vars, y_vars.solution))
 
 # Output results
 if model.status == 'ok':

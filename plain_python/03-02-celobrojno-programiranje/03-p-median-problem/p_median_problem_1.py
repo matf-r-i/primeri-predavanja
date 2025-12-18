@@ -45,7 +45,7 @@ for i in range(n):
         row.append(distance(i,j))
     dists.append(row)
 distances = xr.DataArray(dists, dims=['x_coord','y_coord']) 
-#print(distances)
+print(distances)
 
 # Create building costs matrix
 build_cs = []
@@ -79,7 +79,7 @@ for i in range(n):
     for j in range(m):
         model.add_constraints(x.loc[i,j] <= y.loc[j])
 
-p:int = 4
+p:int = 2
 # Constraint: there have to be exactly p established facilities 
 model.add_constraints( (y).sum() == p)
 
@@ -89,8 +89,8 @@ model.solve(solver='highs')
 
 print(model.solution)
 
-#print("{}:\n{}\n".format(x, x.solution))
-#print("{}:\n{}\n".format(y, y.solution))
+print("{}:\n{}\n".format(x, x.solution))
+print("{}:\n{}\n".format(y, y.solution))
 
 selected = []
 for j in range(m):

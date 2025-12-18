@@ -77,7 +77,7 @@ for i in range(n):
     for j in range(m):
         model.add_constraints(x.loc[i,j] <= y.loc[j])
 
-p:int = 4
+p:int = 3
 # Constraint: there have to be exactly p established facilities 
 model.add_constraints( (y).sum() == p)
 

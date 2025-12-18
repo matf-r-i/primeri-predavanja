@@ -94,3 +94,6 @@ print(model)
 model.solve(solver='highs')
 
 print(model.solution)
+
+print("{}:\n{}\n".format(x, x.solution))
+print("{}:\n{}\n".format(u, u.solution))

@@ -8,7 +8,7 @@ import xarray as xr
 from linopy import Model
 
 # Load data
-cities = pd.read_csv('plain_python/03-02-celobrojno-programiranje/05-traveling-salesperson-problem/data/cities_02.csv', usecols= ['x','y'])
+cities = pd.read_csv('plain_python/03-02-celobrojno-programiranje/05-traveling-salesperson-problem/data/cities_01.csv', usecols= ['x','y'])
 print(cities)
 
 # Draw loaded data on screen
@@ -83,6 +83,8 @@ print(model)
 model.solve(solver='highs')
 
 print(model.solution)
+print("{}:\n{}\n".format(x, x.solution))
+print("{}:\n{}\n".format(u, u.solution))
 
 # Draw the results on the screen
 start = []
@@ -95,11 +97,12 @@ links = []
 for i in range(n):
     for j in range(i+1, n):
         if u.solution.data[i] >= 0 and u.solution.data[j]>=0 and \
-            (abs(u.solution.data[i]-u.solution.data[j]) in (1,n-1) ):
-            x1 = cities.loc[u.solution.data[i]].x
-            y1 = cities.loc[u.solution.data[i]].y
-            x2 = cities.loc[u.solution.data[j]].x
-            y2 = cities.loc[u.solution.data[j]].y
+                abs(u.solution.data[i]-u.solution.data[j]) >= 1 and \
+                abs(u.solution.data[i]-u.solution.data[j]) < 2 :
+            x1 = cities.loc[int(u.solution.data[i])].x
+            y1 = cities.loc[int(u.solution.data[i])].y
+            x2 = cities.loc[int(u.solution.data[j])].x
+            y2 = cities.loc[int(u.solution.data[j])].y
             links.append([x1,y1,x2,y2])
 links = pd.DataFrame(links, columns=['x1', 'y1', 'x2', 'y2'])
 #print(links)
@@ -110,6 +113,9 @@ draw = (
     + geom_point(data = start,color = "yellow")
 )
 for i in range(len(links)):
+    r = int(i *(1/len(links))*255)    
+    g = int(i *(1/len(links))*255)    
+    b = 0    
     draw += geom_segment(mapping = aes(x=links.loc[i].x1, y=links.loc[i].y1, 
-            xend=links.loc[i].x2, yend=links.loc[i].y2), color="pink")
+            xend=links.loc[i].x2, yend=links.loc[i].y2), color=f'#{r:02X}{g:02X}{b:02X}')
 print(draw)
