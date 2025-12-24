@@ -9,7 +9,7 @@
 # With this basic definition you have a set of vertices (cities) and a set of edges (connections between cities).
 # Each edge has an associated distance d > 0. That distance could be travel time, distance in km or the monetary cost associated with traveling from one city to another. Restrictions on the distances lead to special cases of the problem.
 # For example the metric-TSP requires that the triangle inequality holds for all triples of edges (as for the euclidean distance).
-# In this exercise, we will construct a TSP with random points within an Euclidean space.
+
 
 import highspy
 import math

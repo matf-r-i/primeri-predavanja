@@ -1,3 +1,9 @@
+# p-median problem u ravni koji razmatramo je specijalan slucaj problema opisanog na http://www.math.nsc.ru/AP/benchmarks/P-median/p-med_eng.html
+# razlika u odnosu na pomenuti problem je to sto ovde matricu troskova izmedju klijenata (kupaca) i lokacija (prodavnica) racunamo
+# putem euklidskih rastojanja u 2D i to sto lokacije mozemo da postavimo na bilo koju lokaciju (sto nije slucaj u p-median problemu).
+# ovo pojednostavljenje (koliko znam) cini da problem zapravo ne bude NP-tezak, ali nam je zbog jednostavne vizuelizaciji i postavke 
+# praktican da nad njim demonstriramo rad evolutivnog algoritma i algoritma slucajne pretrage. 
+
 import highspy
 import math
 
@@ -45,7 +51,7 @@ for i in range(n):
         row.append(distance(i,j))
     dists.append(row)
 distances = xr.DataArray(dists, dims=['x_coord','y_coord']) 
-print(distances)
+#print(distances)
 
 # Create building costs matrix
 build_cs = []
@@ -79,7 +85,7 @@ for i in range(n):
     for j in range(m):
         model.add_constraints(x.loc[i,j] <= y.loc[j])
 
-p:int = 2
+p:int = 3
 # Constraint: there have to be exactly p established facilities 
 model.add_constraints( (y).sum() == p)
 
