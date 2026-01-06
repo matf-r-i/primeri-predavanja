@@ -1,0 +1,70 @@
+### Define variables for the entire file
+@baseUrl = http://localhost:11434
+@modelName = llama3
+
+### 1. List Available Models (GET /api/tags)
+GET {{baseUrl}}/api/tags
+
+### 2. Pull a New Model (POST /api/pull)
+POST {{baseUrl}}/api/pull
+Content-Type: application/json
+
+{
+    "name": "{{modelName}}"
+}
+
+### 3. Generate a Simple Response (POST /api/generate)
+# This is a single-turn completion. For multi-turn chats, use /api/chat.
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+    "model": "{{modelName}}",
+    "prompt": "Explain quantum entanglement in one sentence.",
+    "stream": false
+}
+
+### 3a. Generate a Simple Response (POST /api/generate)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+    "model": "{{modelName}}",
+    "prompt": "Колико ногу рогова укупно има крава?",
+    "stream": false
+}
+
+### 4. Generate with Streaming Response (POST /api/generate)
+# Set "stream": true to receive the response token by token (like the CLI).
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+    "model": "{{modelName}}",
+    "prompt": "List three colors of the rainbow.",
+    "stream": true
+}
+
+### 5. Chat Conversation (POST /api/chat)
+# Use the 'messages' array for multi-turn conversations. The model remembers context within this request.
+POST {{baseUrl}}/api/chat
+Content-Type: application/json
+
+{
+  "model": "{{modelName}}",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello, who won the 2023 Nobel Prize in Physics?"
+    },
+    {
+      "role": "assistant",
+      "content": "The 2023 Nobel Prize in Physics was awarded to Pierre Agostini, Ferenc Krausz and Anne L'Huillier for their experimental methods that generate attosecond pulses of light."
+    },
+    {
+      "role": "user",
+      "content": "Can you summarize why their work is important in two bullet points?"
+    }
+  ],
+  "stream": false
+}
