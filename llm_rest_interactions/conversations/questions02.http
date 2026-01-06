@@ -1,0 +1,208 @@
+### Switch environments using the selector in VS Code bottom-right
+
+
+### Environments: localhost, development, production
+
+
+### ----------------------------
+
+
+### MODEL MANAGEMENT
+
+
+### ----------------------------
+
+
+### List available models
+GET {{baseUrl}}/api/tags
+Authorization: Bearer {{apiKey}}
+
+
+### Pull a model
+POST {{baseUrl}}/api/pull
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "name": "{{modelName}}",
+  "stream": false
+}
+
+
+### ----------------------------
+
+
+### GENERATION ENDPOINTS
+
+
+### ----------------------------
+
+
+### Simple generation with defaults
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+Authorization: Bearer {{apiKey}}
+
+{
+  "model": "{{modelName}}",
+  "prompt": "Explain quantum computing in 3 bullet points",
+  "stream": false,
+  "options": {{defaultOptions}}
+}
+
+
+### Generate with overridden options
+@customTemp = 1.2
+@customTokens = 500
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "model": "{{modelName}}",
+  "prompt": "Write a creative story about a space pirate",
+  "stream": true,
+  "options": {
+    "temperature": {{customTemp}},
+    "num_predict": {{customTokens}},
+    "top_p": 0.95,
+    "repeat_penalty": 1.1,
+    "seed": {{$randomInt 1000 9999}}
+  }
+}
+
+
+### ----------------------------
+
+
+### CHAT ENDPOINTS
+
+
+### ----------------------------
+
+
+### Single chat completion
+POST {{baseUrl}}/api/chat
+Content-Type: application/json
+
+{
+  "model": "{{modelName}}",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful coding assistant. Always respond with code examples when relevant."
+    },
+    {
+      "role": "user",
+      "content": "Show me how to parse JSON in Python"
+    }
+  ],
+  "stream": false,
+  "options": {{defaultOptions}}
+}
+
+
+### Multi-turn conversation
+@sessionId = {{$timestamp}}
+POST {{baseUrl}}/api/chat
+Content-Type: application/json
+X-Session-ID: {{sessionId}}
+
+{
+  "model": "{{modelName}}",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What's the capital of France?"
+    },
+    {
+      "role": "assistant",
+      "content": "The capital of France is Paris."
+    },
+    {
+      "role": "user",
+      "content": "What are 3 tourist attractions there?"
+    }
+  ],
+  "stream": false
+}
+
+
+### ----------------------------
+
+
+### ADVANCED: DYNAMIC VARIABLES
+
+
+### ----------------------------
+
+
+### Generate with random seed and save response to variable
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+> {%
+// JavaScript code executed after request
+client.global.set("lastResponse", response.body.response);
+client.global.set("lastPrompt", "What is 2+2?");
+%}
+
+{
+  "model": "{{modelName}}",
+  "prompt": "What is 2+2?",
+  "stream": false
+}
+
+
+### Use the previous response in a new request
+POST {{baseUrl}}/api/chat
+Content-Type: application/json
+
+{
+  "model": "{{modelName}}",
+  "messages": [
+    {
+      "role": "user",
+      "content": "{{lastPrompt}}"
+    },
+    {
+      "role": "assistant",
+      "content": "{{lastResponse}}"
+    },
+    {
+      "role": "user",
+      "content": "Now multiply that by 10"
+    }
+  ]
+}
+
+
+### ----------------------------
+
+
+### BATCH REQUESTS
+
+
+### ----------------------------
+
+
+### Test multiple prompts in sequence
+@prompts = [
+"Explain machine learning",
+"Write a haiku about nature",
+"List 5 programming languages"
+]
+
+
+### Loop through prompts (requires script)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+< {%
+  const prompts = ["Explain machine learning", "Write a haiku", "List 5 languages"];
+  client.global.set("currentPrompt", prompts[0]);
+%}
+
+{
+  "model": "{{modelName}}",
+  "prompt": "{{currentPrompt}}",
+  "stream": false
+}

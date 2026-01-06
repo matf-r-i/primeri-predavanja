@@ -1,0 +1,29 @@
+### Switch environments using the selector in VS Code bottom-right
+### Environments: localhost, development, production
+
+### ----------------------------
+### MODEL MANAGEMENT
+### ----------------------------
+
+### List available models
+GET {{baseUrl}}/api/tags
+Authorization: Bearer {{apiKey}}
+
+
+### Copy a Model
+POST {{baseUrl}}/api/copy
+Content-Type: application/json
+
+{
+    "source": "llama3",
+    "destination": "llama3-backup"
+}
+
+
+### Delete a Model
+DELETE {{baseUrl}}/api/delete
+Content-Type: application/json
+
+{
+    "name": "llama3-backup"
+}

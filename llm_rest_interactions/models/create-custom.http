@@ -1,0 +1,29 @@
+@baseUrl = http://localhost:11434
+@customModel = my-llama-custom
+
+
+### Create a custom model from Modelfile
+POST {{baseUrl}}/api/create
+Content-Type: application/json
+
+{
+  "name": "{{customModel}}",
+  "modelfile": """
+    FROM llama3:8b
+    PARAMETER temperature 0.8
+    PARAMETER num_ctx 4096
+    SYSTEM \"You are a technical documentation expert. Always provide clear examples.\"
+    TEMPLATE \"{{ .Prompt }}\"
+  """,
+  "stream": false
+}
+
+
+### Test the custom model
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+  "model": "{{customModel}}",
+  "prompt": "How do I use environment variables in Docker?"
+}
