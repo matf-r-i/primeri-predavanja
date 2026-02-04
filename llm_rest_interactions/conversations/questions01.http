@@ -1,19 +1,13 @@
 ### Define variables for the entire file
 @baseUrl = http://localhost:11434
+
+### Alternatives: phi4-mini, llama3.2, llama3, deepseek-r1,smollm
 @modelName = llama3
 
-### 1. List Available Models (GET /api/tags)
+### List Available Models (GET /api/tags)
 GET {{baseUrl}}/api/tags
 
-### 2. Pull a New Model (POST /api/pull)
-POST {{baseUrl}}/api/pull
-Content-Type: application/json
-
-{
-    "name": "{{modelName}}"
-}
-
-### 3. Generate a Simple Response (POST /api/generate)
+### Generate a Simple Response (POST /api/generate)
 # This is a single-turn completion. For multi-turn chats, use /api/chat.
 POST {{baseUrl}}/api/generate/
 Content-Type: application/json
@@ -24,7 +18,7 @@ Content-Type: application/json
     "stream": false
 }
 
-### 3a. Generate a Simple Response (POST /api/generate)
+### Generate a Simple Response (POST /api/generate)
 POST {{baseUrl}}/api/generate
 Content-Type: application/json
 
@@ -34,7 +28,16 @@ Content-Type: application/json
     "stream": false
 }
 
-### 4. Generate with Streaming Response (POST /api/generate)
+### Generate a Simple Response (POST /api/generate)
+POST {{baseUrl}}/api/generate
+Content-Type: application/json
+
+{
+    "model": "{{modelName}}",
+    "prompt": "Koliko pravilnih geometrijskih tela postoji i koja su to tela?",
+    "stream": false
+}
+### Generate with Streaming Response (POST /api/generate)
 # Set "stream": true to receive the response token by token (like the CLI).
 POST {{baseUrl}}/api/generate
 Content-Type: application/json
@@ -45,7 +48,7 @@ Content-Type: application/json
     "stream": true
 }
 
-### 5. Chat Conversation (POST /api/chat)
+### Chat Conversation (POST /api/chat)
 # Use the 'messages' array for multi-turn conversations. The model remembers context within this request.
 POST {{baseUrl}}/api/chat
 Content-Type: application/json
