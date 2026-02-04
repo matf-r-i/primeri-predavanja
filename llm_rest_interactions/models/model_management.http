@@ -1,3 +1,5 @@
+@baseUrl = http://localhost:11434
+@apiKey = your_api_key_here
 ### Switch environments using the selector in VS Code bottom-right
 ### Environments: localhost, development, production
 

@@ -15,7 +15,7 @@ Content-Type: application/json
 
 ### 3. Generate a Simple Response (POST /api/generate)
 # This is a single-turn completion. For multi-turn chats, use /api/chat.
-POST {{baseUrl}}/api/generate
+POST {{baseUrl}}/api/generate/
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 {
     "model": "{{modelName}}",
-    "prompt": "Колико ногу рогова укупно има крава?",
+    "prompt": "Колико ногу и рогова укупно има крава?",
     "stream": false
 }
 
