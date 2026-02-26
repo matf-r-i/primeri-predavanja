@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
     "model": "{{modelName}}",
-    "prompt": "Колико ногу и рогова укупно има крава?",
+    "prompt": "Is it possible that captain of the battleship has brother, and the brother of the captain does not have a brother. If answer is yse, explain in detail.",
     "stream": false
 }
 
