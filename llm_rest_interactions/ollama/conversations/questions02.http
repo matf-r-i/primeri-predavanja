@@ -1,4 +1,12 @@
 ### Switch environments using the selector in VS Code bottom-right
+@baseUrl = http://localhost:11434
+@apiKey = not_set
+@defaultOptions = {
+  "temperature": 0.7,
+  "num_predict": 200,
+  "top_p": 0.9,
+  "repeat_penalty": 1.0
+}
 
 
 ### Environments: localhost, development, production
@@ -17,6 +25,7 @@
 GET {{baseUrl}}/api/tags
 Authorization: Bearer {{apiKey}}
 
+@modelName = qwen2.5-coder:7b
 
 ### Pull a model
 POST {{baseUrl}}/api/pull
@@ -47,7 +56,7 @@ Authorization: Bearer {{apiKey}}
   "model": "{{modelName}}",
   "prompt": "Explain quantum computing in 3 bullet points",
   "stream": false,
-  "options": {{defaultOptions}}
+  "options": "{defaultOptions}"
 }
 
 

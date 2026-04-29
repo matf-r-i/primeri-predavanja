@@ -1,11 +1,15 @@
 ### Define variables for the entire file
-@baseUrl = http://localhost:11434
-
-### Alternatives: phi4-mini, llama3.2, llama3, deepseek-r1,smollm
-@modelName = llama3
+# port
+@port = 11434
+# base url for all requests
+@baseUrl = http://localhost:{{port}}
 
 ### List Available Models (GET /api/tags)
 GET {{baseUrl}}/api/tags
+
+### Alternatives: phi4-mini:latest, qwen2.5-coder:7b, llama3.2:latest, llama3:latest, deepseek-r1:1.5b, smollm:latest
+@modelName = qwen2.5-coder:7b
+
 
 ### Generate a Simple Response (POST /api/generate)
 # This is a single-turn completion. For multi-turn chats, use /api/chat.

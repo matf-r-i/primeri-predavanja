@@ -1,0 +1,74 @@
+### llama.cpp API Examples
+@hostname = localhost
+@port = 1234
+@host = http://{{hostname}}:{{port}}
+
+@api_key = sk-dummy-key-for-local-testing
+
+### ========== OpenAI Compatible Endpoints ==========
+
+#### 1. List Models (GET /v1/models)
+GET {{host}}/v1/models
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+#### 2. Chat Completion (Non-streaming)
+# POST {{host}}/v1/chat/completions
+POST {{host}}/v1/chat/completions
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+{
+    "messages": [
+    {
+        "role": "system",
+        "content": "You are a helpful assistant."
+    },
+    {
+        "role": "user",
+        "content": "What is the capital of France?"
+    }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 500,
+    "stream": false
+}
+
+#### 3. Chat Completion (Streaming)
+POST {{host}}/v1/chat/completions
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+{
+    "messages": [
+    {
+        "role": "user",
+        "content": "Write a haiku about programming."
+    }
+    ],
+    "temperature": 0.8,
+    "stream": true
+}
+
+#### 4. Text Completion (Non-streaming)
+POST {{host}}/v1/completions
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+{
+    "prompt": "The quick brown fox jumps over the",
+    "temperature": 0.6,
+    "max_tokens": 50,
+    "stream": false
+}
+
+#### 5. Generate Embeddings
+POST {{host}}/v1/embeddings
+Authorization: Bearer {{api_key}}
+Content-Type: application/json
+
+{
+    "input": "Your text string goes here",
+    "model": "local-model"
+}
+
