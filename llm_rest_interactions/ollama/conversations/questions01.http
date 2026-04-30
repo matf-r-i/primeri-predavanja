@@ -8,7 +8,7 @@
 GET {{baseUrl}}/api/tags
 
 ### Alternatives: phi4-mini:latest, qwen2.5-coder:7b, llama3.2:latest, llama3:latest, deepseek-r1:1.5b, smollm:latest
-@modelName = qwen2.5-coder:7b
+@modelName = Phi-4-mini-reasoning-Q4_K_M:latest
 
 
 ### Generate a Simple Response (POST /api/generate)

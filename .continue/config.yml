@@ -1,0 +1,22 @@
+name: My Local Assistant
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Qwen-1.5B-Q8_0 (Fast)
+    provider: ollama
+    model: DeepSeek-R1-Distill-Qwen-1.5B-Q8_0
+    roles:
+      - autocomplete
+
+  - name: Qwen-2.5B-coder-7b-instruct-Q4_K_M (Chat)
+    provider: ollama
+    model: qwen2.5-coder-7b-instruct-q4_k_m 
+    roles:
+      - chat
+      - edit
+      - apply
+
+tabAutocompleteModel:
+  model: DeepSeek-R1-Distill-Qwen-1.5B-Q8_0
+  provider: ollama
